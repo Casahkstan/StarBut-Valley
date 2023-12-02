@@ -1,7 +1,12 @@
 program main;
 {$mode objfpc}{$H+}
 uses
-  classes,sysutils;
+	playerUnit;
+
+var
+	p : Player;
 begin 
-   
+	initPlayer(p);
+	setName(p, 'Sacha');
+	writeln(getName(p));
 end.
