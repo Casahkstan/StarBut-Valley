@@ -1,0 +1,34 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "debug main",
+			"file": "main.lpr",
+			"type": "fpc",
+			"presentation": {
+				"showReuseMessage": false,
+				"clear": true,
+				"revealProblems": "onProblem"
+			},
+			"buildOption": {
+				"unitOutputDir": "./out",
+				"customOptions": [
+					"-dDEBUG",
+					"-gw2"
+				]
+			}
+		},
+		{
+			"label": "release",
+			"file": "main.lpr",
+			"type": "fpc",
+			"buildOption": {
+				"syntaxMode": "ObjFPC",
+				"unitOutputDir": "./out",
+				"customOptions": [
+					"-dRELEASE"
+				]
+			}
+		}
+	]
+}
