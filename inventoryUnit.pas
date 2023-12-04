@@ -5,9 +5,13 @@ interface
 type 
   Rarity = (base, silver, gold, iridium);
 
-  Item = record
+  itemType = record
     name : String;
     rarete : Rarity;
+  end;
+
+  Item = record
+    iType : itemType;
     stack:Integer;
   end;
 
@@ -18,11 +22,14 @@ procedure initInventory();
 
 // Add : Ajoute un élément passé en paramètre à l'inventaire. 
 // ⚠️ Ne regarde pas si l'invetaire est plein
-procedure AddInventory(name : String; ammount : Integer);
+procedure AddInventory(iT : itemType; ammount : Integer);
 
-//Sub : Retire un élément passé en paramètre à l'inventaire du joueur
+// Sub : Retire un élément passé en paramètre à l'inventaire du joueur
 // ⚠️ Ne regarde pas si l'invetaire est vide
-procedure SubInventory(name: String; ammount : Integer);
+procedure SubInventory(iT : itemType; ammount : Integer);
+
+// Setter : Change l'inventaire
+procedure setInventory(inv : inventory);
 
 // Getter : Retourne l'inventaire du joueur
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
@@ -31,45 +38,55 @@ function getInventory() : inventory;
 // Affiche l'inventaire ligne par ligne
 procedure displayInventory();
 
+// Augmente d'un niveau l'inventaire du joueur
+procedure upgradeInventory();
+
+// Getter : Retourne le niveau de l'inventaire du joueur
+// ⚠️ Ne peut pas être utiliser pour modifier des variables
+function getInventoryLevel() : Integer;
+
 implementation
 uses playerUnit;
 
 var
-  inv : inventory;
+  inventaire : inventory;
+  level : Integer;
 
 procedure initInventory();
 var
+  iType : itemType;
   itemVide : Item;    // Item par défault dans l'inventaire
   i : Integer;        // Compteur
 begin
-  SetLength(inv,5);
+  SetLength(inventaire,5);
   
-  itemVide.name := 'Vide';
+  iType.name := 'Vide';
+  iType.rarete := Rarity.base;
+  itemVide.iType := iType;
   itemVide.stack := 0;
-  itemVide.rarete := Rarity.base;
-  for i := low(inv) to high(inv) do
-    inv[i] := itemVide;
+  for i := low(inventaire) to high(inventaire) do
+    inventaire[i] := itemVide;
 end;
 
 // Retourne True si l'item passé en paramètre est présent, false sinon
-function isPresent(name : String) : Boolean;
+function isPresent(iT : itemType) : Boolean;
 var
   inv : inventory;      // Inventaire du joueur
   i : Integer;          // Compteur
 begin
   inv := getInventory;
   i := low(inv);
-  while (i < high(inv)) and (inv[i].name <> name) do
+  while (i < high(inv)) and (inv[i].iType.name <> iT.name) and (inv[i].iType.rarete <> iT.rarete) do
     i := i + 1;
   
-  if inv[i].name = name then
+  if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
     isPresent := True
   else
     isPresent := False;
 end;
 
 // Retourne False si l'inventaire contient un stack non plein de l'item passé en paramètre, True sinon
-function isStackNotFull(name : String) : Boolean;
+function isStackAvailable(iT : itemType) : Boolean;
 var
   inv : inventory;      // Inventaire du joueur
   i : Integer;          // Compteur
@@ -80,16 +97,24 @@ begin
   stackDispo := False;
   while (i <= high(inv)) and (stackDispo = False) do
   begin
-    if (inv[i].name = name) and (inv[i].stack <> 5) then
+    if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].stack <> 5) then
       stackDispo := True;
     i := i + 1;
   end;
 
-  isStackNotFull := stackDispo;
+  isStackAvailable := stackDispo;
+end;
+
+function isMaxed() : Boolean;
+begin
+  if getInventoryLevel = 3 then
+    isMaxed := True
+  else
+    isMaxed := False;
 end;
 
 //Add : Ajoute un élément passé en paramètre à l'inventaire.
-procedure AddInventory(name : String; ammount : Integer);
+procedure AddInventory(iT : itemType; ammount : Integer);
 var
   inv : inventory;      // Inventaire du joueur
   i,                    // Compteur
@@ -99,67 +124,74 @@ begin
   inv := getInventory;
   i := low(inv);
   // SI L'OBJET EST DEJA DANS L'INVENTAIRE ET QU'UN DES STACKS N'EST PAS PLEIN
-  if isPresent(name) and isStackNotFull(name) then
+  if isPresent(iT) and isStackAvailable(iT) then
   begin
-    while (inv[i].name <> name) and (inv[i].stack <> 5) do
+    // Récupère l'indice de l'item
+    while (inv[i].iType.name <> iT.name) and (inv[i].iType.rarete <> iT.rarete) and (inv[i].stack <> 5) do
       i := i + 1;
+    // Regarde si le slot sera rempli
     if inv[i].stack + ammount > 5 then
     begin
-      newAmmount := ammount - inv[i].stack;
+      newAmmount := (ammount + inv[i].stack) - 5;
       inv[i].stack := 5;
-      AddInventory(name, newAmmount);
+      AddInventory(iT, newAmmount);
     end
     else
+    begin
       inv[i].stack := ammount + inv[i].stack;
+    end;
   end
   // SINON
   else
   begin  
-    while (i < high(inv)) and (inv[i].name <> 'Vide') do
+    while (i < high(inv)) and (inv[i].iType.name <> 'Vide') do
       i := i + 1;
     if ammount <= 5 then
     begin
-      newItem.name := name;
+      newItem.iType := iT;
       newItem.stack := ammount;
       inv[i] := newItem;
     end
     // CAS OU AMMOUNT EST SUPERIEUR A 5
     else
     begin
-      newItem.name := name;
+      newItem.iType := iT;
       newItem.stack := 5;
       inv[i] := newItem;
-      AddInventory(name, ammount-5);
+      AddInventory(iT, ammount-5);
     end;
   end;
+  setInventory(inv);
 end;
 
 //Sub : Retire un élément passé en paramètre à l'inventaire du joueur
-procedure SubInventory(name: String; ammount : Integer);
+procedure SubInventory(iT : itemType; ammount : Integer);
 var
   inv : inventory;      // Inventaire du joueur
   itemVide : Item;      // Item par default dans une case de l'inventaire pas utilisée
   i : Integer;          // Compteur
+  iType : itemType;     // Type de l'item par défault
 begin
   inv := getInventory;
-  if isPresent(name) then
+  if isPresent(iT) then
   begin
     i := low(inv);
     while (ammount <> 0) and (i < high(inv)) do
     begin
-      if (inv[i].name = name) then
+      writeln(inv[i].iType.name);
+      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
       begin
         if (ammount >= inv[i].stack) then
         begin
-          writeln(ammount);
-          itemVide.name := 'Vide';
+          iType.name := 'Vide';
+          iType.rarete := Rarity.base;
+          itemVide.iType := iType;
           itemVide.stack := 0;
           ammount := ammount - inv[i].stack;
           inv[i] := itemVide;
         end
         else
         begin
-          writeln(ammount);
           inv[i].stack := inv[i].stack - ammount;
           ammount := 0;
         end;
@@ -170,13 +202,20 @@ begin
     if ammount <> 0 then
       write('Je ne peux pas en enlever autant')
   end;
+  setInventory(inv);
+end;
+
+// Setter : Change l'inventaire
+procedure setInventory(inv : inventory);
+begin
+  inventaire := inv;
 end;
 
 // Getter : Retourne l'inventaire du joueur
 //  ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getInventory() : inventory;
 begin
-  getInventory := inv;
+  getInventory := inventaire;
 end;
 
 // Affiche l'inventaire ligne par ligne
@@ -188,6 +227,39 @@ begin
 	inv := getInventory;
   writeln('Voici l''inventaire de ', getName);
 	for i := low(inv) to high(inv) do
-		writeln(inv[i].name, ' (', inv[i].stack, ')');
+		writeln(inv[i].iType.name, ' (', inv[i].iType.rarete, ') : ', inv[i].stack);
+end;
+
+// Augmente d'un niveau l'inventaire du joueur et met des slots vide dans les nouveaux compartiments
+procedure upgradeInventory();
+var
+  inv : inventory;
+  itemVide : Item;
+  iT : itemType;
+  i : Integer;
+begin
+  if not isMaxed then
+  begin
+    inv := getInventory();
+    level := level + 1;
+    SetLength(inv, length(inventaire)+5);
+
+    iT.name := 'Vide';
+    iT.rarete := Rarity.base;
+    itemVide.iType := iT;
+    itemVide.stack := 0;
+
+    for i := high(inv)-5 to high(inv) do
+      inv[i] := itemVide;
+
+    setInventory(inv);
+  end;
+end;
+
+// Getter : Retourne le niveau de l'inventaire du joueur
+// ⚠️ Ne peut pas être utiliser pour modifier des variables
+function getInventoryLevel() : Integer;
+begin
+  getInventoryLevel := level;
 end;
 end.

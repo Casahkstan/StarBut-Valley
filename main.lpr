@@ -4,11 +4,18 @@ program main;
 uses
 	playerUnit, inventoryUnit;
 
+var
+	champ2,
+	champ : itemType;
 begin 
 	initPlayer();
 	setName('Sacha');
-	AddInventory('Champignon', 4);
-	AddInventory('Champignon', 4);
-	SubInventory('Champignon', 3);
+	champ.name := 'Champignon';
+	champ.rarete := Rarity.base;
+	champ2.name := 'Champignon';
+	champ2.rarete := Rarity.base;
+	AddInventory(champ, 4);
+	AddInventory(champ2, 4);
+	SubInventory(champ, 3);
 	displayInventory();
 end.
