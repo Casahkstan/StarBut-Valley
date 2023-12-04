@@ -1,14 +1,6 @@
 unit playerUnit;
 {$codepage utf-8}
 interface
-//  Types utilisé pour l'inventaire 
-type 
-  Item=record
-    name:String;
-    stack:Integer;
-  end;
-
-  liste_record = Array of Item;
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
 
@@ -23,13 +15,6 @@ procedure setStamina(s : Integer);
 
 // Setter : Change la quantité d'experience de l'utilisateur passé en paramètre
 procedure setExp(e : Integer);
-
-//Add : Ajoute un élément passé en paramètre à l'inventaire. Un message d'erreur sera affiché si l'inventaire est déjà rempli
-procedure AddInventaire(e : String);
-
-//Sub : Retire un élément passé en paramètre à l'inventaire du joueur
-procedure SubInventaire(e: String);
-//Sub : Retire un élément passé en paramètre à l'inventaire du joueur.
 
 // Getter : Retourne le nom de l'utilisateur passé en paramètre
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
@@ -47,11 +32,8 @@ function getStamina() : Integer;
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getExp() : Integer;
 
-// Getter : Retourne l'inventaire du joueur
-//  ⚠️ Ne peut pas être utilisé pour modifier des variables
-function getInventaire() : liste_record;  
-
 implementation
+uses inventoryUnit;
 
 //  Variable du joueur
 var
@@ -59,16 +41,24 @@ var
   stamina,
   money,
   experience : Integer;
-  inventaire : liste_record;
+  inv : inventory;
 
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
+var
+  itemVide : Item;    // Item par défault dans l'inventaire
+  i : Integer;
 begin
   username := 'Non défini';
   stamina := 100;
   money := 200;
   experience:=0;
-  SetLength(inventaire,5);
+  SetLength(inv,5);
+  
+  itemVide.name := 'Vide';
+  itemVide.stack := 0;
+  for i := low(inv) to high(inv) do
+    inv[i] := itemVide;
 end;
 
 // Setter : Change le nom de l'utilisateur passé en paramètre
@@ -93,13 +83,6 @@ end;
 procedure setExp(e : Integer);
 begin
   experience := e;
-end;
-
-//Add : Ajoute un élément passé en paramètre à l'inventaire. Un message d'erreur sera affiché si l'inventaire est déjà rempli
-procedure AddInventaire(e : String);
-begin
-  assert length(inventaire)<=5, 'Votre inventaire est déjà rempli';
-  
 end;
 
 // Getter : Retourne le nom de l'utilisateur passé en paramètre

@@ -7,7 +7,7 @@ uses
 var
 	p : Player;
 begin 
-	initPlayer(p);
-	setName(p, 'Sacha');
-	writeln(getName(p));
+	initPlayer();
+	setName('Sacha');
+	writeln(getName);
 end.
