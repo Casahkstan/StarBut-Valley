@@ -1,5 +1,5 @@
 unit playerUnit;
-
+{$codepage utf-8}
 interface
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
@@ -21,6 +21,7 @@ procedure setExp(e : Integer);
 procedure AddInventaire(e : String);
 
 //Sub : Retire un élément passé en paramètre à l'inventaire du joueur
+procedure SubInventaire(e: String);
 
 // Getter : Retourne le nom de l'utilisateur passé en paramètre
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
@@ -38,6 +39,9 @@ function getStamina() : Integer;
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getExp() : Integer;
 
+// Getter : Retourne l'inventaire du joueur
+//  ⚠️ Ne peut pas être utilisé pour modifier des variables
+function getInventaire() : Array of String;  
 
 implementation
 //  Variable du joueur
