@@ -2,12 +2,13 @@ program main;
 {$codepage utf8}
 {$mode objfpc}{$H+}
 uses
-	playerUnit;
+	playerUnit, inventoryUnit;
 
-var
-	p : Player;
 begin 
-	initPlayer(p);
-	setName(p, 'Sacha');
-	writeln(getName(p));
+	initPlayer();
+	setName('Sacha');
+	AddInventory('Champignon', 4);
+	AddInventory('Champignon', 4);
+	SubInventory('Champignon', 3);
+	displayInventory();
 end.
