@@ -20,7 +20,7 @@ procedure setExp(e : Integer);
 //Add : Ajoute un élément passé en paramètre à l'inventaire. Un message d'erreur sera affiché si l'inventaire est déjà rempli
 procedure AddInventaire(e : String);
 
-//Sub : Retire un élément passé en paramètre à l'inventaire du joueur
+//Sub : Retire un élément passé en paramètre à l'inventaire du joueur.
 
 // Getter : Retourne le nom de l'utilisateur passé en paramètre
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
