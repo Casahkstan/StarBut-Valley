@@ -98,7 +98,8 @@ end;
 //Add : Ajoute un élément passé en paramètre à l'inventaire. Un message d'erreur sera affiché si l'inventaire est déjà rempli
 procedure AddInventaire(e : String);
 begin
-  assert length()
+  assert length(inventaire)<=5, 'Votre inventaire est déjà rempli';
+  
 end;
 
 // Getter : Retourne le nom de l'utilisateur passé en paramètre
