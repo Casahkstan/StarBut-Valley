@@ -4,7 +4,6 @@ interface
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
 
-
 // Setter : Change le nom de l'utilisateur passé en paramètre
 procedure setName(username : String);
 
@@ -22,6 +21,7 @@ procedure AddInventaire(e : String);
 
 //Sub : Retire un élément passé en paramètre à l'inventaire du joueur
 procedure SubInventaire(e: String);
+//Sub : Retire un élément passé en paramètre à l'inventaire du joueur.
 
 // Getter : Retourne le nom de l'utilisateur passé en paramètre
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
