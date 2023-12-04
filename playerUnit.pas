@@ -1,6 +1,14 @@
 unit playerUnit;
 {$codepage utf-8}
 interface
+//  Types utilisé pour l'inventaire 
+type 
+  Item=record
+    name:String;
+    stack:Integer;
+  end;
+
+  liste_record = Array of Item;
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
 
@@ -41,15 +49,17 @@ function getExp() : Integer;
 
 // Getter : Retourne l'inventaire du joueur
 //  ⚠️ Ne peut pas être utilisé pour modifier des variables
-function getInventaire() : Array of String;  
+function getInventaire() : liste_record;  
 
 implementation
+
 //  Variable du joueur
 var
   username : String;
   stamina,
-  money : Integer;
-  inventaire : Array of String;
+  money,
+  experience : Integer;
+  inventaire : liste_record;
 
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
@@ -57,6 +67,7 @@ begin
   username := 'Non défini';
   stamina := 100;
   money := 200;
+  experience:=0;
   SetLength(inventaire,5);
 end;
 
@@ -82,6 +93,12 @@ end;
 procedure setExp(e : Integer);
 begin
   experience := e;
+end;
+
+//Add : Ajoute un élément passé en paramètre à l'inventaire. Un message d'erreur sera affiché si l'inventaire est déjà rempli
+procedure AddInventaire(e : String);
+begin
+  assert length()
 end;
 
 // Getter : Retourne le nom de l'utilisateur passé en paramètre
@@ -111,6 +128,8 @@ function getExp() : Integer;
 begin
   getExp := experience;
 end;
+
+
 
 
 end.
