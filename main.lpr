@@ -1,4 +1,5 @@
 program main;
+{$codepage utf8}
 {$mode objfpc}{$H+}
 uses
 	playerUnit;
