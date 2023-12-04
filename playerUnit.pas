@@ -17,6 +17,11 @@ procedure setStamina(s : Integer);
 // Setter : Change la quantité d'experience de l'utilisateur passé en paramètre
 procedure setExp(e : Integer);
 
+//Add : Ajoute un élément passé en paramètre à l'inventaire. Un message d'erreur sera affiché si l'inventaire est déjà rempli
+procedure AddInventaire(e : String);
+
+//Sub : Retire un élément passé en paramètre à l'inventaire du joueur
+
 // Getter : Retourne le nom de l'utilisateur passé en paramètre
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getName() : String;
@@ -33,12 +38,14 @@ function getStamina() : Integer;
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getExp() : Integer;
 
+
 implementation
 //  Variable du joueur
 var
   username : String;
   stamina,
   money : Integer;
+  inventaire : Array of String;
 
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
@@ -46,6 +53,7 @@ begin
   username := 'Non défini';
   stamina := 100;
   money := 200;
+  SetLength(inventaire,5);
 end;
 
 // Setter : Change le nom de l'utilisateur passé en paramètre
@@ -99,5 +107,6 @@ function getExp() : Integer;
 begin
   getExp := experience;
 end;
+
 
 end.
