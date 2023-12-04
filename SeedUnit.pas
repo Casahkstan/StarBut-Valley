@@ -1,48 +1,54 @@
 unit SeedUnit;
 
 interface
+    uses weatherUnit;
 
     //type pour créer une graine
     type   
     Saison=Array [1..4] of String;
         
     // Init : procedure mettant les graines de saison dans les 4 saisons
-    procedure initSaison(saison:String);
+    procedure graineSaison(saison:TSaison);
 
     // Description : Procédure donnant une description de chaque graine 
     procedure Description(graine : String);
 
+    // Getter : Retourne les graines de saison du joueur
+    // ⚠️ Ne peut pas être utiliser pour modifier des variables
+    function getSeed():Saison;
+
 
 implementation
+
     var 
         seedSaison:Saison;
 
     // Init : procedure mettant les graines de saison disponible avec la saison en paramètre
-    procedure initSaison(saison:String);
+    procedure graineSaison(saison:TSaison);
     begin
         case saison of
-            'hiver':
+            Hiver:
                 begin
                     seedSaison[1]:='carotte';
                     seedSaison[2]:='epinard';
                     seedSaison[3]:='chou';
                     seedSaison[4]:='poireau';
                 end;     
-            'ete':
+            Ete:
                 begin
                     seedSaison[1]:='tomate';
                     seedSaison[2]:='poivron';
                     seedSaison[3]:='haricot';
                     seedSaison[4]:='concombre';
                 end;
-            'printemps':
+            Printemps:
                 begin
                     seedSaison[1]:='asperge';
                     seedSaison[2]:='pois';
                     seedSaison[3]:='radis';
                     seedSaison[4]:='ail';
                 end;
-            'automne':
+            Automne:
                 begin
                     seedSaison[1]:='brocolis';
                     seedSaison[2]:='citrouille';
@@ -79,10 +85,12 @@ implementation
         end;
     end;
 
-
-    // changeSaison : Procedure qui change les graines de saison en passant en paramètre la saison
-    procedure changeSaison(saison:String);
+    // Getter : Retourne les graines de saison du joueur
+    // ⚠️ Ne peut pas être utiliser pour modifier des variables
+    function getSeed():Saison;
     begin
-        
+        getSeed:=seedSaison;
     end;
+
+
 end.
