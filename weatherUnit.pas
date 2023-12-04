@@ -59,5 +59,5 @@ begin
   saisonnalite:=currentWeather;
 end;
 
-
+end.
 
