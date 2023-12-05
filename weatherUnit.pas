@@ -12,7 +12,7 @@ type
 function randomWeather():Integer;
 
 //Renvoie une saison différentes en fonction de la saison
-function saisonnalite(aleatoire : Integer):TWeather; 
+function saisonnalite(saison:TSaison):TWeather; 
 
 implementation
 
@@ -28,16 +28,18 @@ end;
 
 
 //On compare la valeur aléatoire précédemment calculée avec certains nombres afin de créer des chances différents pour chaque météo selon la saison.
-function saisonnalite(aleatoire:Integer;saison : TSaison):TWeather;
+function saisonnalite(saison : TSaison):TWeather;
 var
   currentWeather : TWeather;  //Stocke la météo actuelle, est renvoyée
+  aleatoire : Integer;
 begin
+  aleatoire := randomWeather();
   case saison of
     Printemps : case aleatoire of
       0..59 : currentWeather := Soleil;
-      60...89 : currentWeather := Pluie;
-      90...99 : currentWeather := Orage; 
-      // 1/60 que la météo soit ensoleillée,1/30 qu'elle soit pluvieuse et 1/10 pour qu'elle soit orageuse au Printemps ; même principe à la suite
+      60..89 : currentWeather := Pluie;
+      90..99 : currentWeather := Orage; 
+      // 60% que la météo soit ensoleillée,30% qu'elle soit pluvieuse et 10% pour qu'elle soit orageuse au Printemps ; même principe à la suite
     end;
     Ete : case aleatoire of
       0..69 : currentWeather := Soleil;
