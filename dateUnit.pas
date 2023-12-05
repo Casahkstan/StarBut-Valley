@@ -118,7 +118,7 @@ procedure saisonSuivante ();
 begin
   if getSaisonActuelle = Hiver then
     setSaisonActuelle(Printemps);
-    
+
   else
     setSaisonActuelle(succ(getSaisonActuelle));
   
@@ -142,7 +142,7 @@ begin
   if getHeureActuelle = 23 then
   begin
     setHeureActuelle(0);
-    jourSuivant();
+    jourSuivant();  //Si l'heure dépasse 23, cela signifie que l'on a changé de jour : On remet l'heure à 0 et passe au jour suivant
   end; 
   else
     setHeureActuelle(getHeureActuelle+1);

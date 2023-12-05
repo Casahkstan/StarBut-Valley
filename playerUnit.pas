@@ -106,13 +106,43 @@ begin
   getExp := experience;
 end;
 
+function repos():Boolean;
+var
+  aDormi : Boolean;
+begin
+  aDormi := False;
+  case getHeureActuelle of
+    6..23 : begin
+      jourSuivant();
+      setHeureActuelle(6);
+      aDormi:=True;
+    end;
+    0..1 : begin
+      setHeureActuelle(6);
+      aDormi:=True;
+    end;
+    2..5 : 
+      setHeureActuelle(6);
+  repos := aDormi;
+end;
+
+//Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (aDormi = False & 6h)
 procedure fatigue();
 var
   heureBase : Integer;
 begin
-  heureBase := 
+  if {action} then
+  begin
+    setStamina(getStamina()-5);
+  end;
+  if aDormi then
+  begin
+    setStamina(100);
+  end
+  else
+  begin
+    setStamina(10);
+  end;
 end;
-
-
 
 end.
