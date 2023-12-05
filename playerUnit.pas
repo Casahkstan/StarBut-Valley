@@ -115,10 +115,7 @@ begin
 end;
 
 procedure repos();
-var
-  aDormi : Boolean;
 begin
-  aDormi := False;
   case getHeureActuelle of
     6..23 : begin
       jourSuivant();
@@ -137,7 +134,7 @@ begin
   end;
 end;
 
-//Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (aDormi = False & 6h)
+//Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (on met la stamina à 10)
 procedure fatigue();
 begin
   if getIsAction then
@@ -146,8 +143,7 @@ begin
   end;
   if getStamina = 0 then
   begin
-    jourSuivant();
-    setHeureActuelle(6);
+    repos;
     setStamina(10);  //Si le joueur n'a plus d'endurance, il s'évanouit et se réveille le lendemain à 6h avec très peu d'endurance
   end;
 end;

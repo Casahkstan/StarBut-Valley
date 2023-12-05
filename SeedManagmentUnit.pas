@@ -2,7 +2,7 @@ unit SeedManagmentUnit;
 {$codepage utf-8}
 interface
 
-uses inventoryUnit,dateUnit,playerUnit;
+uses inventoryUnit,dateUnit,playerUnit,weatherUnit;
 type 
 
     slot = record 
@@ -39,6 +39,9 @@ procedure Grandit();
 
 // Ramasse : permet de ramasser un légumes mûr
 function Ramasse(numEmplacement:Integer) : itemType;
+
+// joursPluvieux : arrose automatiquement les légumes quand il pleut
+procedure joursPluvieux();
 
 implementation
 var
@@ -180,5 +183,12 @@ begin
     end;
 end;
 
-
+procedure joursPluvieux();
+begin
+  if (currentWeather = Pluie) or (currentWeather = Orage) then
+  begin
+    for i:=low(getFerme) to high(getFerme) do
+      GetEmplacement[i].arrose := True;
+  end;
+end;
 end.

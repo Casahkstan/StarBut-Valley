@@ -9,13 +9,13 @@ uses dateUnit;
 type
   TWeather=(Soleil,Pluie,Neige,Orage);  //Différents types de météo
 
-//Génère un nombre aléatoire.
+//Génère un nombre aléatoire
 function randomWeather():Integer;
 
-//Change la saison actuelle selon la
+//Change la météo actuelle selon la saison
 function saisonnalite():Tweather; 
 
-//R
+//Retourne le numéro correspondant à la saison
 function getNumSaison():Integer;
 
 implementation
