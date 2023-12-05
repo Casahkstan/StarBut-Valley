@@ -10,3 +10,7 @@ brocolis
 citrouille
 mache
 oignon
+carotte
+epinard
+chou
+poireau
