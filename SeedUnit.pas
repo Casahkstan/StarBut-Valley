@@ -38,7 +38,8 @@ implementation
             for j:=0 to 3 do 
             begin
                 readln(texte,ligne);
-                seedSaison[i,j]:=ligne;
+                seedSaison.name[i,j]:=ligne;
+                seedSaison.rarete[i,j]:=base;
             end; 
 
             
