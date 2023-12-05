@@ -4,8 +4,6 @@ unit dateUnit;
 
 interface
 
-uses weatherUnit;
-
 type
   TJour = (Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche);
   date = record

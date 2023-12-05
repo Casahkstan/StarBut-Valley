@@ -13,9 +13,10 @@ type
 //Génère un nombre aléatoire.
 function randomWeather():Integer;
 
-//Renvoie une saison différentes en fonction de la saison
-procedure saisonnalite(); 
+//Change la saison actuelle selon la
+function saisonnalite():Tweather; 
 
+//R
 function getNumSaison():Integer;
 
 implementation
@@ -62,9 +63,11 @@ begin
       75..99 : currentWeather := Orage;
     end;
   end;
-  setSaisonActuelle(currentWeather);
+  saisonnalite:=currentWeather;
 end;
 
+
+//Convertit la saison actuelle grâce à un case of
 function getNumSaison():Integer;
 var
   numero : Integer
