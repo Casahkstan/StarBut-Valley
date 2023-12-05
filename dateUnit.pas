@@ -87,7 +87,7 @@ end;
 
 procedure setNumJour(valeur:Integer);
 begin
-  currentTime.numJour := valeur;
+  numJour := valeur;
 end;
 
 // Getter : Retourne la date actuelle
@@ -118,6 +118,7 @@ procedure saisonSuivante ();
 begin
   if getSaisonActuelle = Hiver then
     setSaisonActuelle(Printemps);
+    
   else
     setSaisonActuelle(succ(getSaisonActuelle));
   

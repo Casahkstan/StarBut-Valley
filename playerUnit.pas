@@ -1,6 +1,8 @@
 unit playerUnit;
 {$codepage utf-8}
 interface
+
+uses dateUnit;
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
 
@@ -104,7 +106,12 @@ begin
   getExp := experience;
 end;
 
-
+procedure fatigue();
+var
+  heureBase : Integer;
+begin
+  heureBase := 
+end;
 
 
 
