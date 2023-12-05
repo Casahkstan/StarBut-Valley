@@ -8,7 +8,6 @@ uses dateUnit;
 
 type
   TWeather=(Soleil,Pluie,Neige,Orage);  //Différents types de météo
-  TSaison = (Printemps,Ete,Automne,Hiver); //Différentes saisons
 
 //Génère un nombre aléatoire.
 function randomWeather():Integer;

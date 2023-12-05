@@ -4,8 +4,12 @@ unit dateUnit;
 
 interface
 
+uses playerUnit;
+
 type
   TJour = (Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche);
+  TSaison = (Printemps,Ete,Automne,Hiver); //Différentes saisons
+
   date = record
     minute : 0..60;
     heure : 0..24;
@@ -152,14 +156,4 @@ begin
 
 end;
 
-procedure repos ();
-begin
-  if {dort} then
-  begin
-    setHeureActuelle(6);
-    jourSuivant();
-  end;
-end;
-
- 
 end.
