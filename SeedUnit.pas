@@ -5,10 +5,10 @@ interface
 
     //type pour créer une graine
     type   
-    Saison=Array [1..4] of String;
+    SeedSaison=Array [0..3][0..3] of itemType;
         
     // Init : procedure mettant les graines de saison dans les 4 saisons
-    procedure graineSaison(saison:TSaison);
+    procedure InitgraineSaison();
 
     // Description : Procédure donnant une description de chaque graine 
     procedure Description(graine : String);
@@ -21,41 +21,27 @@ interface
 implementation
 
     var 
-        seedSaison:Saison;
+        seedSaison:SeedSaison;
 
     // Init : procedure mettant les graines de saison disponible avec la saison en paramètre
-    procedure graineSaison(saison:TSaison);
+    procedure InitgraineSaison();
+    var 
+        i,j:Integer;
+        texte:text;
+        ligne:String;
     begin
-        case saison of
-            Hiver:
-                begin
-                    seedSaison[1]:='carotte';
-                    seedSaison[2]:='epinard';
-                    seedSaison[3]:='chou';
-                    seedSaison[4]:='poireau';
-                end;     
-            Ete:
-                begin
-                    seedSaison[1]:='tomate';
-                    seedSaison[2]:='poivron';
-                    seedSaison[3]:='haricot';
-                    seedSaison[4]:='concombre';
-                end;
-            Printemps:
-                begin
-                    seedSaison[1]:='asperge';
-                    seedSaison[2]:='pois';
-                    seedSaison[3]:='radis';
-                    seedSaison[4]:='ail';
-                end;
-            Automne:
-                begin
-                    seedSaison[1]:='brocolis';
-                    seedSaison[2]:='citrouille';
-                    seedSaison[3]:='mache';
-                    seedSaison[4]:='oignon';
-                end;
-        end;
+        assign(texte,'./file/graine.txt');
+        reset(texte);
+        i:=0;
+        j:=0;
+        for i:=0 to 3 do 
+            for j:=0 to 3 do 
+            begin
+                readln(texte,ligne);
+                seedSaison[i,j]:=ligne;
+            end; 
+
+            
     end;
 
 
@@ -89,7 +75,7 @@ implementation
     // ⚠️ Ne peut pas être utiliser pour modifier des variables
     function getSeed():Saison;
     begin
-        getSeed:=seedSaison;
+        getSeed:=seedSaison[getNumSaison];
     end;
 
 
