@@ -34,6 +34,14 @@ function getStamina() : Integer;
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getExp() : Integer;
 
+//Permet au joueur de dormir/s'évanouir
+procedure repos();
+
+//Intègre le système de fatigue
+procedure fatigue();
+
+
+
 implementation
 uses inventoryUnit;
 
@@ -106,7 +114,7 @@ begin
   getExp := experience;
 end;
 
-function repos():Boolean;
+procedure repos();
 var
   aDormi : Boolean;
 begin
@@ -115,33 +123,30 @@ begin
     6..23 : begin
       jourSuivant();
       setHeureActuelle(6);
-      aDormi:=True;
+      setStamina(100);      
     end;
     0..1 : begin
       setHeureActuelle(6);
-      aDormi:=True;
+      setStamina(100);      
+      
     end;
     2..5 : 
       setHeureActuelle(6);
-  repos := aDormi;
+      setStamina(10);
 end;
 
 //Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (aDormi = False & 6h)
 procedure fatigue();
-var
-  heureBase : Integer;
 begin
-  if {action} then
+  if getIsAction then
   begin
-    setStamina(getStamina()-5);
+    setStamina(getStamina-5);
   end;
-  if aDormi then
+  if getStamina = 0 then
   begin
-    setStamina(100);
-  end
-  else
-  begin
-    setStamina(10);
+    jourSuivant();
+    setHeureActuelle(6);
+    setStamina(10);  //Si le joueur n'a plus d'endurance, il s'évanouit et se réveille le lendemain à 6h avec très peu d'endurance
   end;
 end;
 

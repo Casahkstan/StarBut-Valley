@@ -4,8 +4,6 @@ unit dateUnit;
 
 interface
 
-uses playerUnit;
-
 type
   TJour = (Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche);
   TSaison = (Printemps,Ete,Automne,Hiver); //Différentes saisons
@@ -49,11 +47,15 @@ procedure setNumJour(valeur:Integer);
 function getHeureActuelle() : Integer;
 procedure setHeureActuelle(valeur:Integer);
 
+//Getter/Setter qualifiant une tâche d'action 
+function getIsAction():Boolean;
+procedure setIsAction(valeur:Boolean);
 
 implementation
 
 var 
   currentTime : date;
+  isAction : Boolean;
 
 function getDate() : date;
 begin
@@ -130,6 +132,18 @@ begin
   setDate(dateActuelle);
 end;
 
+
+function getIsAction():Boolean;
+begin
+  getIsAction := isAction;
+end;
+
+procedure setIsAction(valeur:Boolean);
+begin
+  isAction := valeur;
+end;
+
+
 //On initialise la date au premier jour du printemps 2023 à 6h00
 procedure initDate();
 begin
@@ -179,9 +193,11 @@ end;
 //Si une action (planter ou se déplacer) est réalisée, on ajoute une heure (?) à l'horloge.
 procedure passageTemps();
 begin
-  if {action} then
+  if getIsAction then
     heureSuivante();
 
 end;
+
+
 
 end.
