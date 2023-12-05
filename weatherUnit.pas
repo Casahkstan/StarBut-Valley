@@ -16,6 +16,8 @@ function randomWeather():Integer;
 //Renvoie une saison différentes en fonction de la saison
 procedure saisonnalite(); 
 
+function getNumSaison():Integer;
+
 implementation
 
 //On génère un nombre aléatoire via Randomize qu'on renvoie 
@@ -76,4 +78,3 @@ end;
 getNumSaison := numero;
 
 end.
-
