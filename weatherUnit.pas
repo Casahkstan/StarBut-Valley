@@ -32,7 +32,7 @@ end;
 
 
 //On compare la valeur aléatoire précédemment calculée avec certains nombres afin de créer des chances différents pour chaque météo selon la saison.
-procedure saisonnalite();
+function saisonnalite() : TWeather;
 var
   currentWeather : TWeather;  //Stocke la météo actuelle, est renvoyée
   aleatoire : Integer;
