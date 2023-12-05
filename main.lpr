@@ -14,8 +14,9 @@ begin
 	champ.rarete := Rarity.base;
 	champ2.name := 'Champignon';
 	champ2.rarete := Rarity.base;
-	AddInventory(champ, 4);
+	AddInventory(champ, 2);
 	AddInventory(champ2, 4);
 	SubInventory(champ, 3);
+	SubInventory(champ, 2);
 	displayInventory();
 end.

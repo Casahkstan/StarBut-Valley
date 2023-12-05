@@ -19,6 +19,10 @@ type
     annee : Integer;
   end;
 
+function getDate() : date;
+
+procedure setDate(val : date);
+
 //Passe à la saison suivante
 procedure saisonSuivante ();
 //Passe au jour suivant
@@ -42,64 +46,88 @@ procedure setSaisonActuelle(valeur:TSaison);
 function getNumJour():Integer;
 procedure setNumJour(valeur:Integer);
 
-function getHeureActuelle():0..24;
-procedure setHeureActuelle(valeur:0..24);
+function getHeureActuelle() : Integer;
+procedure setHeureActuelle(valeur:Integer);
 
 
 implementation
 
 var 
-  jourActuel : TJour;
-  saisonActuelle : TSaison;
-  numJour : Integer;
-  heureActuelle : 0..24;
+  currentTime : date;
+
+function getDate() : date;
+begin
+  getDate := currentTime;
+end;
+
+procedure setDate(val : date);
+begin
+  currentTime := val;
+end;
+
 
 // Getter : Retourne le jour actuel
 // ⚠️ Ne peut pas être utiliser pour modifier des variablesfunction getJourActuel():TJour;
 function getJourActuel():TJour;
 begin
-  getJourActuel:=jourActuel;
+  getJourActuel:=getDate().jour;
 end;
 
 procedure setJourActuel(valeur:TJour);
+var
+  dateActuelle : date;
 begin
-  jourActuel := valeur;
+  dateActuelle := getDate();
+  dateActuelle.jour := valeur;
+  setDate(dateActuelle);
 end;
 
 // Getter : Retourne la saison actuelle
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getSaisonActuelle():TSaison;
 begin
-  getSaisonActuelle := saisonActuelle;
+  getSaisonActuelle := getDate().saison;
 end;
 
 procedure setSaisonActuelle(valeur:TSaison);
+var
+  dateActuelle : date;
 begin
-  saisonActuelle := valeur;
+  dateActuelle := getDate();
+  dateActuelle.saison := valeur;
+  setDate(dateActuelle);
 end;
 
 // Getter : Retourne le numéro du jour
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getNumJour():Integer;
 begin
-  getNumJour := numJour;
+  getNumJour := getDate().numJour;
 end;
 
 procedure setNumJour(valeur:Integer);
+var
+  dateActuelle : date;
 begin
-  currentTime.numJour := valeur;
+  dateActuelle := getDate();
+  dateActuelle.numJour := valeur;
+  setDate(dateActuelle);
 end;
 
 // Getter : Retourne la date actuelle
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
-function getHeureActuelle():0..24;
+function getHeureActuelle():Integer;
 begin
-  getHeureActuelle := heureActuelle;
+  getHeureActuelle := getDate().heure;
 end;
 
-procedure setHeureActuelle(valeur:0..24);
+procedure setHeureActuelle(valeur:Integer);
+var
+  dateActuelle : date;
 begin
-  heureActuelle := valeur;
+  dateActuelle := getDate();
+  dateActuelle.heure := valeur;
+  setDate(dateActuelle);
 end;
 
 //On initialise la date au premier jour du printemps 2023 à 6h00
@@ -117,7 +145,7 @@ end;
 procedure saisonSuivante ();
 begin
   if getSaisonActuelle = Hiver then
-    setSaisonActuelle(Printemps);
+    setSaisonActuelle(Printemps)
   else
     setSaisonActuelle(succ(getSaisonActuelle));
   
@@ -129,7 +157,7 @@ begin
   if getJourActuel = Dimanche then
     setJourActuel(Lundi)
   else
-    setJourActuel(succ(jourActuel));
+    setJourActuel(succ(getDate().jour));
   setNumJour(getNumJour()+1);
   if (getNumJour mod 28) = 0 then
     saisonSuivante();
@@ -142,7 +170,7 @@ begin
   begin
     setHeureActuelle(0);
     jourSuivant();
-  end; 
+  end
   else
     setHeureActuelle(getHeureActuelle+1);
 

@@ -1,13 +1,17 @@
 unit inventoryUnit;
 
+
 interface
+uses playerUnit, weatherUnit;
 // Types utilisé pour l'inventaire 
-type 
+type
   Rarity = (base, silver, gold, iridium);
+
 
   itemType = record
     name : String;
     rarete : Rarity;
+    saison : TSaison;
   end;
 
   Item = record
@@ -46,7 +50,6 @@ procedure upgradeInventory();
 function getInventoryLevel() : Integer;
 
 implementation
-uses playerUnit;
 
 var
   inventaire : inventory;
@@ -169,7 +172,9 @@ procedure SubInventory(iT : itemType; ammount : Integer);
 var
   inv : inventory;      // Inventaire du joueur
   itemVide : Item;      // Item par default dans une case de l'inventaire pas utilisée
+  newAmmount,           // Nombre d'item a stack avec un nouveau stack
   i : Integer;          // Compteur
+  newItem,
   iType : itemType;     // Type de l'item par défault
 begin
   inv := getInventory;
@@ -181,18 +186,21 @@ begin
       writeln(inv[i].iType.name);
       if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
       begin
+        iType.name := 'Vide';
+        iType.rarete := Rarity.base;
+        itemVide.iType := iType;
+        itemVide.stack := 0;
         if (ammount >= inv[i].stack) then
         begin
-          iType.name := 'Vide';
-          iType.rarete := Rarity.base;
-          itemVide.iType := iType;
-          itemVide.stack := 0;
           ammount := ammount - inv[i].stack;
           inv[i] := itemVide;
         end
         else
         begin
-          inv[i].stack := inv[i].stack - ammount;
+          newAmmount := inv[i].stack - ammount;
+          newItem := inv[i].iType;
+          inv[i] := itemVide;
+          AddInventory(newItem, newAmmount);
           ammount := 0;
         end;
       end;
