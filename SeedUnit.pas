@@ -40,10 +40,11 @@ implementation
 			begin
 				readln(texte,ligne);
 				j := LastDelimiter(',', ligne);
-				listeSeeds[i div 4, i mod 4].name := copy(ligne, 1, j-1);
+				listeSeeds[i div 4, i mod 4].name := copy(ligne, 1, j-3);
 				listeSeeds[i div 4, i mod 4].rarete := base;
 				listeSeeds[i div 4, i mod 4].saison := i div 4;
-				listeSeeds[i div 4, i mod 4].prix := StrToInt(copy(ligne, j+1, high(ligne)));
+				listeSeeds[i div 4, i mod 4].prix := StrToInt(copy(ligne, j-1, high(ligne)));
+				listeSeeds[i div 4, i mod 4].maturite := StrToInt(copy(ligne, j+1, high(ligne)));
 			end;
 	end;
 
@@ -89,7 +90,7 @@ implementation
 		for i in listeSeeds do
 			for j := low(i) to high(i) do
 			begin
-				writeln(i[j].name, ' ', i[j].rarete, ' ', i[j].prix);
+				writeln(i[j].name, ' ', i[j].rarete, ' ', i[j].prix,' ',i[j].maturite);
 			end;
 	end;
 end.

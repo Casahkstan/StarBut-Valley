@@ -13,6 +13,7 @@ type
     rarete : Rarity;
     saison : Integer;
     prix : Integer;
+    maturite : Integer;
   end;
 
   Item = record
