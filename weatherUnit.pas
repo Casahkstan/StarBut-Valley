@@ -69,7 +69,7 @@ end;
 //Convertit la saison actuelle grâce à un case of
 function getNumSaison():Integer;
 var
-  numero : Integer
+  numero : Integer;
 begin
   case getSaisonActuelle of
   Printemps : numero := 0;
@@ -78,5 +78,5 @@ begin
   Hiver : numero := 3;
 end;
 getNumSaison := numero;
-
+end;
 end.

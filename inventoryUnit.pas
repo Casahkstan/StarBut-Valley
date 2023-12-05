@@ -2,7 +2,7 @@ unit inventoryUnit;
 
 
 interface
-uses playerUnit, weatherUnit;
+uses playerUnit, dateUnit;
 // Types utilisé pour l'inventaire 
 type
   Rarity = (base, silver, gold, iridium);
@@ -24,7 +24,7 @@ type
 // Init: Crée l'inventaire en lui assignant les valeurs par défault
 procedure initInventory();
 
-// Add : Ajoute un élément passé en paramètre à l'inventaire. 
+// Add : Ajoute 'ammount' élément passé en paramètre à l'inventaire. 
 // ⚠️ Ne regarde pas si l'invetaire est plein
 procedure AddInventory(iT : itemType; ammount : Integer);
 

@@ -128,11 +128,13 @@ begin
     0..1 : begin
       setHeureActuelle(6);
       setStamina(100);      
-      
     end;
     2..5 : 
+    begin
       setHeureActuelle(6);
       setStamina(10);
+    end;
+  end;
 end;
 
 //Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (aDormi = False & 6h)

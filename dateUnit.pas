@@ -159,7 +159,7 @@ end;
 procedure saisonSuivante ();
 begin
   if getSaisonActuelle = Hiver then
-    setSaisonActuelle(Printemps);
+    setSaisonActuelle(Printemps)
   else
     setSaisonActuelle(succ(getSaisonActuelle));
   
@@ -184,7 +184,7 @@ begin
   begin
     setHeureActuelle(0);
     jourSuivant();
-  end; 
+  end
   else
     setHeureActuelle(getHeureActuelle+1);
 
