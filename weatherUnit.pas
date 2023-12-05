@@ -2,8 +2,10 @@ unit weatherUnit;
 
 {$codepage utf-8}
 
-
 interface
+
+uses dateUnit;
+
 type
   TWeather=(Soleil,Pluie,Neige,Orage);  //Différents types de météo
   TSaison = (Printemps,Ete,Automne,Hiver); //Différentes saisons
@@ -12,7 +14,7 @@ type
 function randomWeather():Integer;
 
 //Renvoie une saison différentes en fonction de la saison
-function saisonnalite(saison:TSaison):TWeather; 
+procedure saisonnalite(); 
 
 implementation
 
@@ -28,13 +30,13 @@ end;
 
 
 //On compare la valeur aléatoire précédemment calculée avec certains nombres afin de créer des chances différents pour chaque météo selon la saison.
-function saisonnalite(saison : TSaison):TWeather;
+procedure saisonnalite();
 var
   currentWeather : TWeather;  //Stocke la météo actuelle, est renvoyée
   aleatoire : Integer;
 begin
   aleatoire := randomWeather();
-  case saison of
+  case getSaisonActuelle of
     Printemps : case aleatoire of
       0..59 : currentWeather := Soleil;
       60..89 : currentWeather := Pluie;
@@ -58,8 +60,20 @@ begin
       75..99 : currentWeather := Orage;
     end;
   end;
-  saisonnalite:=currentWeather;
+  setSaisonActuelle(currentWeather);
 end;
+
+function getNumSaison():Integer;
+var
+  numero : Integer
+begin
+  case getSaisonActuelle of
+  Printemps : numero := 0;
+  Ete : numero := 1;
+  Automne : numero := 2;
+  Hiver : numero := 3;
+end;
+getNumSaison := numero;
 
 end.
 

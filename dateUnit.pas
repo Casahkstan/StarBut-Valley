@@ -24,9 +24,24 @@ procedure jourSuivant ();
 //Gère le passage des heures et des jours après avoir réalisé une action
 procedure passageTemps();
 
+//Passe à l'heure suivante;
+procedure heureSuivante();
+
+
 //Initialise la date
 procedure initDate();
 
+function getJourActuel():TJour;
+procedure setJourActuel(valeur:TJour);
+
+function getSaisonActuelle():TSaison;
+procedure setSaisonActuelle(valeur:TSaison);
+
+function getNumJour():Integer;
+procedure setNumJour(valeur:Integer);
+
+function getHeureActuelle():0..24;
+procedure setHeureActuelle(valeur:0..24);
 
 
 implementation
@@ -35,7 +50,7 @@ var
   jourActuel : TJour;
   saisonActuelle : TSaison;
   numJour : Integer;
-  currentTime : date;
+  heureActuelle : 0..24;
 
 // Getter : Retourne le jour actuel
 // ⚠️ Ne peut pas être utiliser pour modifier des variablesfunction getJourActuel():TJour;
@@ -75,14 +90,14 @@ end;
 
 // Getter : Retourne la date actuelle
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
-function getCurrentTime():date;
+function getHeureActuelle():0..24;
 begin
-  getCurrentTime := currentTime;
+  getHeureActuelle := heureActuelle;
 end;
 
-procedure setCurrentTime(valeur:date);
+procedure setHeureActuelle(valeur:0..24);
 begin
-  currentTime := valeur;
+  heureActuelle := valeur;
 end;
 
 //On initialise la date au premier jour du printemps 2023 à 6h00
@@ -120,18 +135,14 @@ end;
 
 //Si l'heure actuelle vaut 23, alors on repasse l'heure à 0 pour passer à l'heure suivante. Sinon, on ajoute 1.
 procedure heureSuivante();
-var
-  time : date;
 begin
-  time := getCurrentTime();
-  if time.heure = 23 then
+  if getHeureActuelle = 23 then
   begin
-    time.heure := 0;
+    setHeureActuelle(0);
     jourSuivant();
   end; 
   else
-    time.heure := time.heure + 1;
-  setCurrentTime(time);
+    setHeureActuelle(getHeureActuelle+1);
 
 end;
 
@@ -145,7 +156,11 @@ end;
 
 procedure repos ();
 begin
-  if {dort} 
+  if {dort} then
+  begin
+    setHeureActuelle(6);
+    jourSuivant();
+  end;
 end;
 
  
