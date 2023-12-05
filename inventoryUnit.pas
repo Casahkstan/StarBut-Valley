@@ -11,7 +11,8 @@ type
   itemType = record
     name : String;
     rarete : Rarity;
-    saison : TSaison;
+    saison : Integer;
+    prix : Integer;
   end;
 
   Item = record

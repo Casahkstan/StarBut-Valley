@@ -72,11 +72,12 @@ var
   numero : Integer;
 begin
   case getSaisonActuelle of
-  Printemps : numero := 0;
-  Ete : numero := 1;
-  Automne : numero := 2;
-  Hiver : numero := 3;
+    Printemps : numero := 0;
+    Ete : numero := 1;
+    Automne : numero := 2;
+    Hiver : numero := 3;
+  end;
+  getNumSaison := numero;
 end;
-getNumSaison := numero;
-end;
+
 end.
