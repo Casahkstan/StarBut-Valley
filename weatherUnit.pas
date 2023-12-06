@@ -87,7 +87,8 @@ var
   futureWeather : TWeather;
 begin
   randomWeather;
-  futureWeather := saisonnalite; 
+  futureWeather := saisonnalite;
+  chaineMeteo := futureWeather; 
 
   
 end;
