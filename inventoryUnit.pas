@@ -296,7 +296,7 @@ begin
   begin
     if getMoney > Round(100 * power(1.4, getInventoryLevel)) then
     begin
-      setMoney(getMoney - Round(100*power(1.4, getInventoryLevel)));
+      setMoney(getMoney - Round(100*math.power(1.4, getInventoryLevel)));
       inv := getInventory();
       level := level + 1;
       SetLength(inv, length(inventaire)+5);
