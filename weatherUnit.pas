@@ -25,7 +25,7 @@ procedure randomWeather();
 //Change la météo actuelle selon la saison
 procedure saisonnalite();
 
-procedure chaineMeteo();
+function chaineMeteo() : TWeather;
 
 implementation
 
