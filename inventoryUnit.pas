@@ -2,7 +2,7 @@ unit inventoryUnit;
 
 
 interface
-uses playerUnit, dateUnit;
+uses playerUnit, dateUnit, math;
 // Types utilisé pour l'inventaire 
 type
   Rarity = (base, silver, gold, iridium);
@@ -294,20 +294,30 @@ var
 begin
   if not isMaxed then
   begin
-    inv := getInventory();
-    level := level + 1;
-    SetLength(inv, length(inventaire)+5);
+    if getMoney > Round(100 * power(1.4, getInventoryLevel)) then
+    begin
+      setMoney(getMoney - Round(100*power(1.4, getInventoryLevel)));
+      inv := getInventory();
+      level := level + 1;
+      SetLength(inv, length(inventaire)+5);
 
-    iT.name := 'Vide';
-    iT.rarete := Rarity.base;
-    itemVide.iType := iT;
-    itemVide.stack := 0;
+      iT.name := 'Vide';
+      iT.rarete := Rarity.base;
+      itemVide.iType := iT;
+      itemVide.stack := 0;
 
-    for i := high(inv)-5 to high(inv) do
-      inv[i] := itemVide;
+      for i := high(inv)-5 to high(inv) do
+        inv[i] := itemVide;
 
-    setInventory(inv);
-  end;
+      setInventory(inv);
+    end
+    else
+    begin
+      writeln('Pas assez de money')
+    end;
+  end
+  else
+    writeln('Sac max');
 end;
 
 // Getter : Retourne le niveau de l'inventaire du joueur

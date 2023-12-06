@@ -147,7 +147,10 @@ var
 begin
     fermeTemp := getFerme;
     if fermeTemp[numEmplacement].arrose=false then
-        fermeTemp[numEmplacement].arrose:=true
+    begin
+        fermeTemp[numEmplacement].arrose:=true;
+        fatigue(1);
+    end
     else
         writeln('Votre plante est deja arrosé');
     setFerme(fermeTemp);
@@ -159,9 +162,6 @@ var
 begin
   for i:=low(getFerme) to high(getFerme) do
     arrose(i);
-  setIsAction(True);
-  fatigue;
-  setIsAction(False);
 end;
 
 
@@ -262,5 +262,21 @@ begin
       fermeTemp[i].arrose := True;
   end;
   setFerme(fermeTemp);
+end;
+
+procedure secher(num : Integer);
+begin
+  fermeTemp := getFerme;
+  fermeTemp[num].arrose := false;
+end;
+
+procedure secherTout();
+var
+  fermeTemp : emplacement;
+  i : Integer;
+begin
+  fermeTemp := getFerme;
+  for i := low(fermeTemp) to high(fermeTemp) do
+    secher(i);
 end;
 end.

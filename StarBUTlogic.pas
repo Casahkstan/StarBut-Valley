@@ -136,7 +136,7 @@ begin
     case choix of 
         1..4:acheter(choix-1);
         5:upgradeInventory();
-        6:description(getShop()[choix].name);
+        6:description(getSeed()[choix].name);
 
 end;
 // Shop : procédure qui lance chaque choix possible dans le shop

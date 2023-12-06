@@ -7,14 +7,19 @@ uses inventoryUnit, SeedUnit;
 type
 	shop = array[0..3] of itemType;
   
+procedure acheter(choix : Integer);
+procedure vendre();
+
 implementation
+var
+	magasin : shop;
 
 procedure acheter(choix : Integer);
 var
-	produit : itemType;
-	money : Integer
+	produit : shop;
+	money : Integer;
 begin
-	produit := getSeed()[choix];
+	produit := getSeed();
 	money := getMoney;
 	if money > produit.prix then
 	begin

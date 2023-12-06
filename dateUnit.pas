@@ -25,8 +25,6 @@ procedure setDate(val : date);
 procedure saisonSuivante ();
 //Passe au jour suivant
 procedure jourSuivant ();
-//Gère le passage des heures et des jours après avoir réalisé une action
-procedure passageTemps();
 
 //Passe à l'heure suivante;
 procedure heureSuivante();
@@ -49,10 +47,6 @@ procedure setNumJour(valeur:Integer);
 function getHeureActuelle() : Integer;
 procedure setHeureActuelle(valeur:Integer);
 
-//Getter/Setter qualifiant une tâche d'action 
-function getIsAction():Boolean;
-procedure setIsAction(valeur:Boolean);
-
 
 
 implementation
@@ -60,7 +54,6 @@ uses weatherUnit;
 
 var 
   currentTime : date;
-  isAction : Boolean;
 
 function getDate() : date;
 begin
@@ -138,17 +131,6 @@ begin
 end;
 
 
-function getIsAction():Boolean;
-begin
-  getIsAction := isAction;
-end;
-
-procedure setIsAction(valeur:Boolean);
-begin
-  isAction := valeur;
-end;
-
-
 //On initialise la date au premier jour du printemps 2023 à 6h00
 procedure initDate();
 begin
@@ -193,14 +175,6 @@ begin
   end
   else
     setHeureActuelle(getHeureActuelle+1);
-
-end;
-
-//Si une action (planter ou se déplacer) est réalisée, on ajoute une heure (?) à l'horloge.
-procedure passageTemps();
-begin
-  if getIsAction then
-    heureSuivante();
 
 end;
 
