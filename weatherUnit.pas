@@ -70,7 +70,6 @@ procedure randomWeather();
 begin
   Randomize;
   setAleatoire(random(100));
-
 end;
 
 
@@ -103,10 +102,10 @@ begin
   end;
 end;
 
-procedure chaineMeteo();
+function chaineMeteo() : TWeather;
 begin
   randomWeather;
-  saisonnalite;  
+  chaineMeteo := getFutureWeather;  
 end;
 
 end.
