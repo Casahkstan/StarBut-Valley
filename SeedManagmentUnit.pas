@@ -89,7 +89,7 @@ end;
 // AddSeed : Plante une graine dans un des emplacement passé en paramètre
 procedure AddSeed(numEmplacement : Integer; seed : itemType);
 begin
-    if EstVide(numEmplacement)=False then 
+    if not EstVide(numEmplacement) then 
         writeln('L''emplacement est déja pris vous ne pouvez pas l''utilisé')
     else
         begin
