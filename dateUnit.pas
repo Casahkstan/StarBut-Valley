@@ -186,9 +186,4 @@ begin
   end;
 end;
 
-procedure Attendre();
-begin
-  setHeureActuelle(getHeureActuelle() + 1);
-end;
-
 end.
