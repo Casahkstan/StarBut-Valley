@@ -50,7 +50,7 @@ procedure upgradeInventory();
 // Getter : Retourne le niveau de l'inventaire du joueur
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getInventoryLevel() : Integer;
-
+      
 // Retourne False si l'inventaire contient un stack non plein de l'item passé en paramètre, True sinon
 function isStackAvailable(iT : itemType) : Boolean;
 
