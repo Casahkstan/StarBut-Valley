@@ -9,13 +9,20 @@ uses dateUnit;
 type
   TWeather=(Soleil,Pluie,Neige,Orage);  //Différents types de météo
 
+
+function getCurrentWeather():TWeather;
+procedure setCurrentWeather(valeur : TWeather);
+
+function getAleatoire():Integer;
+procedure setAleatoire(valeur:Integer);
+
 //Génère un nombre aléatoire
-function randomWeather():Integer;
+procedure randomWeather();
 
 //Change la météo actuelle selon la saison
-function saisonnalite():Tweather; 
+procedure saisonnalite();
 
-
+function chaineMeteo():TWeather;
 
 implementation
 
