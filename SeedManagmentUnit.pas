@@ -37,6 +37,8 @@ procedure AddSeed(numEmplacement : Integer; seed : itemType);
 // Arrose : passe le booléen nommé "arrose" de faux à vrai pour l'arrosé
 procedure arrose(numEmplacement:Integer);
 
+procedure arroseTout();
+
 // Grandit : reduit de 1 la valeur du jours restant
 procedure Grandit();
 
@@ -151,6 +153,18 @@ begin
     setFerme(fermeTemp);
 end;
 
+procedure arroseTout();
+var
+  i : Integer;
+begin
+  for i:=low(getFerme) to high(getFerme) do
+    arrose(i);
+  setIsAction(True);
+  fatigue;
+  setIsAction(False);
+end;
+
+
 // Grandit : reduit de 1 la valeur du jours restant
 procedure Grandit();
 var 
@@ -247,5 +261,6 @@ begin
     for i:=low(getFerme) to high(getFerme) do
       fermeTemp[i].arrose := True;
   end;
+  setFerme(fermeTemp);
 end;
 end.
