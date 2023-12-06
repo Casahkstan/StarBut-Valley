@@ -25,9 +25,6 @@ function getFerme() : emplacement;
 // Setter : Change la valeur de la ferme a la variable passée en paramètre
 procedure setFerme(f : emplacement);
 
-// GetterEmplacement : Retourne un numero d'emplacement passé en paramètre
-function GetEmplacement(num : Integer) : slot;
-
 // EstVide : Retourne True si un emplacement est vide et False sinon
 function EstVide(num:Integer):Boolean;
 
@@ -255,7 +252,7 @@ var
   currentWeather : TWeather;
 begin
   fermeTemp := getFerme();
-  currentWeather := getWeather;
+  currentWeather := getCurrentWeather();
   if (currentWeather = TWeather.Pluie) or (currentWeather = TWeather.Orage) then
   begin
     for i:=low(getFerme) to high(getFerme) do
@@ -265,9 +262,12 @@ begin
 end;
 
 procedure secher(num : Integer);
+var 
+  fermeTemp:emplacement;
 begin
   fermeTemp := getFerme;
   fermeTemp[num].arrose := false;
+  setFerme(fermeTemp);
 end;
 
 procedure secherTout();
@@ -278,5 +278,6 @@ begin
   fermeTemp := getFerme;
   for i := low(fermeTemp) to high(fermeTemp) do
     secher(i);
+  setFerme(fermeTemp);
 end;
 end.

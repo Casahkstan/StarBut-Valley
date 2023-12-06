@@ -1,7 +1,7 @@
 unit SeedUnit;
 
 interface
-	uses weatherUnit, inventoryUnit, sysutils;
+	uses weatherUnit, inventoryUnit, sysutils,dateUnit;
 
 	//type pour créer une graine
 	type   
@@ -29,8 +29,7 @@ implementation
 	procedure InitgraineSaison();
 	var 
 		i,
-		j,
-		price : Integer;
+		j : Integer;
 		texte : text;
 		ligne : String;
 	begin
@@ -79,7 +78,7 @@ implementation
 	// ⚠️ Ne peut pas être utiliser pour modifier des variables
 	function getSeed() : seedSaison;
 	begin
-		getSeed := (listeSeeds[getNumSaison]);
+		getSeed := (listeSeeds[getDate().saison]);
 	end;
 
 	procedure afficheGraines();

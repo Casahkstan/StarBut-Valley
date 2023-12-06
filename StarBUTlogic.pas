@@ -1,6 +1,6 @@
 unit StarBUTlogic;
 
-interface;
+interface
 
 // choixMenuPrincipal : Retourne un booléen sur le choix du début du jeu si le joueur veur jouer
 function choixMenuPrincipal() : Boolean;
@@ -22,7 +22,7 @@ procedure Ferme();
 
 // Shop : procédure qui lance chaque choix possible dans le shop
 procedure Shop();
-implementation;
+implementation
 
 uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit;
 
@@ -137,7 +137,7 @@ begin
         1..4:acheter(choix-1);
         5:upgradeInventory();
         6:description(getSeed()[choix].name);
-
+    end;
 end;
 // Shop : procédure qui lance chaque choix possible dans le shop
 procedure Shop();
