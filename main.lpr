@@ -11,7 +11,7 @@ begin
 	setName('Sacha');
 	champ.name := 'Champignon';
 	champ.rarete := Rarity.base;
-	champ.saison := TSaison.Hiver;
+	champ.saison := 3;
 	AddInventory(champ, 2);
 	AddInventory(champ, 2);
 	displayInventory();

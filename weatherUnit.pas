@@ -39,23 +39,23 @@ var
 begin
   aleatoire := randomWeather();
   case getSaisonActuelle of
-    Printemps : case aleatoire of
+    0 : case aleatoire of
       0..59 : currentWeather := Soleil;
       60..89 : currentWeather := Pluie;
       90..99 : currentWeather := Orage; 
       // 60% que la météo soit ensoleillée,30% qu'elle soit pluvieuse et 10% pour qu'elle soit orageuse au Printemps ; même principe à la suite
     end;
-    Ete : case aleatoire of
+    1 : case aleatoire of
       0..69 : currentWeather := Soleil;
       70..79 : currentWeather := Pluie;
       80..99 : currentWeather := Orage;
     end;
-    Automne : case aleatoire of
+    2 : case aleatoire of
       0..9 : currentWeather :=  Soleil;
       10..79 : currentWeather := Pluie;
       80..99 : currentWeather := Orage;
     end;
-    Hiver : case aleatoire of
+    3 : case aleatoire of
       0..4 : currentWeather := Soleil;
       5..29 : currentWeather := Pluie;
       30..74 : currentWeather := Neige;
@@ -66,18 +66,6 @@ begin
 end;
 
 
-//Convertit la saison actuelle grâce à un case of
-function getNumSaison():Integer;
-var
-  numero : Integer;
-begin
-  case getSaisonActuelle of
-    Printemps : numero := 0;
-    Ete : numero := 1;
-    Automne : numero := 2;
-    Hiver : numero := 3;
-  end;
-  getNumSaison := numero;
-end;
+
 
 end.

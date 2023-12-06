@@ -6,7 +6,7 @@ interface
 
 type
   TJour = (Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche);
-  TSaison = (Printemps,Ete,Automne,Hiver); //Différentes saisons
+  TSaison = 0..3; //Différentes saisons
 
   date = record
     minute : 0..60;
@@ -151,15 +151,15 @@ begin
   currentTime.heure := 6;
   currentTime.jour := Lundi;
   currentTime.numJour := 1;
-  currentTime.saison := Printemps;
+  currentTime.saison := 0;
   currentTime.annee := 2023;
 end;
 
 //On passe à la saison suivante grâce à succ. Néanmoins, si la saison est l'hiver, alors on la passe manuellement au printemps
 procedure saisonSuivante ();
 begin
-  if getSaisonActuelle = Hiver then
-    setSaisonActuelle(Printemps)
+  if getSaisonActuelle = 3 then
+    setSaisonActuelle(0)
   else
     setSaisonActuelle(succ(getSaisonActuelle));
   
