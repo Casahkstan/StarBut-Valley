@@ -31,6 +31,8 @@ procedure passageTemps();
 //Passe à l'heure suivante;
 procedure heureSuivante();
 
+procedure meteoSuivante();
+
 
 //Initialise la date
 procedure initDate();
@@ -50,6 +52,8 @@ procedure setHeureActuelle(valeur:Integer);
 //Getter/Setter qualifiant une tâche d'action 
 function getIsAction():Boolean;
 procedure setIsAction(valeur:Boolean);
+
+
 
 implementation
 uses weatherUnit;
@@ -176,7 +180,7 @@ begin
   setNumJour(getNumJour()+1);
   if (getNumJour mod 28) = 0 then
     saisonSuivante();
-  chaineMeteo;
+  meteoSuivante;
 end;
 
 //Si l'heure actuelle vaut 23, alors on repasse l'heure à 0 pour passer à l'heure suivante. Sinon, on ajoute 1.
@@ -200,6 +204,12 @@ begin
 
 end;
 
-
+procedure meteoSuivante();
+begin
+  if getHeureActuelle >= 6 then
+  begin
+    setCurrentWeather(getFutureWeather);
+  end;
+end;
 
 end.
