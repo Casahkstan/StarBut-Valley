@@ -13,6 +13,9 @@ type
 function getCurrentWeather():TWeather;
 procedure setCurrentWeather(valeur : TWeather);
 
+function getFutureWeather():TWeather;
+procedure setFutureWeather(valeur : TWeather);
+
 function getAleatoire():Integer;
 procedure setAleatoire(valeur:Integer);
 
@@ -22,11 +25,12 @@ procedure randomWeather();
 //Change la météo actuelle selon la saison
 procedure saisonnalite();
 
-function chaineMeteo():TWeather;
+procedure chaineMeteo();
 
 implementation
 
 var
+  futureWeather,
   currentWeather : TWeather;
   aleatoire : Integer;
 
@@ -39,6 +43,16 @@ procedure setCurrentWeather(valeur : TWeather);
 begin
   currentWeather := valeur;
   
+end;
+
+function getFutureWeather():TWeather;
+begin
+  getFutureWeather := futureWeather;
+end;
+
+procedure setFutureWeather(valeur : TWeather);
+begin
+  futureWeather := valeur;
 end;
 
 function getAleatoire():Integer;
@@ -65,38 +79,34 @@ procedure saisonnalite();
 begin
   case getSaisonActuelle of
     0 : case getAleatoire of
-      0..59 : setCurrentWeather(Soleil);
-      60..89 : setCurrentWeather(Pluie);
-      90..99 : setCurrentWeather(Orage); 
+      0..59 : setFutureWeather(Soleil);
+      60..89 : setFutureWeather(Pluie);
+      90..99 : setFutureWeather(Orage); 
       // 60% que la météo soit ensoleillée,30% qu'elle soit pluvieuse et 10% pour qu'elle soit orageuse au Printemps ; même principe à la suite
     end;
     1 : case getAleatoire of
-      0..69 : setCurrentWeather(Soleil);
-      70..79 : setCurrentWeather(Pluie);
-      80..99 : setCurrentWeather(Orage);
+      0..69 : setFutureWeather(Soleil);
+      70..79 : setFutureWeather(Pluie);
+      80..99 : setFutureWeather(Orage);
     end;
     2 : case getAleatoire of
-      0..9 : setCurrentWeather(Soleil);
-      10..79 : setCurrentWeather(Pluie);
-      80..99 : setCurrentWeather(Orage);
+      0..9 : setFutureWeather(Soleil);
+      10..79 : setFutureWeather(Pluie);
+      80..99 : setFutureWeather(Orage);
     end;
     3 : case getAleatoire of
-      0..4 : setCurrentWeather(Soleil);
-      5..29 : setCurrentWeather(Pluie);
-      30..74 : setCurrentWeather(Neige);
-      75..99 : setCurrentWeather(Orage);
+      0..4 : setFutureWeather(Soleil);
+      5..29 : setFutureWeather(Pluie);
+      30..74 : setFutureWeather(Neige);
+      75..99 : setFutureWeather(Orage);
     end;
   end;
 end;
 
-function chaineMeteo():TWeather;
-var
-  futureWeather : TWeather;
+procedure chaineMeteo();
 begin
   randomWeather;
-  futureWeather := saisonnalite;
-  chaineMeteo := futureWeather; 
-
-  
+  saisonnalite;  
 end;
 
+end.

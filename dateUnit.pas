@@ -52,6 +52,7 @@ function getIsAction():Boolean;
 procedure setIsAction(valeur:Boolean);
 
 implementation
+uses weatherUnit;
 
 var 
   currentTime : date;
@@ -175,7 +176,7 @@ begin
   setNumJour(getNumJour()+1);
   if (getNumJour mod 28) = 0 then
     saisonSuivante();
-  setCurrentWeather(chaineMeteo);
+  chaineMeteo;
 end;
 
 //Si l'heure actuelle vaut 23, alors on repasse l'heure à 0 pour passer à l'heure suivante. Sinon, on ajoute 1.

@@ -51,6 +51,18 @@ procedure upgradeInventory();
 // ⚠️ Ne peut pas être utiliser pour modifier des variables
 function getInventoryLevel() : Integer;
 
+// Retourne False si l'inventaire contient un stack non plein de l'item passé en paramètre, True sinon
+function isStackAvailable(iT : itemType) : Boolean;
+
+// Retourne True si l'item passé en paramètre est présent, false sinon
+function isPresent(iT : itemType) : Boolean;
+
+// Retourne True si l'inventaire n'est pas plein, false sinon
+function isNotFull() : Boolean;
+
+// Retourne le nombre de fois ou iT apprait dans l'inventaire (stack comptés)
+function getNombreOccu(iT : itemType) : Integer;
+
 implementation
 
 var
@@ -67,6 +79,9 @@ begin
   
   iType.name := 'Vide';
   iType.rarete := Rarity.base;
+  iType.saison := -1;
+  iType.prix := 0;
+  iType.maturite := 0;
   itemVide.iType := iType;
   itemVide.stack := 0;
   for i := low(inventaire) to high(inventaire) do
@@ -78,16 +93,18 @@ function isPresent(iT : itemType) : Boolean;
 var
   inv : inventory;      // Inventaire du joueur
   i : Integer;          // Compteur
+  estPresent : Boolean; // Valeur retournée
 begin
   inv := getInventory;
   i := low(inv);
-  while (i < high(inv)) and (inv[i].iType.name <> iT.name) and (inv[i].iType.rarete <> iT.rarete) do
+  estPresent := False;
+  while (i < high(inv)) and not estPresent do
+  begin
+    if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
+      estPresent := True;
     i := i + 1;
-  
-  if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
-    isPresent := True
-  else
-    isPresent := False;
+  end;
+  isPresent := estPresent;
 end;
 
 // Retourne False si l'inventaire contient un stack non plein de l'item passé en paramètre, True sinon
@@ -110,6 +127,25 @@ begin
   isStackAvailable := stackDispo;
 end;
 
+// Retourne True si l'inventaire n'est pas plein, false sinon
+function isNotFull() : Boolean;
+var
+  isFull : Boolean;
+  i : Integer;
+  inv : inventory;
+begin
+  inv := getInventory;
+  isFull := True;
+  i := low(inv);
+  while (i < high(inv)) and isFull do
+    begin
+      if inv[i].iType.name = 'Vide' then
+        isFull := False;
+      i := i + 1;
+    end;
+  isNotFull := not isFull;
+end;
+
 function isMaxed() : Boolean;
 begin
   if getInventoryLevel = 3 then
@@ -125,25 +161,31 @@ var
   i,                    // Compteur
   newAmmount : Integer; // Nouvelle valeur pour le nouveau stack a ajouter
   newItem : Item;       // Nouvel item a ajouter dans l'inventaire (seulement si l'item n'est pas l'inventaire ou que le stack n'est pas plein)
+  estPresent : Boolean; // Passe a vrai quand l'item est trouvé dans l'inventaire
 begin
   inv := getInventory;
   i := low(inv);
   // SI L'OBJET EST DEJA DANS L'INVENTAIRE ET QU'UN DES STACKS N'EST PAS PLEIN
   if isPresent(iT) and isStackAvailable(iT) then
   begin
+    estPresent := False;
     // Récupère l'indice de l'item
-    while (inv[i].iType.name <> iT.name) and (inv[i].iType.rarete <> iT.rarete) and (inv[i].stack <> 5) do
-      i := i + 1;
-    // Regarde si le slot sera rempli
-    if inv[i].stack + ammount > 5 then
+    while (i < high(inv)) and not estPresent do
     begin
-      newAmmount := (ammount + inv[i].stack) - 5;
-      inv[i].stack := 5;
+      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
+        estPresent := True;
+      i := i + 1;
+    end;
+    // Regarde si le slot sera rempli
+    if inv[i-1].stack + ammount > 5 then
+    begin
+      newAmmount := (ammount + inv[i-1].stack) - 5;
+      inv[i-1].stack := 5;
       AddInventory(iT, newAmmount);
     end
     else
     begin
-      inv[i].stack := ammount + inv[i].stack;
+      inv[i-1].stack := inv[i-1].stack + ammount;
     end;
   end
   // SINON
@@ -177,7 +219,7 @@ var
   newAmmount,           // Nombre d'item a stack avec un nouveau stack
   i : Integer;          // Compteur
   newItem,
-  iType : itemType;     // Type de l'item par défault
+  itType : itemType;     // Type de l'item par défault
 begin
   inv := getInventory;
   if isPresent(iT) then
@@ -185,12 +227,14 @@ begin
     i := low(inv);
     while (ammount <> 0) and (i < high(inv)) do
     begin
-      writeln(inv[i].iType.name);
       if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
       begin
-        iType.name := 'Vide';
-        iType.rarete := Rarity.base;
-        itemVide.iType := iType;
+        itType.name := 'Vide';
+        itType.rarete := Rarity.base;
+        itType.prix := 0;
+        itType.maturite := 0;
+        itType.saison := -1;
+        itemVide.iType := itType;
         itemVide.stack := 0;
         if (ammount >= inv[i].stack) then
         begin
@@ -271,5 +315,22 @@ end;
 function getInventoryLevel() : Integer;
 begin
   getInventoryLevel := level;
+end;
+
+// Retourne le nombre de fois ou iT apprait dans l'inventaire (stack comptés)
+function getNombreOccu(iT : itemType) : Integer;
+var
+  i : Integer;
+  inv : inventory;
+begin
+  inv := getInventory;
+  getNombreOccu := 0;
+  for i := low(inv) to high(inv) do
+    begin
+      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
+      begin
+        getNombreOccu := getNombreOccu + 1;
+      end;
+    end;
 end;
 end.
