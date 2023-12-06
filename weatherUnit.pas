@@ -15,57 +15,80 @@ function randomWeather():Integer;
 //Change la météo actuelle selon la saison
 function saisonnalite():Tweather; 
 
-//Retourne le numéro correspondant à la saison
-function getNumSaison():Integer;
+
 
 implementation
 
-//On génère un nombre aléatoire via Randomize qu'on renvoie 
-function randomWeather():Integer;
 var
-  aleatoire : Integer;  //Stocke une valeur aléatoire
+  currentWeather : TWeather;
+  aleatoire : Integer;
+
+function getCurrentWeather():TWeather;
+begin
+  getCurrentWeather := currentWeather;
+end;
+
+procedure setCurrentWeather(valeur : TWeather);
+begin
+  currentWeather := valeur;
+  
+end;
+
+function getAleatoire():Integer;
+begin
+  getAleatoire := aleatoire;
+end;
+
+procedure setAleatoire(valeur:Integer);
+begin
+  aleatoire := valeur;
+end;
+
+//On génère un nombre aléatoire via Randomize qu'on renvoie 
+procedure randomWeather();
 begin
   Randomize;
-  aleatoire := random(100);
-  randomWeather:=aleatoire;
+  setAleatoire(random(100));
+
 end;
 
 
 //On compare la valeur aléatoire précédemment calculée avec certains nombres afin de créer des chances différents pour chaque météo selon la saison.
-function saisonnalite() : TWeather;
-var
-  currentWeather : TWeather;  //Stocke la météo actuelle, est renvoyée
-  aleatoire : Integer;
+procedure saisonnalite();
 begin
-  aleatoire := randomWeather();
   case getSaisonActuelle of
-    0 : case aleatoire of
-      0..59 : currentWeather := Soleil;
-      60..89 : currentWeather := Pluie;
-      90..99 : currentWeather := Orage; 
+    0 : case getAleatoire of
+      0..59 : setCurrentWeather(Soleil);
+      60..89 : setCurrentWeather(Pluie);
+      90..99 : setCurrentWeather(Orage); 
       // 60% que la météo soit ensoleillée,30% qu'elle soit pluvieuse et 10% pour qu'elle soit orageuse au Printemps ; même principe à la suite
     end;
-    1 : case aleatoire of
-      0..69 : currentWeather := Soleil;
-      70..79 : currentWeather := Pluie;
-      80..99 : currentWeather := Orage;
+    1 : case getAleatoire of
+      0..69 : setCurrentWeather(Soleil);
+      70..79 : setCurrentWeather(Pluie);
+      80..99 : setCurrentWeather(Orage);
     end;
-    2 : case aleatoire of
-      0..9 : currentWeather :=  Soleil;
-      10..79 : currentWeather := Pluie;
-      80..99 : currentWeather := Orage;
+    2 : case getAleatoire of
+      0..9 : setCurrentWeather(Soleil);
+      10..79 : setCurrentWeather(Pluie);
+      80..99 : setCurrentWeather(Orage);
     end;
-    3 : case aleatoire of
-      0..4 : currentWeather := Soleil;
-      5..29 : currentWeather := Pluie;
-      30..74 : currentWeather := Neige;
-      75..99 : currentWeather := Orage;
+    3 : case getAleatoire of
+      0..4 : setCurrentWeather(Soleil);
+      5..29 : setCurrentWeather(Pluie);
+      30..74 : setCurrentWeather(Neige);
+      75..99 : setCurrentWeather(Orage);
     end;
   end;
-  saisonnalite:=currentWeather;
 end;
 
+function chaineMeteo():TWeather;
+var
+  futureWeather : TWeather;
+begin
+  randomWeather;
+  futureWeather := saisonnalite; 
 
+  
+end;
 
-
-end.
