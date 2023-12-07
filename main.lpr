@@ -15,4 +15,5 @@ begin
 	AddInventory(champ, 2);
 	AddInventory(champ, 2);
 	displayInventory();
+	readln;
 end.
