@@ -5,7 +5,18 @@ interface
 { CADRE : 235 par 60 }
 // debutPartie : procedure qui debute une partie 
 procedure debutPartie();
+
+//RubanEmplacement : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un emplacement
+procedure RubanEmplacement();
+
+// FermeIHM : procedure qui affiche l'interface de la ferme
 procedure FermeIHM();
+
+// MaisonIHM : procedure qui affiche l'interface de la ferme
+procedure MaisonIHM();
+
+//EffaceRuban
+procedure EffaceRuban();
 implementation
 
 uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit;
@@ -42,16 +53,25 @@ end;
 //AfficheLieuFerme : procedure qui affiche le cadre avec le lieu actuel
 procedure AfficheLieuFerme();
 begin
-  dessinerCadreXY(56,2,108,6,double,Black,White);
-  deplacerCurseurXY(76,4);
+  dessinerCadreXY(60,2,112,6,double,Black,White);
+  deplacerCurseurXY(80,4);
   write('Lieu : Ferme');
+  couleurTexte(Black);
+end;
+
+//AfficheLieuMaison : procedure qui affiche le cadre avec le lieu actuel
+procedure AfficheLieuMaison();
+begin
+  dessinerCadreXY(60,2,112,6,double,Black,White);
+  deplacerCurseurXY(80,4);
+  write('Lieu : Maison');
   couleurTexte(Black);
 end;
 
 //AfficheHeure : procedure qui affiche le cadre avec l'heure et la saison
 procedure AfficheHeure();
 begin
-  dessinerCadreXY(183,2,198,8,double,White,Black);
+  dessinerCadreXY(180,2,198,8,double,White,Black);
   deplacerCurseurXY(184,3);
   write(IntToStr(getHeureActuelle)+' : '+IntToStr(getMinuteActuelle));
   deplacerCurseurXY(184,5);
@@ -66,11 +86,26 @@ begin
   AfficheHeure;
   AffichePerso;
 end;
-//Affiche un message au centre de l'écran
-procedure affichageMessage(message : String);
+//EffaceRuban
+procedure EffaceRuban();
+var
+  i,j:Integer;
 begin
-  dessinerCadreXY(26, 10, 114, 14, double, black, white);
-  deplacerCurseurXY(65-(length(message) div 2), 12);
+  for i:=0 to 7 do 
+    begin
+      changerLigneCurseur(i+42);
+      for j:=2 to 198 do
+        begin
+          write(' ');
+          changerColonneCurseur(j);
+        end;
+    end;
+end;
+//Affiche un message au centre de l'écran
+procedure affichageMessage(x1,x2,y1,y2:Integer;message : String);
+begin
+  dessinerCadreXY(x1,y1,x2,y2,double, black, white);
+  deplacerCurseurXY(x1+1, (y2-y1) +y1 div 2 );
   write(message);
   readln();
 end;
@@ -96,14 +131,22 @@ end;
 procedure AfficheEmplacementVide(x,y,num:Integer);
 begin
   deplacerCurseurXY(x,y);
-  write(getFerme[num].elem.name);
+  write(getFerme[num].elem.name+' '+IntToStr(num));
 end;
 
 // AfficheEmplacmentRempli : procedure qui affiche un emplacement
 procedure AfficheEmplacementRempli(x,y,num:Integer);
+var 
+  arrose:Boolean;
+  estarrose:String;
 begin
+  arrose:=getFerme[num].arrose;
+  if arrose then 
+    estarrose:='Arrosé'
+  else
+    estarrose:='N''est pas arrosé';
   deplacerCurseurXY(x,y);
-  write(getFerme[num].elem.name+'('+IntToStr(getFerme[num].joursRestant)+')');
+  write(getFerme[num].elem.name+' '+IntToStr(num)+'('+IntToStr(getFerme[num].joursRestant)+')'+estarrose);
 end;
 
 // AfficheAllEmplacement : procedure qui affiche tous les emplacemnts
@@ -117,23 +160,97 @@ begin
       for j:=1 to 10 do 
         begin
           if  not EstVide(j+i*10) then 
-            AfficheEmplacementRempli(10+i*70,10+j*4,j+i*10)
+            AfficheEmplacementRempli(10+i*70,10+j*3,j+i*10)
           else
-            AfficheEmplacementVide(10+i*70,10+j*4,j+i*10);
+            AfficheEmplacementVide(10+i*70,10+j*3,j+i*10);
         end;
     end;
   couleurTexte(White);
 end;
+
+// rubanBasFerme : procedure qui affiche le ruban en bas de l'écran
+procedure rubanBasFerme();
+begin
+  EffaceRuban();  
+  deplacerCurseurXY(5,45);
+  write('1 - Aller à la maison');
+  deplacerCurseurXY(35,45);
+  write('2 - Aller au shop');
+  deplacerCurseurXY(65,45);
+  write('3 - Aller sur un emplacement');
+  deplacerCurseurXY(105,45);
+  write('4 - Tout arroser');
+  deplacerCurseurXY(135,45);
+  write('9 - Revenir au menu principal');
+  deplacerCurseurXY(10,47);
+  Ferme();
+  deplacerCurseurXY(10,47);
+  write(' ');
+  refresh();
+  rubanBasFerme();
+end;
+
+// rubanBasMaison : procedure qui affiche le ruban en bas de l'écran
+procedure rubanBasMaison();
+begin
+  EffaceRuban();  
+  deplacerCurseurXY(5,45);
+  write('1 - Aller à la ferme');
+  deplacerCurseurXY(35,45);
+  write('2 - Attendre');
+  deplacerCurseurXY(65,45);
+  write('3 - Dormir');
+  deplacerCurseurXY(955,45);
+  write('4 - Regarder la méteto');
+  deplacerCurseurXY(125,45);
+  write('9 - Revenir au menu principal');
+  deplacerCurseurXY(10,47);
+  Maison();
+  deplacerCurseurXY(10,47);
+  write(' ');
+  refresh();
+  rubanBasMaison();
+end;
+
+//RubanEmplacement : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un emplacement
+procedure RubanEmplacement();
+begin
+  EffaceRuban();
+  deplacerCurseurXY(5,45);
+  write('1 - Planter une graine');
+  deplacerCurseurXY(35,45);
+  write('2 - Arrosé une plante');
+  deplacerCurseurXY(65,45);
+  write('3 - Ramasser un  légume');
+  deplacerCurseurXY(10,47);
+  menuEmplacement();
+  deplacerCurseurXY(10,47);
+  write(' ');
+  RubanEmplacement();
+end;
+
 // FermeIHM : procedure qui affiche l'interface de la ferme
 procedure FermeIHM();
 begin
   effacerEcran();
-  dessinerCadreXY(1,1,199,60,simple,White,Black);
+  dessinerCadreXY(1,1,199,50,simple,White,Black);
   AfficheLieuFerme;
   Refresh;
   AfficheAllEmplacement;
+  EffaceRuban;
+  rubanBasFerme;
 end;
 
+// MaisonIHM : procedure qui affiche l'interface de la ferme
+procedure MaisonIHM();
+begin
+  effacerEcran();
+  dessinerCadreXY(1,1,199,50,simple,White,Black);
+  AfficheLieuMaison;
+  Refresh;
+  EffaceRuban;
+  rubanBasMaison;
+end;
 // debutPartie : procedure qui debute une partie 
 procedure debutPartie();
 var 
@@ -160,10 +277,15 @@ begin
       write('Votre nom de ferme : ');
       EcrisFerme();
       effacerEcran();
-      deplacerCurseurXY(26,12);
-      affichageMessage('Bienvenue '+getName+' dans votre ferme : '+getNomFerme);
+      dessinerCadreXY(26,10,114,14,double, black, white);
+      deplacerCurseurXY(50,12);
+      write('Bienvenue '+getName+' dans votre ferme : '+getNomFerme);
+      readln();
       effacerEcran();
-      affichageMessage('Vous arrivez dans votre ferme');
+      dessinerCadreXY(26,10,114,14,double, black, white);
+      deplacerCurseurXY(56,12);
+      write('Vous arrivez dans votre ferme');
+      readln();
       FermeIHM();
     end;
 end;
