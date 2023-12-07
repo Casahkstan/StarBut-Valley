@@ -47,6 +47,10 @@ function getHeureActuelle() : Integer;
 // Setter : Change l'heure actuelle
 procedure setHeureActuelle(valeur:Integer);
 
+// Getter : Retourne le jour actuel
+// ⚠️ Ne peut pas être utilisépour modifier des variables
+function getMinuteActuelle():Integer;
+
 //Initialise la date
 procedure initDate();
 
@@ -154,6 +158,13 @@ begin
   dateActuelle := getDate();
   dateActuelle.heure := valeur;
   setDate(dateActuelle);
+end;
+
+// Getter : Retourne le jour actuel
+// ⚠️ Ne peut pas être utilisépour modifier des variables
+function getMinuteActuelle():Integer;
+begin
+  getMinuteActuelle := getDate().minute;
 end;
 
 
