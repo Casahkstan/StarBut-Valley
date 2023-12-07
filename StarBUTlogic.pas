@@ -1,6 +1,7 @@
 unit StarBUTlogic;
 
 interface
+uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit;
 
 // choixMenuPrincipal : Retourne un booléen sur le choix du début du jeu si le joueur veur jouer
 function choixMenuPrincipal() : Boolean;
@@ -24,7 +25,6 @@ procedure Ferme();
 procedure Shop();
 implementation
 
-uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit;
 
 
 // Initpartie : lance une partie complète de StarBUTValley
@@ -32,7 +32,7 @@ procedure Initpartie();
 begin
     initPlayer();
     initGarden();
-    InitgraineSaison();
+    initgraines();
     initDate();
 end;
 

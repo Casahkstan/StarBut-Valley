@@ -2,9 +2,8 @@ program main;
 {$codepage utf8}
 {$mode objfpc}{$H+}
 uses
-	StarBUTtest;
+	StarBUTValleyIHM;
 
 begin 
-	test();
-	readln;
+	debutPartie();
 end.
