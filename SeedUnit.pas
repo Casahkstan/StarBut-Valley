@@ -20,6 +20,8 @@ interface
 
 	procedure afficheGraines();
 
+	function getSeeds() : Seeds;
+
 implementation
 
 	var 
@@ -40,7 +42,7 @@ implementation
 			begin
 				readln(texte,ligne);
 				j := LastDelimiter(',', ligne);
-				ligneTemp := copy(ligne, low(j), j-1);
+				ligneTemp := copy(ligne, low(ligne), j-1);
 				listeSeeds[i div 4, i mod 4].name := copy(ligneTemp, 1, LastDelimiter(',', ligneTemp)-1);
 				listeSeeds[i div 4, i mod 4].rarete := base;
 				listeSeeds[i div 4, i mod 4].saison := i div 4;
@@ -81,6 +83,11 @@ implementation
 	function getSeed() : seedSaison;
 	begin
 		getSeed := (listeSeeds[getDate().saison]);
+	end;
+
+	function getSeeds() : Seeds;
+	begin
+		getSeeds := listeSeeds;
 	end;
 
 	procedure afficheGraines();

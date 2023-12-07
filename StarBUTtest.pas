@@ -7,7 +7,7 @@ interface
 procedure test();
 
 implementation
-uses StarBUTlogic, TestUnitaire, playerUnit, inventoryUnit, dateUnit;
+uses StarBUTlogic, TestUnitaire, playerUnit, inventoryUnit, dateUnit, SeedManagmentUnit, SeedUnit, sysutils;
 
 procedure InitialisationJoueur_Test();
 var
@@ -61,12 +61,49 @@ begin
 end;
 
 procedure Seeds_Test();
-
+var 
+  i,
+  j : Integer;
+  texte : text;
+  ligneTemp,
+  ligne : String;
+  sameSeeds : Boolean;
+  seed : Seeds;
+  seedActuelle : itemType;
+begin
+  newTestsSeries('Test sur les graines');
+  newTest('Test sur les graines', 'Initialisation graines');
+  initGraines();
+  assign(texte,'./file/graine.txt');
+  reset(texte);
+  seed := getSeeds;
+  sameSeeds := True;
+  i := low(seed);
+  while (i < high(seed)) and (sameSeeds = True) do 
+    begin
+      readln(texte,ligne);
+      j := LastDelimiter(',', ligne);
+      ligneTemp := copy(ligne, low(ligne), j-1);
+      seedActuelle.name := copy(ligneTemp, 1, LastDelimiter(',', ligneTemp)-1);
+      seedActuelle.rarete := base;
+      seedActuelle.saison := i div 4;
+      seedActuelle.prix := StrToInt(copy(ligneTemp, LastDelimiter(',', ligneTemp)+1, high(ligneTemp)));
+      seedActuelle.maturite := StrToInt(copy(ligne, j+1, high(ligne)));
+      if not CompareMem(@(seed[i div 4, i mod 4]), @seedActuelle, SizeOf((itemType))) then
+      begin
+        writeln(seed[i div 4, i mod 4].rarete, ' and ', seedActuelle.rarete);
+        sameSeeds := False;
+      end;
+      i := i + 1;
+    end;
+  testIsEqual(sameSeeds);
+end;
 
 procedure test();
 begin
   InitialisationJoueur_Test;
   Dates_Test;
+  Seeds_Test;
 
   Summary();
 end;
