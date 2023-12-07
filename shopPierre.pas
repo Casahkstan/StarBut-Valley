@@ -11,8 +11,6 @@ procedure acheter(choix : Integer);
 procedure vendre();
 
 implementation
-var
-	magasin : shop;
 
 procedure acheter(choix : Integer);
 var
@@ -40,8 +38,9 @@ var
 	inv : inventory;
 	nbVente,
 	money,
-	prix : Integer;
-	choix : Integer;
+	prix,
+	choix,
+	multiplicateurRarete : Integer;
 begin
 	writeln('Que voulez vous vendre ? (entrer le numéro de l''objet a vendre)');
 	displayInventory();
@@ -59,8 +58,14 @@ begin
 			readln(nbVente)
 		until (nbVente <= getNombreOccu(inv[choix].iType));
 		SubInventory(inv[choix].iType, nbVente);
+		case inv[choix].iType.rarete of
+			base: multiplicateurRarete := 1;
+			silver: multiplicateurRarete := 2;
+			gold: multiplicateurRarete := 3;
+			iridium: multiplicateurRarete := 4;
+		end;
 		money := getMoney;
-		money := money + prix*nbVente;
+		money := money + (prix + 1 * multiplicateurRarete) * nbVente;
 		setMoney(money);
 		writeln('Vente terminée');
 	end;
