@@ -10,10 +10,10 @@ type
         joursRestant:Integer;
         arrose:Boolean; 
         joursPlante:Integer;
-        joursMature:Integer;
+        joursMature:Integer;  // Chaque slot de ferme possède ces caractéristiques
     end;
 
-    emplacement=Array[1..30] of slot;
+    emplacement=Array[1..30] of slot; // Tableau de slots individuels
 
 // Init : Initialise les 30 emplacements de notre ferme
 procedure initGarden();
@@ -25,23 +25,6 @@ function getFerme() : emplacement;
 // Setter : Change la valeur de la ferme a la variable passée en paramètre
 procedure setFerme(f : emplacement);
 
-// EstVide : Retourne True si un emplacement est vide et False sinon
-function EstVide(num:Integer):Boolean;
-
-// AddSeed : Plante une graine dans un des emplacement passé en paramètre
-procedure AddSeed(numEmplacement : Integer; seed : itemType);
-
-// Arrose : passe le booléen nommé "arrose" de faux à vrai pour l'arrosé
-procedure arrose(numEmplacement:Integer);
-
-procedure arroseTout();
-
-// Grandit : reduit de 1 la valeur du jours restant
-procedure Grandit();
-
-// Ramasse : permet de ramasser un légumes mûr
-procedure Ramasse(numEmplacement:Integer);
-
 // Getter : Retourne le nom de la ferme du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getNomFerme() : String;
@@ -49,19 +32,51 @@ function getNomFerme() : String;
 // Setter : Change le nom de la ferme a la variable passée en paramètre
 procedure setNomFerme(s : String);
 
+// EstVide : Retourne True si un emplacement est vide et False sinon
+function EstVide(num:Integer):Boolean;
+
+// AddSeed : Plante une graine dans un des emplacement passé en paramètre
+procedure AddSeed(numEmplacement : Integer; seed : itemType);
+
+// Grandit : reduit de 1 la valeur du jours restant
+procedure Grandit();
+
+// Ramasse : permet de ramasser un légumes mûr
+procedure Ramasse(numEmplacement:Integer);
+
+// DonneRarete : donne la rareté d'un objet en fonction de l'expérience d'un joueur
+function DonneRarete() : Rarity;
+
+// ClearEmplacement : Permet de vider un emplacement passé en paramètre
+procedure ClearEmplacement(numEmplacement:Integer);
+
+// Arrose : passe le booléen nommé "arrose" de faux à vrai pour l'arroser
+procedure arrose(numEmplacement:Integer);
+
+// arroseTout : Permet d'arroser toutes les plantes de la ferme en une fois
+procedure arroseTout();
+
 // joursPluvieux : arrose automatiquement les légumes quand il pleut
 procedure joursPluvieux();
 
+// secher : Change l'état arrosé du slot num de la ferme à faux
+procedure secher(num : Integer);
+
+//  secherTout : Parcourt la ferme et sèche tous ses emplacements
+procedure secherTout();
+
+
+
 implementation
 var
-    ferme:emplacement;
-    nomFerme : String;
+    ferme:emplacement;  // Ferme du jeu
+    nomFerme : String;  // Nom de la ferme
 
 // Init : Initialise les 30 emplacements de notre ferme
 procedure initGarden();
 var
-    i:Integer;
-    fermeTemp : emplacement;
+    i:Integer;  // Entier, parcourt les slots de la ferme
+    fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
     fermeTemp := getFerme;
     for i:=low(fermeTemp) to high(fermeTemp) do
@@ -77,11 +92,18 @@ begin
         end;
     setFerme(fermeTemp);
 end;
+
 // Getter : Retourne toute la ferme du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getFerme() : emplacement;
 begin
     getFerme:=ferme;
+end;
+
+// Setter : Change la ferme
+procedure setFerme(f : emplacement);
+begin
+  ferme := f;
 end;
 
 // Getter : Retourne le nom de la ferme du joueur
@@ -97,15 +119,10 @@ begin
   nomFerme := s;
 end;
 
-procedure setFerme(f : emplacement);
-begin
-  ferme := f;
-end;
-
 // EstVide : Retourne True si un emplacement est vide et False sinon
 function EstVide(num:Integer):Boolean;
 var
-  fermeTemp : emplacement;
+  fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
     fermeTemp := getFerme;
     if fermeTemp[num].elem.name<>'Emplacement vide' then
@@ -114,10 +131,10 @@ begin
         EstVide:=false;
 end;
 
-// AddSeed : Plante une graine dans un des emplacement passé en paramètre
+// AddSeed : Plante une graine dans un des emplacement passé en paramètre, seulement si l'emplacement est vide
 procedure AddSeed(numEmplacement : Integer; seed : itemType);
 var
-  fermeTemp : emplacement;
+  fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
     if not EstVide(numEmplacement) then 
         writeln('L''emplacement est déja pris vous ne pouvez pas l''utilisé')
@@ -137,36 +154,11 @@ begin
         end;
 end;
 
-// Arrose : passe le booléen nommé "arrose" de faux à vrai pour l'arrosé
-procedure arrose(numEmplacement:Integer);
-var
-  fermeTemp : emplacement;
-begin
-    fermeTemp := getFerme;
-    if fermeTemp[numEmplacement].arrose=false then
-    begin
-        fermeTemp[numEmplacement].arrose:=true;
-        fatigue(1);
-    end
-    else
-        writeln('Votre plante est deja arrosé');
-    setFerme(fermeTemp);
-end;
-
-procedure arroseTout();
-var
-  i : Integer;
-begin
-  for i:=low(getFerme) to high(getFerme) do
-    arrose(i);
-end;
-
-
 // Grandit : reduit de 1 la valeur du jours restant
 procedure Grandit();
 var 
-    i:Integer;
-    fermeTemp : emplacement;
+    i:Integer;  // Entier, parcourt les slots de la ferme
+    fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme 
 begin
     fermeTemp := getFerme;
     for i:=low(fermeTemp) to high(fermeTemp) do 
@@ -177,14 +169,35 @@ begin
     setFerme(fermeTemp);
 end;
 
-//donne la rareté d'un objet en fonction de l'expérience d'un joueur
+// Ramasse : permet de ramasser un légumes mûr
+procedure Ramasse(numEmplacement:Integer);
+var 
+    retour:itemType;  // itemType, légume ramassé ajouté à l'inventaire
+    fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
+begin
+  fermeTemp := getFerme;
+    if (not EstVide(numEmplacement)) and (fermeTemp[numEmplacement].joursRestant=0) and (isPresent(fermeTemp[numEmplacement].elem) or isStackAvailable(fermeTemp[numEmplacement].elem)) then 
+        begin
+            retour:=fermeTemp[numEmplacement].elem;
+            retour.rarete:=DonneRarete();
+            ClearEmplacement(numEmplacement);
+        end
+    else
+    begin
+        writeln('Vous ne pouvez pas ramassé.');
+        writeln('Veuillez attendre ou planter une graine');
+    end;
+  AddInventory(retour, 1);
+end;
+
+// DonneRarete : donne la rareté d'un objet en fonction de l'expérience d'un joueur
 function DonneRarete() : Rarity;
 var
     chanceBase,
     chanceArgent,
-    chanceOr,
-    numChance : Integer;
-    probRarete:Rarity;
+    chanceOr, // Entiers, stockent les probabilités de rareté  
+    numChance : Integer;  // Entier, sert à simuler un tirage aléatoire
+    probRarete:Rarity;  // Rareté, renvoyé, la rareté d'une graine suivant le niveau du joueur 
 begin
     Randomize;
     numChance:=random(101);
@@ -205,10 +218,11 @@ begin
     end; 
     DonneRarete:=probRarete;
 end;
+
 // ClearEmplacement : Permet de vider un emplacement passé en paramètre
 procedure ClearEmplacement(numEmplacement:Integer);
 var
-  fermeTemp : emplacement;
+  fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
     fermeTemp := getFerme;
     if not EstVide(numEmplacement) then 
@@ -224,60 +238,62 @@ begin
         end;
     setFerme(fermeTemp);
 end;
-// Ramasse : permet de ramasser un légumes mûr
-procedure Ramasse(numEmplacement:Integer);
-var 
-    retour:itemType;
-    fermeTemp : emplacement;
+
+// Arrose : passe le booléen nommé "arrose" de faux à vrai pour l'arrosé, si elle ne l'est pas déjà
+procedure arrose(numEmplacement:Integer);
+var
+  fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
-  fermeTemp := getFerme;
-    if (not EstVide(numEmplacement)) and (fermeTemp[numEmplacement].joursRestant=0) and (isPresent(fermeTemp[numEmplacement].elem) or isStackAvailable(fermeTemp[numEmplacement].elem)) then 
-        begin
-            retour:=fermeTemp[numEmplacement].elem;
-            retour.rarete:=DonneRarete();
-            ClearEmplacement(numEmplacement);
-        end
-    else
+    fermeTemp := getFerme;
+    if fermeTemp[numEmplacement].arrose=false then
     begin
-        writeln('Vous ne pouvez pas ramassé.');
-        writeln('Veuillez attendre ou planter une graine');
-    end;
-  AddInventory(retour, 1);
+        fermeTemp[numEmplacement].arrose:=true;
+        fatigue(1);
+    end
+    else
+        writeln('Votre plante est deja arrosé');
+    setFerme(fermeTemp);
 end;
 
+// arroseTout : Permet d'arroser toutes les plantes de la ferme en une fois
+procedure arroseTout();
+var
+  i : Integer;  // Entier, parcourt les slots de la ferme
+begin
+  for i:=low(getFerme) to high(getFerme) do
+    arrose(i);
+end;
+
+// joursPluvieux : arrose automatiquement les emplacements s'il pleut
 procedure joursPluvieux();
 var
-  fermeTemp : emplacement;
-  i : Integer;
-  currentWeather : TWeather;
+  currentWeather : TWeather;  // stocke la météo courante
 begin
-  fermeTemp := getFerme();
   currentWeather := getCurrentWeather();
   if (currentWeather = TWeather.Pluie) or (currentWeather = TWeather.Orage) then
-  begin
-    for i:=low(getFerme) to high(getFerme) do
-      fermeTemp[i].arrose := True;
-  end;
-  setFerme(fermeTemp);
+  arroseTout;
 end;
 
+// secher : Change l'état arrosé du slot num de la ferme à faux
 procedure secher(num : Integer);
 var 
-  fermeTemp:emplacement;
+  fermeTemp:emplacement;  // Ferme temporaire, permet de modifier une valeur de la ferme
 begin
   fermeTemp := getFerme;
   fermeTemp[num].arrose := false;
   setFerme(fermeTemp);
 end;
 
+//  secherTout : Parcourt la ferme et sèche tous ses emplacements
 procedure secherTout();
 var
-  fermeTemp : emplacement;
-  i : Integer;
+  fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
+  i : Integer;  //Entier, parcourt les slots de la ferme
 begin
   fermeTemp := getFerme;
   for i := low(fermeTemp) to high(fermeTemp) do
     secher(i);
   setFerme(fermeTemp);
 end;
+
 end.

@@ -6,33 +6,33 @@ uses dateUnit;
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
 
-// Setter : Change le nom du joueur
-procedure setName(s : String);
-
-// Setter : Change la quantité d'argent du joueur
-procedure setMoney(m : Integer);
-
-// Setter : Change la stamina du joueur
-procedure setStamina(s : Integer);
-
-// Setter : Change la quantité d'experience du joueur
-procedure setExp(e : Integer);
-
 // Getter : Retourne le nom du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getName() : String;
+
+// Setter : Change le nom du joueur
+procedure setName(s : String);
 
 // Getter : Retourne la money du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getMoney() : Integer;
 
+// Setter : Change la quantité d'argent du joueur
+procedure setMoney(m : Integer);
+
 // Getter : Retourne la stamina du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getStamina() : Integer;
 
+// Setter : Change la stamina du joueur
+procedure setStamina(s : Integer);
+
 // Getter : Retourne la quantité d'experience du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getExp() : Integer;
+
+// Setter : Change la quantité d'experience du joueur
+procedure setExp(e : Integer);
 
 //Permet au joueur de dormir
 procedure repos();
@@ -51,10 +51,10 @@ uses inventoryUnit;
 
 //  Variable du joueur
 var
-  username : String;
-  stamina,
-  money,
-  experience : Integer;
+  username : String;  // Chaîne de caractères, nom du joueur
+  stamina,  // Entier, niveau d'endurance du joueur
+  money,  // Entier, argent du joueur
+  experience : Integer; // Entier, niveau d'expérience du joueur
 
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
@@ -66,35 +66,17 @@ begin
   initInventory();
 end;
 
-// Setter : Change le nom du joueur
-procedure setName(s : String);
-begin
-  username := s;
-end;
-
-// Setter : Change la quantité d'argent du joueur
-procedure setMoney(m : Integer);
-begin
-  money := m;
-end;
-
-// Setter : Change la stamina du joueur
-procedure setStamina(s : Integer);
-begin
-  stamina := s;
-end;
-
-// Setter : Change la quantité d'experience du joueur
-procedure setExp(e : Integer);
-begin
-  experience := e;
-end;
-
 // Getter : Retourne le nom du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getName() : String;
 begin
   getName := username;
+end;
+
+// Setter : Change le nom du joueur
+procedure setName(s : String);
+begin
+  username := s;
 end;
 
 // Getter : Retourne la money du joueur
@@ -104,11 +86,23 @@ begin
   getMoney := money;
 end;
 
+// Setter : Change la quantité d'argent du joueur
+procedure setMoney(m : Integer);
+begin
+  money := m;
+end;
+
 // Getter : Retourne la stamina du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
 function getStamina() : Integer;
 begin
   getStamina := stamina;
+end;
+
+// Setter : Change la stamina du joueur
+procedure setStamina(s : Integer);
+begin
+  stamina := s;
 end;
 
 // Getter : Retourne la quantité d'experience du joueur
@@ -118,6 +112,13 @@ begin
   getExp := experience;
 end;
 
+// Setter : Change la quantité d'experience du joueur
+procedure setExp(e : Integer);
+begin
+  experience := e;
+end;
+
+// Permet au joueur de dormir seulement entre 6h et 1h du matin, sinon, il s'évanouit
 procedure repos();
 begin
   case getHeureActuelle of
@@ -137,6 +138,7 @@ begin
   end;
 end;
 
+// Gère l'évanouissement du joueur
 procedure evanouissement();
 begin
   case getHeureActuelle of
@@ -152,7 +154,7 @@ end;
 //Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (on met la stamina à 10)
 procedure fatigue(point : Integer);
 begin
-  setStamina(getStamina-point);
+  setStamina(getStamina-point); 
   heureSuivante;
   if getStamina <= 0 then
     evanouissement;
