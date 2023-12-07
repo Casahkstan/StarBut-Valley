@@ -125,7 +125,7 @@ var
   fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
     fermeTemp := getFerme;
-    if fermeTemp[num].elem.name<>'Emplacement vide' then
+    if fermeTemp[num].elem.name='Emplacement vide' then
         EstVide:=true
     else
         EstVide:=false;
