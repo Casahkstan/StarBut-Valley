@@ -65,8 +65,6 @@ procedure secher(num : Integer);
 //  secherTout : Parcourt la ferme et sèche tous ses emplacements
 procedure secherTout();
 
-
-
 implementation
 var
     ferme:emplacement;  // Ferme du jeu
@@ -137,8 +135,6 @@ var
   fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
     if not EstVide(numEmplacement) then 
-        writeln('L''emplacement est déja pris vous ne pouvez pas l''utilisé')
-    else
         begin
             fermeTemp := getFerme();
             fermeTemp[numEmplacement].elem.name := seed.name;
@@ -245,13 +241,11 @@ var
   fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
     fermeTemp := getFerme;
-    if fermeTemp[numEmplacement].arrose=false then
+    if (fermeTemp[numEmplacement].arrose=false)and(not EstVide(numEmplacement)) then
     begin
         fermeTemp[numEmplacement].arrose:=true;
         fatigue(1);
-    end
-    else
-        writeln('Votre plante est deja arrosé');
+    end;
     setFerme(fermeTemp);
 end;
 
@@ -295,5 +289,4 @@ begin
     secher(i);
   setFerme(fermeTemp);
 end;
-
 end.

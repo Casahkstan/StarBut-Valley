@@ -1,7 +1,7 @@
 unit StarBUTlogic;
-
+{$codepage utf-8}
 interface
-uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit;
+uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit,StarBUTValleyIHM,GestionEcran;
 
 // choixMenuPrincipal : Retourne un booléen sur le choix du début du jeu si le joueur veur jouer
 function choixMenuPrincipal() : Boolean;
@@ -23,6 +23,10 @@ procedure Ferme();
 
 // Shop : procédure qui lance chaque choix possible dans le shop
 procedure Shop();
+
+// menuEmplacement : procedure qui ouvre un menu avec un emplecment passé en paramètre
+procedure menuEmplacement();
+
 implementation
 
 
@@ -93,26 +97,62 @@ var
 begin
     choix:=BatimentChoix();
     case choix of 
-        1:Ferme();
+        1:FermeIHM;
         2:Attendre();
         3:repos();
         4:write(chaineMeteo());
-        9:choixMenuPrincipal();
+        9:debutPartie();
     end;
 end;
 
 // menuEmplacement : procedure qui ouvre un menu avec un emplecment passé en paramètre
 procedure menuEmplacement();
 var
-    num:Integer;
+    num,choix1,choix2:Integer;
 begin
     num:=ChoixEmplacement();
     case num of 
-        1:AddSeed(num,getInventory()[ChoixEmplacement()].iType);
-        2:arrose(num);
+        1:
+            begin
+                EffaceRuban();
+                dessinerCadreXY(40,30,159,40,double,White,Black);
+                deplacerCurseurXY(75,32);
+                write('Quel graine de ton inventaire choisis tu (numéro de slot)');
+                deplacerCurseurXY(45,35);
+                choix1:=ChoixEmplacement();
+                dessinerCadreXY(40,30,159,40,double,White,Black);
+                deplacerCurseurXY(75,32);
+                write('Sur quel emplacement veux-tu le planter ?');
+                deplacerCurseurXY(45,35);
+                choix2:=ChoixEmplacement();
+                AddSeed(choix2,getInventory[choix1].iType);
+                effacerEcran;
+                FermeIHM();
+            end;
+        2:
+            begin
+                EffaceRuban();
+                dessinerCadreXY(40,30,130,40,double,White,Black);
+                deplacerCurseurXY(75,32);
+                write('Quel emplacement veux-tu arroser ?');
+                deplacerCurseurXY(45,35);
+                choix2:=ChoixEmplacement();
+                arrose(choix2);
+                if getFerme[choix2].arrose =false then 
+                    begin
+                        dessinerCadreXY(40,30,130,40,double,White,Black);
+                        deplacerCurseurXY(75,35);
+                        write('Impossible d''arroser un emplacement vide');
+                        readln;
+                    end;
+                effacerEcran;
+                FermeIHM();
+            end;
         3:Ramasse(num);
     end;
 end;
+
+
 // Ferme : procédure qui lance chaque choix possible dans la ferme
 procedure Ferme();
 var 
@@ -120,11 +160,11 @@ var
 begin
     choix:=BatimentChoix();
     case choix of 
-        1:Maison();
+        1:MaisonIHM;
         2:Shop();
-        3:menuEmplacement();
+        3:RubanEmplacement();
         4:arroseTout();
-        9:choixMenuPrincipal();
+        9:debutPartie();
     end;
 end;
 //menuachete : menu qui propose soit d'acheter soit d'avoir une description des graines
@@ -149,7 +189,7 @@ begin
         1:Ferme();
         2:Menuachete();
         3:vendre();
-        9:choixMenuPrincipal();
+        9:debutPartie();
     end;
 end;
 end.
