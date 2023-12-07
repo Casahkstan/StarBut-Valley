@@ -9,6 +9,15 @@ procedure test();
 implementation
 uses StarBUTlogic, TestUnitaire, playerUnit, inventoryUnit, dateUnit, SeedManagmentUnit, SeedUnit, sysutils;
 
+// Retourne true si les 2 records sont similaires
+function compareRec(s1, s2 : itemType) : Boolean;
+begin
+  if (s1.name = s2.name) and (s1.maturite = s2.maturite) and (s1.prix = s2.prix) and (s1.rarete = s2.rarete) and (s1.saison = s2.saison) then
+    compareRec := True
+  else
+    compareRec := False;
+end;
+
 procedure InitialisationJoueur_Test();
 var
   estVide : Boolean;
@@ -89,9 +98,9 @@ begin
       seedActuelle.saison := i div 4;
       seedActuelle.prix := StrToInt(copy(ligneTemp, LastDelimiter(',', ligneTemp)+1, high(ligneTemp)));
       seedActuelle.maturite := StrToInt(copy(ligne, j+1, high(ligne)));
-      if not CompareMem(@(seed[i div 4, i mod 4]), @seedActuelle, SizeOf((itemType))) then
+      if not compareRec(seed[i div 4, i mod 4], seedActuelle) then
       begin
-        writeln(seed[i div 4, i mod 4].rarete, ' and ', seedActuelle.rarete);
+        writeln(seed[i div 4, i mod 4].saison, ' and ', seedActuelle.saison);
         sameSeeds := False;
       end;
       i := i + 1;
