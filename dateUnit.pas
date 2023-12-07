@@ -170,9 +170,16 @@ end;
 
 //On passe à la saison suivante grâce à succ. Néanmoins, si la saison est l'hiver, alors on la passe manuellement au printemps
 procedure saisonSuivante ();
+var
+  dateTemp : date;
 begin
   if getSaisonActuelle = 3 then
-    setSaisonActuelle(0)
+  begin
+    dateTemp := getDate;
+    dateTemp.annee := dateTemp.annee + 1;
+    setDate(dateTemp);
+    setSaisonActuelle(0);
+  end
   else
     setSaisonActuelle(succ(getSaisonActuelle));
   
@@ -186,8 +193,10 @@ begin
   else
     setJourActuel(succ(getDate().jour));
   setNumJour(getNumJour()+1);
-  if (getNumJour mod 28) = 0 then
+  if (getNumJour mod 28) = 1 then
+  begin
     saisonSuivante();
+  end;
   meteoSuivante;
 end;
 
