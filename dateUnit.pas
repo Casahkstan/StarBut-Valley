@@ -5,21 +5,50 @@ unit dateUnit;
 interface
 
 type
-  TJour = (Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche);
-  TSaison = 0..3; //Différentes saisons
+  TJour = (Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche);  // Type énuméré contenant les jours de la semaine
+  TSaison = 0..3; // Type énuméré contenant les 4 valeurs de saison
 
   date = record
     minute : 0..60;
-    heure : 0..24;
+    heure : 0..24;  
     jour : TJour;
     numJour : Integer;
     saison : TSaison;
-    annee : Integer;
-  end;
+    annee : Integer;  
+  end;  // Record de la date possédant les minutes,heures,jour...
 
+// Getter : Retourne la date
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getDate() : date;
-
+// Setter : Change la date du jour
 procedure setDate(val : date);
+
+// Getter : Retourne le jour actuel
+// ⚠️ Ne peut pas être utilisépour modifier des variables
+function getJourActuel():TJour;
+// Setter : Change le jour actuel
+procedure setJourActuel(valeur:TJour);
+
+// Getter : Retourne la saison actuelle
+// ⚠️ Ne peut pas être utilisépour modifier des variables
+function getSaisonActuelle():TSaison;
+// Setter : Change la saison actuelle
+procedure setSaisonActuelle(valeur:TSaison);
+
+// Getter : Retourne le numéro du jour
+// ⚠️ Ne peut pas être utilisépour modifier des variables
+function getNumJour():Integer;
+// Setter : Change le numéro du jour
+procedure setNumJour(valeur:Integer);
+
+// Getter : Retourne l'heure actuelle
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
+function getHeureActuelle() : Integer;
+// Setter : Change l'heure actuelle
+procedure setHeureActuelle(valeur:Integer);
+
+//Initialise la date
+procedure initDate();
 
 //Passe à la saison suivante
 procedure saisonSuivante ();
@@ -29,23 +58,12 @@ procedure jourSuivant ();
 //Passe à l'heure suivante;
 procedure heureSuivante();
 
+//Passe à la météo suivante
 procedure meteoSuivante();
 
 
-//Initialise la date
-procedure initDate();
 
-function getJourActuel():TJour;
-procedure setJourActuel(valeur:TJour);
 
-function getSaisonActuelle():TSaison;
-procedure setSaisonActuelle(valeur:TSaison);
-
-function getNumJour():Integer;
-procedure setNumJour(valeur:Integer);
-
-function getHeureActuelle() : Integer;
-procedure setHeureActuelle(valeur:Integer);
 
 
 
@@ -53,13 +71,17 @@ implementation
 uses weatherUnit;
 
 var 
-  currentTime : date;
+  currentTime : date;   //record date, contient la date actuelle
 
+
+// Getter : Retourne la date
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getDate() : date;
 begin
   getDate := currentTime;
 end;
 
+// Setter : Change la date du jour
 procedure setDate(val : date);
 begin
   currentTime := val;
@@ -67,15 +89,16 @@ end;
 
 
 // Getter : Retourne le jour actuel
-// ⚠️ Ne peut pas être utiliser pour modifier des variablesfunction getJourActuel():TJour;
+// ⚠️ Ne peut pas être utilisé pour modifier des variablesfunction getJourActuel():TJour;
 function getJourActuel():TJour;
 begin
   getJourActuel:=getDate().jour;
 end;
 
+// Setter : Change le jour actuel
 procedure setJourActuel(valeur:TJour);
 var
-  dateActuelle : date;
+  dateActuelle : date;  //record date, permet de changer seulement le jour de la date
 begin
   dateActuelle := getDate();
   dateActuelle.jour := valeur;
@@ -83,15 +106,16 @@ begin
 end;
 
 // Getter : Retourne la saison actuelle
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getSaisonActuelle():TSaison;
 begin
   getSaisonActuelle := getDate().saison;
 end;
 
+// Setter : Change la saison actuelle
 procedure setSaisonActuelle(valeur:TSaison);
 var
-  dateActuelle : date;
+  dateActuelle : date;  //record date, permet de changer seulement la saison de la date
 begin
   dateActuelle := getDate();
   dateActuelle.saison := valeur;
@@ -99,15 +123,16 @@ begin
 end;
 
 // Getter : Retourne le numéro du jour
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getNumJour():Integer;
 begin
   getNumJour := getDate().numJour;
 end;
 
+// Setter : Change le numéro du jour
 procedure setNumJour(valeur:Integer);
 var
-  dateActuelle : date;
+  dateActuelle : date;  //record date, permet de changer seulement le numéro de jour de la date
 begin
   dateActuelle := getDate();
   dateActuelle.numJour := valeur;
@@ -115,15 +140,16 @@ begin
 end;
 
 // Getter : Retourne la date actuelle
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getHeureActuelle():Integer;
 begin
   getHeureActuelle := getDate().heure;
 end;
 
+// Setter : Change l'heure actuelle
 procedure setHeureActuelle(valeur:Integer);
 var
-  dateActuelle : date;
+  dateActuelle : date;  //record date, permet de changer seulement l'heure de la date
 begin
   dateActuelle := getDate();
   dateActuelle.heure := valeur;
@@ -178,6 +204,7 @@ begin
 
 end;
 
+//Change la météo seulement si l'heure dépasse 6h du matin
 procedure meteoSuivante();
 begin
   if getHeureActuelle >= 6 then

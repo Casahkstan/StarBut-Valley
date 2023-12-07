@@ -19,7 +19,7 @@ type
 procedure initGarden();
 
 // Getter : Retourne toute la ferme du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getFerme() : emplacement;
 
 // Setter : Change la valeur de la ferme a la variable passée en paramètre
@@ -43,7 +43,7 @@ procedure Grandit();
 procedure Ramasse(numEmplacement:Integer);
 
 // Getter : Retourne le nom de la ferme du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getNomFerme() : String;
 
 // Setter : Change le nom de la ferme a la variable passée en paramètre
@@ -78,14 +78,14 @@ begin
     setFerme(fermeTemp);
 end;
 // Getter : Retourne toute la ferme du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getFerme() : emplacement;
 begin
     getFerme:=ferme;
 end;
 
 // Getter : Retourne le nom de la ferme du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getNomFerme() : String;
 begin
   getNomFerme := nomFerme;

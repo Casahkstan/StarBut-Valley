@@ -38,7 +38,7 @@ procedure SubInventory(iT : itemType; ammount : Integer);
 procedure setInventory(inv : inventory);
 
 // Getter : Retourne l'inventaire du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getInventory() : inventory;
 
 // Affiche l'inventaire ligne par ligne
@@ -48,7 +48,7 @@ procedure displayInventory();
 procedure upgradeInventory();
 
 // Getter : Retourne le niveau de l'inventaire du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getInventoryLevel() : Integer;
       
 // Retourne False si l'inventaire contient un stack non plein de l'item passé en paramètre, True sinon
@@ -321,7 +321,7 @@ begin
 end;
 
 // Getter : Retourne le niveau de l'inventaire du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getInventoryLevel() : Integer;
 begin
   getInventoryLevel := level;

@@ -15,7 +15,7 @@ interface
 	procedure Description(graine : String);
 
 	// Getter : Retourne les graines de saison du joueur
-	// ⚠️ Ne peut pas être utiliser pour modifier des variables
+	// ⚠️ Ne peut pas être utilisépour modifier des variables
 	function getSeed() : seedSaison;
 
 	procedure afficheGraines();
@@ -75,7 +75,7 @@ implementation
 	end;
 
 	// Getter : Retourne les graines de saison du joueur
-	// ⚠️ Ne peut pas être utiliser pour modifier des variables
+	// ⚠️ Ne peut pas être utilisépour modifier des variables
 	function getSeed() : seedSaison;
 	begin
 		getSeed := (listeSeeds[getDate().saison]);

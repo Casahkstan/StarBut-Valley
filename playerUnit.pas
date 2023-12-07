@@ -19,19 +19,19 @@ procedure setStamina(s : Integer);
 procedure setExp(e : Integer);
 
 // Getter : Retourne le nom du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getName() : String;
 
 // Getter : Retourne la money du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getMoney() : Integer;
 
 // Getter : Retourne la stamina du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getStamina() : Integer;
 
 // Getter : Retourne la quantité d'experience du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getExp() : Integer;
 
 //Permet au joueur de dormir
@@ -91,28 +91,28 @@ begin
 end;
 
 // Getter : Retourne le nom du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getName() : String;
 begin
   getName := username;
 end;
 
 // Getter : Retourne la money du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getMoney() : Integer;
 begin
   getMoney := money;
 end;
 
 // Getter : Retourne la stamina du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getStamina() : Integer;
 begin
   getStamina := stamina;
 end;
 
 // Getter : Retourne la quantité d'experience du joueur
-// ⚠️ Ne peut pas être utiliser pour modifier des variables
+// ⚠️ Ne peut pas être utilisépour modifier des variables
 function getExp() : Integer;
 begin
   getExp := experience;
