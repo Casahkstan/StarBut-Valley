@@ -9,7 +9,7 @@ interface
 	Seeds = Array [0..3] of seedSaison;
 			
 	// Init : procedure mettant les graines de saison dans les 4 saisons
-	procedure InitgraineSaison();
+	procedure initGraines();
 
 	// Description : Procédure donnant une description de chaque graine 
 	procedure Description(graine : String);
@@ -26,11 +26,12 @@ implementation
 		listeSeeds : Seeds;
 
 	// Init : procedure mettant les graines de saison disponible avec la saison en paramètre
-	procedure InitgraineSaison();
+	procedure initGraines();
 	var 
 		i,
 		j : Integer;
 		texte : text;
+		ligneTemp,
 		ligne : String;
 	begin
 		assign(texte,'./file/graine.txt');
@@ -39,10 +40,11 @@ implementation
 			begin
 				readln(texte,ligne);
 				j := LastDelimiter(',', ligne);
-				listeSeeds[i div 4, i mod 4].name := copy(ligne, 1, j-3);
+				ligneTemp := copy(ligne, low(j), j-1);
+				listeSeeds[i div 4, i mod 4].name := copy(ligneTemp, 1, LastDelimiter(',', ligneTemp)-1);
 				listeSeeds[i div 4, i mod 4].rarete := base;
 				listeSeeds[i div 4, i mod 4].saison := i div 4;
-				listeSeeds[i div 4, i mod 4].prix := StrToInt(copy(ligne, j-1, high(ligne)));
+				listeSeeds[i div 4, i mod 4].prix := StrToInt(copy(ligneTemp, LastDelimiter(',', ligneTemp)+1, high(ligneTemp)));
 				listeSeeds[i div 4, i mod 4].maturite := StrToInt(copy(ligne, j+1, high(ligne)));
 			end;
 	end;
