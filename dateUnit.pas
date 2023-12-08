@@ -1,7 +1,6 @@
 unit dateUnit;
 {$codepage utf-8}
 
-
 interface
 
 type
