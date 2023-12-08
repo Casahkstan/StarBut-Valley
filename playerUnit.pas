@@ -167,7 +167,7 @@ end;
 procedure Attendre();
 begin
   if (getHeureActuelle = 1) then
-    evanouissement;
+    evanouissement
   else
   begin
     if (getHeureActuelle + 1 > 23) then
