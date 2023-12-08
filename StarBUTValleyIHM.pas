@@ -280,6 +280,22 @@ begin
   EffaceRuban;
   rubanBasMaison;
 end;
+
+// ShopIHM : procedure qui affiche l'interface de la ferme
+procedure ShopIHM();
+begin
+  effacerEcran();
+  dessinerCadreXY(1,1,199,50,simple,White,Black);
+  AfficheLieuMaison;
+  Refresh;
+  deplacerCurseurXY(25,25);
+  write('Bienvenue chez vous !');
+  deplacerCurseurXY(25,27);
+  write('Votre lit et votre télé vous attend');
+  EffaceRuban;
+  rubanBasMaison;
+end;
+
 // debutPartie : procedure qui debute une partie 
 procedure debutPartie();
 var 
