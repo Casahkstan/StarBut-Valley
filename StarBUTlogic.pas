@@ -1,7 +1,6 @@
 unit StarBUTlogic;
 {$codepage utf-8}
 interface
-uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit,StarBUTValleyIHM,GestionEcran,sysutils;
 
 // choixMenuPrincipal : Retourne un booléen sur le choix du début du jeu si le joueur veur jouer
 function choixMenuPrincipal() : Boolean;
@@ -27,9 +26,12 @@ procedure Shop();
 // menuEmplacement : procedure qui ouvre un menu avec un emplecment passé en paramètre
 procedure menuEmplacement();
 
+//menuachete : menu qui propose soit d'acheter soit d'avoir une description des graines
+procedure menuachete();
+
 implementation
 
-
+uses weatherUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit,StarBUTValleyIHM,GestionEcran,sysutils,SeedUnit;
 
 // Initpartie : lance une partie complète de StarBUTValley
 procedure Initpartie();
@@ -129,7 +131,7 @@ begin
     end;
 end;
 
-// menuEmplacement : procedure qui ouvre un menu avec un emplecment passé en paramètre
+// menuEmplacement : procedure qui ouvre un menu avec un emplacment passé en paramètre
 procedure menuEmplacement();
 var
     num,choix1,choix2,i,j:Integer;
@@ -187,8 +189,19 @@ begin
                 write('Quel emplacement veux tu ramasser ?');
                 deplacerCurseurXY(45,35);
                 choix2:=ChoixEmplacement();
-                Ramasse(choix2);
-                effacerEcran;
+                if (EstVide(choix2)) or (getFerme[choix2].joursRestant>0) then
+                    begin
+                        effacerEcran;
+                        dessinerCadreXY(40,30,159,40,double,White,Black);
+                        deplacerCurseurXY(85,35);
+                        write('Emplacement vide ou pas mûr');
+                        attendrems(2000);
+                        effacerEcran;
+                    end
+                else
+                    begin
+                        Ramasse(choix2);
+                    end;
                 FermeIHM;
             end;
     end;
@@ -203,7 +216,7 @@ begin
     choix:=BatimentChoix();
     case choix of 
         1:MaisonIHM;
-        2:Shop();
+        2:ShopIHM;
         3:RubanEmplacement();
         4:arroseTout();
         9:debutPartie();
@@ -219,6 +232,7 @@ begin
         1..4:acheter(choix-1);
         5:upgradeInventory();
         6:description(getSeed()[choix].name);
+        7:ShopIHM
     end;
 end;
 // Shop : procédure qui lance chaque choix possible dans le shop
@@ -228,8 +242,8 @@ var
 begin
     choix:=BatimentChoix();
     case choix of 
-        1:Ferme();
-        2:Menuachete();
+        1:FermeIHM;
+        2:rubanMenuachete;
         3:vendre();
         9:debutPartie();
     end;
