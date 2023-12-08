@@ -158,7 +158,6 @@ end;
 procedure fatigue(point : Integer);
 begin
   setStamina(getStamina-point); 
-  heureSuivante;
   if getStamina <= 0 then
     evanouissement;
 end;
