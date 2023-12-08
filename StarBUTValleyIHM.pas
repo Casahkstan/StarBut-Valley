@@ -1,7 +1,7 @@
 unit StarBUTValleyIHM;
 {$codepage utf-8}
 interface
-
+uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit,weatherUnit,SeedUnit;
 { CADRE : 235 par 60 }
 // debutPartie : procedure qui debute une partie 
 procedure debutPartie();
@@ -18,11 +18,19 @@ procedure MaisonIHM();
 
 // affichePierre : procedure permettant d'afficher pierre
 procedure affichePierre(x,y:Integer); 
+
 //EffaceRuban
 procedure EffaceRuban();
+
+// ShopIHM : procedure qui affiche l'interface de la ferme
+procedure ShopIHM();
+
+//RubanMenuAchete : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un MenuAchete
+procedure RubanMenuAchete();
+
 implementation
 
-uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit,weatherUnit;
+
 
 // afficheLogo : procedure permettant d'afficher le logo
 procedure afficheLogo(x,y:Integer);
@@ -90,6 +98,15 @@ begin
   dessinerCadreXY(60,2,112,6,double,Black,White);
   deplacerCurseurXY(80,4);
   write('Lieu : Maison');
+  couleurTexte(Black);
+end;
+
+//AfficheLieuShop : procedure qui affiche le cadre avec le lieu actuel
+procedure AfficheLieuShop();
+begin
+  dessinerCadreXY(60,2,112,6,double,Black,White);
+  deplacerCurseurXY(76,4);
+  write('Lieu : Shop de Pierre');
   couleurTexte(Black);
 end;
 
@@ -237,6 +254,32 @@ begin
   rubanBasMaison();
 end;
 
+// rubanBasShop : procedure qui affiche le ruban en bas de l'écran
+procedure rubanBasShop();
+begin
+  EffaceRuban();  
+  deplacerCurseurXY(5,45);
+  write('1 - Aller à la ferme');
+  deplacerCurseurXY(35,45);
+  write('2 - Acheter');
+  deplacerCurseurXY(60,45);
+  write('3 - Vendre');
+  deplacerCurseurXY(125,45);
+  write('9 - Revenir au menu principal');
+  deplacerCurseurXY(10,47);
+  Shop();
+  deplacerCurseurXY(10,47);
+  write(' ');
+  refresh();
+  rubanBasShop;
+end;
+
+//rubanmenuachete : menu qui propose soit d'acheter soit d'avoir une description des graines
+procedure ruabnmenuachete();
+begin
+  
+end;
+
 //RubanEmplacement : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un emplacement
 procedure RubanEmplacement();
 begin
@@ -252,6 +295,31 @@ begin
   deplacerCurseurXY(10,47);
   write(' ');
   RubanEmplacement();
+end;
+
+//RubanMenuAchete : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un MenuAchete
+procedure RubanMenuAchete();
+begin
+  EffaceRuban();
+  deplacerCurseurXY(5,45);
+  write('1 - ',getSeed[0].name);
+  deplacerCurseurXY(25,45);
+  write('2 - ',getSeed[1].name);
+  deplacerCurseurXY(45,45);
+  write('3 - ',getSeed[2].name);
+  deplacerCurseurXY(65,45);
+  write('4 - ',getSeed[3].name);
+  deplacerCurseurXY(85,45);
+  write('5 - Améliore ton sac');
+  deplacerCurseurXY(115,45);
+  write('6 - Description des graines');
+  deplacerCurseurXY(145,45);
+  write('7 - Retour au Shop');
+  deplacerCurseurXY(10,47);
+  menuachete;
+  write(' ');
+  refresh;
+  RubanMenuAchete;
 end;
 
 // FermeIHM : procedure qui affiche l'interface de la ferme
@@ -276,7 +344,7 @@ begin
   deplacerCurseurXY(25,25);
   write('Bienvenue chez vous !');
   deplacerCurseurXY(25,27);
-  write('Votre lit et votre télé vous attend');
+  write('Votre lit et votre télé vous attendent...');
   EffaceRuban;
   rubanBasMaison;
 end;
@@ -286,14 +354,18 @@ procedure ShopIHM();
 begin
   effacerEcran();
   dessinerCadreXY(1,1,199,50,simple,White,Black);
-  AfficheLieuMaison;
+  AfficheLieuShop;
   Refresh;
-  deplacerCurseurXY(25,25);
-  write('Bienvenue chez vous !');
-  deplacerCurseurXY(25,27);
-  write('Votre lit et votre télé vous attend');
+  deplacerCurseurXY(25,20);
+  write('Bienvenue dans le magasin de Pierre !');
+  deplacerCurseurXY(25,22);
+  write('Il a de nombreux produits à vous proposer');
+  deplacerCurseurXY(25,24);
+  write('Vous pouvez acheter ou vendre des produits');
+  deplacerCurseurXY(25,26);
+  write('Vous pouvez aussi avoir une description des graines');
   EffaceRuban;
-  rubanBasMaison;
+  rubanBasShop;
 end;
 
 // debutPartie : procedure qui debute une partie 
