@@ -3,7 +3,7 @@ unit shopPierre;
 {$mode objfpc}{$H+}
 
 interface
-uses inventoryUnit, SeedUnit,playerUnit;
+uses inventoryUnit, SeedUnit,playerUnit,StarBUTValleyIHM,sysutils,GestionEcran;
 type
 	shop = array[0..3] of itemType;	// Boutique de Pierre
   
@@ -46,25 +46,37 @@ var
 	money,	// Argent du joueur
 	prix,	// Prix d'une graine
 	choix,	// Choix du joueur
+	i,j,	//Compteurs
 	multiplicateurRarete : Integer;	// Multiplie le prix d'un objet selon sa rareté
 begin
-	writeln('Que voulez vous vendre ? (entrer le numéro de l''objet a vendre)');
-	displayInventory();
+	effacerEcran;
+	for i:=0 to getInventoryLevel do
+		for j:=0 to 4 do 
+			begin
+				deplacerCurseurXY(10+j*40,40+i*3);
+				write(getInventory[i*5+j].Itype.name+' vous en avez '+IntToStr(getInventory[i*5+j].stack)); 
+			end;
+	affichageMessage(89,110,10,14,'Que veux-tu vendre ?');
+	deplacerCurseurXY(95,13);
 	readln(choix);
+	effacerEcran;
 	inv := getInventory;
-	if inv[choix].iType.name = 'Vide' then
+	if inv[choix-1].iType.name = 'Vide' then
 	begin
-		writeln('Impossible de vendre ceci !');
+		affichageMessage(85,113,24,26,'Impossible de vendre ceci !');
+		attendrems(1000);
+		ShopIHM;
 	end
 	else
 	begin
-		prix := inv[choix].iType.prix;
+		prix := inv[choix-1].iType.prix;
 		repeat
-			writeln('Combien souhaitez vous en vendre, max ', getNombreOccu(inv[choix].iType));
+			affichageMessage(79,119,10,14,'Combien souhaitez vous en vendre, max '+IntToStr(getNombreOccu(inv[choix-1].iType)));
+			deplacerCurseurXY(82,13);
 			readln(nbVente)
-		until (nbVente <= getNombreOccu(inv[choix].iType));
-		SubInventory(inv[choix].iType, nbVente);
-		case inv[choix].iType.rarete of
+		until (nbVente <= getNombreOccu(inv[choix-1].iType));
+		SubInventory(inv[choix-1].iType, nbVente);
+		case inv[choix-1].iType.rarete of
 			base: multiplicateurRarete := 1;
 			silver: multiplicateurRarete := 2;
 			gold: multiplicateurRarete := 3;
@@ -73,7 +85,11 @@ begin
 		money := getMoney;
 		money := money + (prix + 1 * multiplicateurRarete) * nbVente;
 		setMoney(money);
-		writeln('Vente terminée');
+		effacerEcran;
+		affichageMessage(85,113,24,26,'Vente terminée');
+		readln;
+		effacerEcran;
+		ShopIHM;
 	end;
 end;
 

@@ -28,6 +28,9 @@ procedure ShopIHM();
 //RubanMenuAchete : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un MenuAchete
 procedure RubanMenuAchete();
 
+//Affiche un message au centre de l'écran
+procedure affichageMessage(x1,x2,y1,y2:Integer;message : String);
+
 implementation
 
 
@@ -143,13 +146,13 @@ begin
         end;
     end;
 end;
+
 //Affiche un message au centre de l'écran
 procedure affichageMessage(x1,x2,y1,y2:Integer;message : String);
 begin
   dessinerCadreXY(x1,y1,x2,y2,double, black, white);
-  deplacerCurseurXY(x1+1, (y2-y1) +y1 div 2 );
+  deplacerCurseurXY(x1+1, y1+1);
   write(message);
-  readln();
 end;
 
 // menuDepartIHM : IHM du menu de debut 

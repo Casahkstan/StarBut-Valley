@@ -46,25 +46,25 @@ end;
 procedure Description(graine:String);
 begin
 	case graine of 
-		'carotte':write('Leur prix est de 5 d''or et leur temps de maturation est de 3 jours');
-		'epinard':write('Leur prix est de 3 d''or et leur temps de maturation est de 2 jours');
-		'chou':write('Leur prix est de 10 d''or et leur temps de maturation est de 5 jours');
-		'poireau':write('Leur prix est de 2 d''or et leur temps de maturation est de 1 jours');
+		'carotte':write('leur prix est de 5 or et leur temps de maturation est de 3 jours');
+		'epinard':write('leur prix est de 3 or et leur temps de maturation est de 2 jours');
+		'chou':write('leur prix est de 10 or et leur temps de maturation est de 5 jours');
+		'poireau':write('leur prix est de 2 or et leur temps de maturation est de 1 jours');
 
-		'tomate':write('Leur prix est de 6 d''or et leur temps de maturation est de 3 jours');
-		'poivron':write('Leur prix est de 4 d''or et leur temps de maturation est de 2 jours');
-		'haricot':write('Leur prix est de 1 d''or et leur temps de maturation est de 1 jours');
-		'concombre':write('Leur prix est de 9 d''or et leur temps de maturation est de 4 jours');  
+		'tomate':write('leur prix est de 6 or et leur temps de maturation est de 3 jours');
+		'poivron':write('leur prix est de 4 or et leur temps de maturation est de 2 jours');
+		'haricot':write('leur prix est de 1 or et leur temps de maturation est de 1 jours');
+		'concombre':write('leur prix est de 9 or et leur temps de maturation est de 4 jours');  
 
-		'asperge':write('Leur prix est de 5 d''or et leur temps de maturation est de 3 jours');
-		'pois':write('Leur prix est de 1 d''or et leur temps de maturation est de 1 jours');
-		'radis':write('Leur prix est de 4 d''or et leur temps de maturation est de 2 jours');
-		'ail':write('Leur prix est de 9 d''or et leur temps de maturation est de 4 jours');
+		'asperge':write('leur prix est de 5 or et leur temps de maturation est de 3 jours');
+		'pois':write('leur prix est de 1 or et leur temps de maturation est de 1 jours');
+		'radis':write('leur prix est de 4 or et leur temps de maturation est de 2 jours');
+		'ail':write('leur prix est de 9 or et leur temps de maturation est de 4 jours');
 
-		'brocolis':write('Leur prix est de 4 d''or et leur temps de maturation est de 2 jours');
-		'citrouille':write('Leur prix est de 10 d''or et leur temps de maturation est de 5 jours');
-		'mache':write('Leur prix est de 5 d''or et leur temps de maturation est de 3 jours');
-		'oignon':write('Leur prix est de 2 d''or et leur temps de maturation est de 1 jours');
+		'brocolis':write('leur prix est de 4 or et leur temps de maturation est de 2 jours');
+		'citrouille':write('leur prix est de 10 or et leur temps de maturation est de 5 jours');
+		'mache':write('leur prix est de 5 or et leur temps de maturation est de 3 jours');
+		'oignon':write('leur prix est de 2 or et leur temps de maturation est de 1 jours');
 	end;
 end;
 
@@ -244,7 +244,11 @@ begin
         1:MaisonIHM;
         2:ShopIHM;
         3:RubanEmplacement();
-        4:arroseTout();
+        4:
+            begin
+                arroseTout();
+                FermeIHM;
+            end;
         9:debutPartie();
     end;
 end;
@@ -261,7 +265,8 @@ begin
             begin
                 for i:=0 to 3 do 
                     begin
-                        deplacerCurseurXY(80,20+i*5);
+                        deplacerCurseurXY(120,20+i*2);
+                        write(getSeed[i].name+' : ');
                         Description(getSeed[i].name);
                     end;
             end;
