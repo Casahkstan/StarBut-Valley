@@ -42,6 +42,32 @@ begin
     initDate();
 end;
 
+// Description : Procédure donnant une description de chaque graine 
+procedure Description(graine:String);
+begin
+	case graine of 
+		'carotte':write('Leur prix est de 5 d''or et leur temps de maturation est de 3 jours');
+		'epinard':write('Leur prix est de 3 d''or et leur temps de maturation est de 2 jours');
+		'chou':write('Leur prix est de 10 d''or et leur temps de maturation est de 5 jours');
+		'poireau':write('Leur prix est de 2 d''or et leur temps de maturation est de 1 jours');
+
+		'tomate':write('Leur prix est de 6 d''or et leur temps de maturation est de 3 jours');
+		'poivron':write('Leur prix est de 4 d''or et leur temps de maturation est de 2 jours');
+		'haricot':write('Leur prix est de 1 d''or et leur temps de maturation est de 1 jours');
+		'concombre':write('Leur prix est de 9 d''or et leur temps de maturation est de 4 jours');  
+
+		'asperge':write('Leur prix est de 5 d''or et leur temps de maturation est de 3 jours');
+		'pois':write('Leur prix est de 1 d''or et leur temps de maturation est de 1 jours');
+		'radis':write('Leur prix est de 4 d''or et leur temps de maturation est de 2 jours');
+		'ail':write('Leur prix est de 9 d''or et leur temps de maturation est de 4 jours');
+
+		'brocolis':write('Leur prix est de 4 d''or et leur temps de maturation est de 2 jours');
+		'citrouille':write('Leur prix est de 10 d''or et leur temps de maturation est de 5 jours');
+		'mache':write('Leur prix est de 5 d''or et leur temps de maturation est de 3 jours');
+		'oignon':write('Leur prix est de 2 d''or et leur temps de maturation est de 1 jours');
+	end;
+end;
+
 // choixMenuPrincipal : Retourne un booléen sur le choix du début du jeu si le joueur veur jouer
 function choixMenuPrincipal() : Boolean;
 var 
@@ -225,14 +251,21 @@ end;
 //menuachete : menu qui propose soit d'acheter soit d'avoir une description des graines
 procedure menuachete();
 var 
-    choix:Integer;
+    choix,i:Integer;
 begin
     choix:=ChoixEmplacement();
     case choix of 
         1..4:acheter(choix-1);
         5:upgradeInventory();
-        6:description(getSeed()[choix].name);
-        7:ShopIHM
+        6:
+            begin
+                for i:=0 to 3 do 
+                    begin
+                        deplacerCurseurXY(80,20+i*5);
+                        Description(getSeed[i].name);
+                    end;
+            end;
+        7:ShopIHM;
     end;
 end;
 // Shop : procédure qui lance chaque choix possible dans le shop
