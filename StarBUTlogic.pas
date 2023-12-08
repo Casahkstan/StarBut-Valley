@@ -1,7 +1,7 @@
 unit StarBUTlogic;
 {$codepage utf-8}
 interface
-uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit,StarBUTValleyIHM,GestionEcran;
+uses weatherUnit,SeedUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit,StarBUTValleyIHM,GestionEcran,sysutils;
 
 // choixMenuPrincipal : Retourne un booléen sur le choix du début du jeu si le joueur veur jouer
 function choixMenuPrincipal() : Boolean;
@@ -138,18 +138,19 @@ begin
     case num of 
         1:
             begin
-                EffaceRuban();
+                effacerEcran;
                 dessinerCadreXY(40,20,159,30,double,White,Black);
                 deplacerCurseurXY(68,22);
                 write('Quel graine de ton inventaire choisis tu (numéro de slot)');
-                for i:=0 to getInventoryLevel-1 do
+                for i:=0 to getInventoryLevel do
                     for j:=0 to 4 do 
                         begin
-                            deplacerCurseurXY(1+j*40,30+i*3);
-                            write(getInventory.Item.name+IntToStr(getInventory.stack)); 
+                            deplacerCurseurXY(1+j*40,40+i*3);
+                            write(getInventory[i*5+j].Itype.name+' vous en avez '+IntToStr(getInventory[i*5+j].stack)); 
                         end;
                 deplacerCurseurXY(45,25);
                 choix1:=ChoixEmplacement();
+                effacerEcran;
                 dessinerCadreXY(40,30,159,40,double,White,Black);
                 deplacerCurseurXY(75,32);
                 write('Sur quel emplacement veux-tu le planter ?');
