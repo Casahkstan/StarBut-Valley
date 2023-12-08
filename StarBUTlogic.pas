@@ -132,17 +132,23 @@ end;
 // menuEmplacement : procedure qui ouvre un menu avec un emplecment passé en paramètre
 procedure menuEmplacement();
 var
-    num,choix1,choix2:Integer;
+    num,choix1,choix2,i,j:Integer;
 begin
     num:=ChoixEmplacement();
     case num of 
         1:
             begin
                 EffaceRuban();
-                dessinerCadreXY(40,30,159,40,double,White,Black);
-                deplacerCurseurXY(75,32);
+                dessinerCadreXY(40,20,159,30,double,White,Black);
+                deplacerCurseurXY(68,22);
                 write('Quel graine de ton inventaire choisis tu (numéro de slot)');
-                deplacerCurseurXY(45,35);
+                for i:=0 to getInventoryLevel-1 do
+                    for j:=0 to 4 do 
+                        begin
+                            deplacerCurseurXY(1+j*40,30+i*3);
+                            write(getInventory.Item.name+IntToStr(getInventory.stack)); 
+                        end;
+                deplacerCurseurXY(45,25);
                 choix1:=ChoixEmplacement();
                 dessinerCadreXY(40,30,159,40,double,White,Black);
                 deplacerCurseurXY(75,32);
