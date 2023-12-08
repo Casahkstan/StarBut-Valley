@@ -197,6 +197,7 @@ begin
         begin
             retour:=fermeTemp[numEmplacement].elem;
             retour.rarete:=DonneRarete();
+            retour.legume := True;
             ClearEmplacement(numEmplacement);
         end;
   AddInventory(retour, 1);

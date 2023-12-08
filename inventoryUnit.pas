@@ -2,7 +2,7 @@ unit inventoryUnit;
 
 
 interface
-uses playerUnit, dateUnit, math,sysutils,GestionEcran;
+uses playerUnit, dateUnit, math, sysutils, GestionEcran;
 // Types utilisé pour l'inventaire 
 type
   Rarity = (base, silver, gold, iridium); // 4 niveaux de rareté pour une graine
@@ -14,6 +14,7 @@ type
     saison : Integer;
     prix : Integer;
     maturite : Integer; // Chaque type d'item a 5 caractéristiques, un nom, une rareté...
+    legume : Boolean;
   end;
 
   Item = record
@@ -83,6 +84,7 @@ begin
   iType.saison := -1;
   iType.prix := 0;
   iType.maturite := 0;
+  iType.legume := false;
   itemVide.iType := iType;
   itemVide.stack := 0;
   for i := low(inventaire) to high(inventaire) do
@@ -127,7 +129,7 @@ begin
     // Récupère l'indice de l'item
     while (i < high(inv)) and not estPresent do
     begin
-      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
+      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) then
         estPresent := True;
       i := i + 1;
     end;
@@ -182,7 +184,7 @@ begin
     i := low(inv);
     while (ammount <> 0) and (i < high(inv)) do
     begin
-      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
+      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) then
       begin
         itType.name := 'Vide';
         itType.rarete := Rarity.base;
@@ -292,7 +294,7 @@ begin
   stackDispo := False;
   while (i <= high(inv)) and (stackDispo = False) do
   begin
-    if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].stack <> 5) then
+    if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) and (inv[i].stack <> 5) then
       stackDispo := True;
     i := i + 1;
   end;
@@ -312,7 +314,7 @@ begin
   estPresent := False;
   while (i < high(inv)) and not estPresent do
   begin
-    if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
+    if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) then
       estPresent := True;
     i := i + 1;
   end;
@@ -349,7 +351,7 @@ begin
   getNombreOccu := 0;
   for i := low(inv) to high(inv) do
     begin
-      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) then
+      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) then
       begin
         getNombreOccu := getNombreOccu + 1;
       end;
