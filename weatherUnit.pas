@@ -9,14 +9,22 @@ uses dateUnit;
 type
   TWeather=(Soleil,Pluie,Neige,Orage);  //Différents types de météo
 
-
+// Getter : Retourne la météo actuelle
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getCurrentWeather():TWeather;
+// Setter : Change la météo actuelle
 procedure setCurrentWeather(valeur : TWeather);
 
+// Getter : Retourne la météo du lendemain
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getFutureWeather():TWeather;
+// Setter : Change la météo du lendemain
 procedure setFutureWeather(valeur : TWeather);
 
+// Getter : Retourne la valeur aléatoire
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getAleatoire():Integer;
+// Setter : Change la valeur aléatoire
 procedure setAleatoire(valeur:Integer);
 
 //Génère un nombre aléatoire
@@ -25,41 +33,51 @@ procedure randomWeather();
 //Change la météo actuelle selon la saison
 procedure saisonnalite();
 
+// Renvoie la météo du lendemain
 function chaineMeteo() : TWeather;
 
 implementation
 
 var
-  futureWeather,
-  currentWeather : TWeather;
-  aleatoire : Integer;
+  futureWeather,  // Météo du lendemain
+  currentWeather : TWeather;  // Météo courante
+  aleatoire : Integer;  // Nombre aléatoire
 
+// Getter : Retourne la météo actuelle
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getCurrentWeather():TWeather;
 begin
   getCurrentWeather := currentWeather;
 end;
 
+// Setter : Change la météo actuelle
 procedure setCurrentWeather(valeur : TWeather);
 begin
   currentWeather := valeur;
   
 end;
 
+// Getter : Retourne la météo du lendemain
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getFutureWeather():TWeather;
 begin
   getFutureWeather := futureWeather;
 end;
 
+// Setter : Change la météo du lendemain
 procedure setFutureWeather(valeur : TWeather);
 begin
   futureWeather := valeur;
 end;
 
+// Getter : Retourne la valeur aléatoire
+// ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getAleatoire():Integer;
 begin
   getAleatoire := aleatoire;
 end;
 
+// Setter : Change la valeur aléatoire
 procedure setAleatoire(valeur:Integer);
 begin
   aleatoire := valeur;
@@ -102,6 +120,7 @@ begin
   end;
 end;
 
+// Renvoie la météo du lendemain
 function chaineMeteo() : TWeather;
 begin
   randomWeather;
