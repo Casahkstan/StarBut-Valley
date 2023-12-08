@@ -274,12 +274,6 @@ begin
   rubanBasShop;
 end;
 
-//rubanmenuachete : menu qui propose soit d'acheter soit d'avoir une description des graines
-procedure ruabnmenuachete();
-begin
-  
-end;
-
 //RubanEmplacement : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un emplacement
 procedure RubanEmplacement();
 begin

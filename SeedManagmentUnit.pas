@@ -65,6 +65,8 @@ procedure secher(num : Integer);
 //  secherTout : Parcourt la ferme et sèche tous ses emplacements
 procedure secherTout();
 
+procedure toutAmeliorer();
+
 implementation
 var
     ferme:emplacement;  // Ferme du jeu
