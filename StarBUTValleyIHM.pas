@@ -45,10 +45,9 @@ begin
   effacerEcran();
   dessinerCadreXY(25,5,135,49,simple,White,Black);
   afficheLogo(45,6);
-  deplacerCurseurXY(94,40);
+  deplacerCurseurXY(49,40);
   write('Merci d''avoir joué');
   readln;
-  debutPartie;
 end;
 
 // afficheLogo : procedure permettant d'afficher le logo
@@ -417,8 +416,10 @@ begin
       write('Vous arrivez dans votre ferme');
       readln();
       FermeIHM();
-    end;
+    end
+  else
+  begin
+    ecranFin;
+  end;
 end;
-
-
 end.
