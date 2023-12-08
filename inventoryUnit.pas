@@ -246,7 +246,7 @@ var
 begin
   if not isMaxed then
   begin
-    if getMoney > Round(100 * power(1.4, getInventoryLevel+1)) then
+    if getMoney > Round(100 * math.power(1.4, getInventoryLevel+1)) then
     begin
       setMoney(getMoney - Round(100*math.power(1.4, getInventoryLevel)));
       inv := getInventory();

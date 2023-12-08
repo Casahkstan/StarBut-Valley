@@ -138,6 +138,7 @@ var
 begin
     if EstVide(numEmplacement) then 
         begin
+            SubInventory(seed, 1);
             fermeTemp := getFerme();
             fermeTemp[numEmplacement].elem.name := seed.name;
             fermeTemp[numEmplacement].elem.rarete := seed.rarete;
