@@ -120,8 +120,11 @@ end;
 
 // Permet au joueur de dormir seulement entre 6h et 1h du matin, sinon, il s'évanouit
 procedure repos();
+var
+  heure : Integer;
 begin
-  case getHeureActuelle of
+  heure := getHeureActuelle;
+  case heure of
     6..23 : begin
       jourSuivant();
       setHeureActuelle(6);
