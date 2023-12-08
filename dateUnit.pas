@@ -65,8 +65,8 @@ procedure heureSuivante();
 //Passe à la météo suivante
 procedure meteoSuivante();
 
-
-
+// Retourne une chaine de caractère correspondant au nom de la saison actuelle
+function getSaisonName() : String;
 
 
 
@@ -233,4 +233,17 @@ begin
   end;
 end;
 
+// Retourne une chaine de caractère correspondant au nom de la saison actuelle
+function getSaisonName() : String;
+var
+  saisonValue : Integer;
+begin
+  saisonValue := getSaisonActuelle;
+  case saisonValue of
+    0 : getSaisonName := 'Printemps';
+    1 : getSaisonName := 'Été';
+    2 : getSaisonName := 'Automne';
+    3 : getSaisonName := 'Hiver';
+  end;
+end;
 end.
