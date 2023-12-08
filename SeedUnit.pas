@@ -52,6 +52,7 @@ begin
 			listeSeeds[i div 4, i mod 4].saison := i div 4;
 			listeSeeds[i div 4, i mod 4].prix := StrToInt(copy(ligneTemp, LastDelimiter(',', ligneTemp)+1, high(ligneTemp)));
 			listeSeeds[i div 4, i mod 4].maturite := StrToInt(copy(ligne, j+1, high(ligne)));
+			listeSeeds[i div 4, i mod 4].legume := false;
 		end;
 end;
 
