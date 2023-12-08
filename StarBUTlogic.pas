@@ -280,7 +280,10 @@ var
 begin
     choix:=BatimentChoix();
     case choix of 
-        1:FermeIHM;
+        1:begin
+          heureSuivante;
+          FermeIHM;
+        end;
         2:rubanMenuachete;
         3:vendre();
         9:debutPartie;
