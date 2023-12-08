@@ -2,7 +2,7 @@ unit SeedManagmentUnit;
 {$codepage utf-8}
 interface
 
-uses inventoryUnit,dateUnit,playerUnit,weatherUnit;
+uses inventoryUnit;
 type 
 
     slot = record 
@@ -68,6 +68,7 @@ procedure secherTout();
 procedure toutAmeliorer();
 
 implementation
+uses dateUnit,playerUnit,weatherUnit, GestionEcran;
 var
     ferme:emplacement;  // Ferme du jeu
     nomFerme : String;  // Nom de la ferme
@@ -136,20 +137,42 @@ procedure AddSeed(numEmplacement : Integer; seed : itemType);
 var
   fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
-    if EstVide(numEmplacement) then 
+    if EstVide(numEmplacement) and (seed.name <> 'Vide') and (not seed.legume) then 
         begin
+            SubInventory(seed, 1);
             fermeTemp := getFerme();
             fermeTemp[numEmplacement].elem.name := seed.name;
             fermeTemp[numEmplacement].elem.rarete := seed.rarete;
             fermeTemp[numEmplacement].elem.saison := seed.saison;
             fermeTemp[numEmplacement].elem.prix := seed.prix;
             fermeTemp[numEmplacement].elem.maturite := seed.maturite;
+            fermeTemp[numEmplacement].elem.legume := false;
             fermeTemp[numEmplacement].joursRestant := seed.maturite;
             fermeTemp[numEmplacement].arrose := false;
             fermeTemp[numEmplacement].joursPlante := getNumJour();
             fermeTemp[numEmplacement].joursMature := getFerme()[numEmplacement].joursPlante+fermeTemp[numEmplacement].elem.maturite;
             setFerme(fermeTemp);
+            Fatigue(2);
+            heureSuivante;
         end;
+end;
+
+procedure ameliorer(n : Integer);
+var
+  fermeTemp : emplacement;
+begin
+  fermeTemp := getFerme;  
+  if (fermeTemp[n].arrose = true) and (fermeTemp[n].elem.name <> 'Emplacement vide') and (fermeTemp[n].joursRestant <> 0) then
+    fermeTemp[n].joursRestant := fermeTemp[n].joursRestant - 1;
+  setFerme(fermeTemp);
+end;
+
+procedure toutAmeliorer();
+var
+  i : Integer;
+begin
+  for i:= low(getFerme) to high(getFerme) do
+    ameliorer(i);
 end;
 
 // Grandit : reduit de 1 la valeur du jours restant
@@ -178,7 +201,9 @@ begin
         begin
             retour:=fermeTemp[numEmplacement].elem;
             retour.rarete:=DonneRarete();
+            retour.legume := True;
             ClearEmplacement(numEmplacement);
+            addExperience(multiplicateurRarete(retour));
         end;
   AddInventory(retour, 1);
 end;
@@ -193,10 +218,11 @@ var
     probRarete:Rarity;  // Rareté, renvoyé, la rareté d'une graine suivant le niveau du joueur 
 begin
     Randomize;
+    attendrems(10);
     numChance:=random(101);
-    chanceBase:=78-(3*getExp());
-    chanceArgent:=14+getExp();
-    chanceOr:=8+getExp();
+    chanceBase:=78-(3*getExpLevel());
+    chanceArgent:=14+getExpLevel();
+    chanceOr:=8+getExpLevel();
     if (numChance >= 0) and (numChance <= chanceBase) then
       probRarete := Rarity.base
     else
@@ -253,6 +279,7 @@ var
 begin
   for i:=low(getFerme) to high(getFerme) do
     arrose(i);
+  heureSuivante;
 end;
 
 // joursPluvieux : arrose automatiquement les emplacements s'il pleut
@@ -278,12 +305,9 @@ end;
 //  secherTout : Parcourt la ferme et sèche tous ses emplacements
 procedure secherTout();
 var
-  fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
   i : Integer;  //Entier, parcourt les slots de la ferme
 begin
-  fermeTemp := getFerme;
-  for i := low(fermeTemp) to high(fermeTemp) do
+  for i := low(getFerme) to high(getFerme) do
     secher(i);
-  setFerme(fermeTemp);
 end;
 end.

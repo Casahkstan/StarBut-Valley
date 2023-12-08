@@ -203,6 +203,8 @@ begin
   else
     setJourActuel(succ(getDate().jour));
   setNumJour(getNumJour()+1);
+  toutAmeliorer();
+  secherTout();
   if (getNumJour mod 28) = 1 then
   begin
     saisonSuivante();
