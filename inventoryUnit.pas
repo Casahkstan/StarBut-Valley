@@ -2,7 +2,7 @@ unit inventoryUnit;
 
 
 interface
-uses playerUnit, dateUnit, math;
+uses playerUnit, dateUnit, math,sysutils,GestionEcran;
 // Types utilisé pour l'inventaire 
 type
   Rarity = (base, silver, gold, iridium); // 4 niveaux de rareté pour une graine
@@ -265,11 +265,19 @@ begin
     end
     else
     begin
-      writeln('Pas assez de money')
+      effacerEcran; 
+      affichageMessage(88,110,10,14,'Pas assez d''argent');
+      readln;
+      effacerEcran;
+      ShopIHM;
     end;
   end
   else
-    writeln('Sac max');
+    effacerEcran; 
+      affichageMessage(88,110,10,14,'Sac max');
+      readln;
+      effacerEcran;
+      ShopIHM;
 end;
 
 // Retourne False si l'inventaire contient un stack non plein de l'item passé en paramètre, True sinon
