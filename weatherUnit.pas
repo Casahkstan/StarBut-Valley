@@ -78,8 +78,8 @@ procedure saisonnalite();
 begin
   case getSaisonActuelle of
     0 : case getAleatoire of
-      0..59 : setFutureWeather(Soleil);
-      60..89 : setFutureWeather(Pluie);
+      0..49 : setFutureWeather(Soleil);
+      50..89 : setFutureWeather(Pluie);
       90..99 : setFutureWeather(Orage); 
       // 60% que la météo soit ensoleillée,30% qu'elle soit pluvieuse et 10% pour qu'elle soit orageuse au Printemps ; même principe à la suite
     end;

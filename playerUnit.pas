@@ -166,9 +166,13 @@ end;
 // Attendre : permet au joueur d'attendre 1heure
 procedure Attendre();
 begin
-  if (getHeureActuelle <1) or (getHeureActuelle>6) then 
+  if (getHeureActuelle = 1) then
+    evanouissement;
+  else
+  begin
     if (getHeureActuelle + 1 > 23) then
       jourSuivant(); // Passage au jour suivant si attente à 23h
-    setHeureActuelle((getHeureActuelle()+1)mod 24);   //le mod 24 permet de revenir à 0 si l'heure est à 23 
+    setHeureActuelle((getHeureActuelle()+1)mod 24);   //le mod 24 permet de revenir à 0 si l'heure est à 23
+  end;
 end;
 end.
