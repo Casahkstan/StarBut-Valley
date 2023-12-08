@@ -153,7 +153,7 @@ begin
                 readln;
                 MaisonIHM;
             end;
-        9:debutPartie();
+        9:ecranFin;
     end;
 end;
 
@@ -249,7 +249,7 @@ begin
                 arroseTout();
                 FermeIHM;
             end;
-        9:debutPartie();
+        9:ecranFin;
     end;
 end;
 //menuachete : menu qui propose soit d'acheter soit d'avoir une description des graines
@@ -283,7 +283,7 @@ begin
         1:FermeIHM;
         2:rubanMenuachete;
         3:vendre();
-        9:debutPartie();
+        9:ecranFin;
     end;
 end;
 end.
