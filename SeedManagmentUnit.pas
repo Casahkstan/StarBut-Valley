@@ -177,12 +177,7 @@ begin
             retour:=fermeTemp[numEmplacement].elem;
             retour.rarete:=DonneRarete();
             ClearEmplacement(numEmplacement);
-        end
-    else
-    begin
-        writeln('Vous ne pouvez pas ramassé.');
-        writeln('Veuillez attendre ou planter une graine');
-    end;
+        end;
   AddInventory(retour, 1);
 end;
 
