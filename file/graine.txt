@@ -7,7 +7,7 @@ poivron,4,2
 haricot,1,1
 concombre,9,4
 brocolis,4,2
-citrouille,1,50
+citrouille,1,5
 mache,5,3
 oignon,2,1
 carotte,5,3
