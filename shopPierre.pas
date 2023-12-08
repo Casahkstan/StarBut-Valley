@@ -61,7 +61,7 @@ begin
 	readln(choix);
 	effacerEcran;
 	inv := getInventory;
-	if inv[choix-1].iType.name = 'Vide' or not inv[choix-1].iType.legume then
+	if (inv[choix-1].iType.name = 'Vide') or not inv[choix-1].iType.legume then
 	begin
 		affichageMessage(85,113,24,26,'Impossible de vendre ceci !');
 		attendrems(1000);

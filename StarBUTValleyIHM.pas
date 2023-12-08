@@ -1,7 +1,7 @@
 unit StarBUTValleyIHM;
 {$codepage utf-8}
 interface
-uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit,weatherUnit,SeedUnit;
+
 { CADRE : 235 par 60 }
 // debutPartie : procedure qui debute une partie 
 procedure debutPartie();
@@ -11,6 +11,9 @@ procedure RubanEmplacement();
 
 // FermeIHM : procedure qui affiche l'interface de la ferme
 procedure FermeIHM();
+
+// afficheLogo : procedure permettant d'afficher le logo
+procedure afficheLogo(x,y:Integer);
 
 // MaisonIHM : procedure qui affiche l'interface de la ferme
 procedure MaisonIHM();
@@ -35,7 +38,7 @@ procedure affichageMessage(x1,x2,y1,y2:Integer;message : String);
 procedure ecranFin();
 
 implementation
-
+uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit,weatherUnit,SeedUnit;
 // ecranFin :  procedure qui affiche l'ecran de fin
 procedure ecranFin();
 begin
@@ -44,6 +47,7 @@ begin
   afficheLogo(45,6);
   deplacerCurseurXY(94,40);
   write('Merci d''avoir joué');
+  readln;
   debutPartie;
 end;
 
