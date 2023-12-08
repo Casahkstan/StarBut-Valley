@@ -296,12 +296,9 @@ end;
 //  secherTout : Parcourt la ferme et sèche tous ses emplacements
 procedure secherTout();
 var
-  fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
   i : Integer;  //Entier, parcourt les slots de la ferme
 begin
-  fermeTemp := getFerme;
-  for i := low(fermeTemp) to high(fermeTemp) do
+  for i := low(getFerme) to high(getFerme) do
     secher(i);
-  setFerme(fermeTemp);
 end;
 end.
