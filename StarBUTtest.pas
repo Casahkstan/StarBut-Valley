@@ -4,6 +4,8 @@ unit StarBUTtest;
 {$mode objfpc}{$H+}
 
 interface
+
+// Réalise l'ensemble des tests unitaires
 procedure test();
 
 implementation
@@ -18,11 +20,12 @@ begin
     compareRec := False;
 end;
 
+// Réalise le test sur l'initialisation du joueur
 procedure InitialisationJoueur_Test();
 var
-  estVide : Boolean;
-  inv : inventory;
-  i : Integer;
+  estVide : Boolean;  
+  inv : inventory;  // Inventaire du joueur
+  i : Integer;    // Entier, parcourt l'inventaire du joueur
 begin
   newTestsSeries('Initialisation Joueur');
   initPlayer();
@@ -41,9 +44,10 @@ begin
   testIsEqual(length(getInventory), 5);
 end;
 
+// Réalise les tests sur l'unité date
 procedure Dates_Test();
 var
-  dateTest : date;
+  dateTest : date;  // Date temporaire pour le test
 begin
   newTestsSeries('Gestion des dates');
   initDate;
@@ -69,15 +73,16 @@ begin
   testIsEqual(getDate().annee, 2024);
 end;
 
+// Réalise les tests sur les graines
 procedure Seeds_Test();
 var 
   i,
-  j : Integer;
-  texte : text;
-  ligneTemp,
-  ligne : String;
-  sameSeeds : Boolean;
-  seed : Seeds;
+  j : Integer;  // Entier, délimite les lignes
+  texte : text; // Texte, stocke le texte du document
+  ligneTemp,  
+  ligne : String; // Lignes du texte
+  sameSeeds : Boolean;  // True si ce sont les mêmes graines, false sinon
+  seed : Seeds; 
   seedActuelle : itemType;
 begin
   newTestsSeries('Test sur les graines');
@@ -108,6 +113,7 @@ begin
   testIsEqual(sameSeeds);
 end;
 
+// Réalise l'ensemble des tests unitaires
 procedure test();
 begin
   InitialisationJoueur_Test;
