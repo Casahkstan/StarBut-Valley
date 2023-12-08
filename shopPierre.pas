@@ -29,6 +29,7 @@ begin
 		begin
 			money := money - produit[choix].prix;
 			AddInventory(produit[choix], 1);
+			setMoney(money);
 		end
 	else
 		writeln('Inventaire plein');
