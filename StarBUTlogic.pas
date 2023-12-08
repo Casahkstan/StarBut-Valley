@@ -99,8 +99,32 @@ begin
     case choix of 
         1:FermeIHM;
         2:Attendre();
-        3:repos();
-        4:write(chaineMeteo());
+        3:
+            begin
+                EffaceRuban;
+                dessinerCadreXY(40,30,159,40,double,White,Black);
+                deplacerCurseurXY(94,35);
+                write('Bonne nuit');
+                repos();
+                attendrems(1000);
+                MaisonIHM;
+            end;
+        4:
+            begin
+                effacerEcran;
+                dessinerCadreXY(1,1,199,50,double,White,White);
+                dessinerCadreXY(1,1,199,8,double,Brown,Black);
+                deplacerCurseurXY(86,4);
+                write('Allumage de la télé');
+                affichePierre(50,9);
+                attendrems(1000);
+                effacerEcran;
+                dessinerCadreXY(1,1,199,50,double,Black,White);
+                deplacerCurseurXY(86,25);
+                write('Météo de demain : ',chaineMeteo);
+                readln;
+                MaisonIHM;
+            end;
         9:debutPartie();
     end;
 end;

@@ -15,11 +15,14 @@ procedure FermeIHM();
 // MaisonIHM : procedure qui affiche l'interface de la ferme
 procedure MaisonIHM();
 
+
+// affichePierre : procedure permettant d'afficher pierre
+procedure affichePierre(x,y:Integer); 
 //EffaceRuban
 procedure EffaceRuban();
 implementation
 
-uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit;
+uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit,weatherUnit;
 
 // afficheLogo : procedure permettant d'afficher le logo
 procedure afficheLogo(x,y:Integer);
@@ -38,6 +41,26 @@ begin
     end;
 end;
 
+// affichePierre : procedure permettant d'afficher pierre
+procedure affichePierre(x,y:Integer);
+var
+  i : Integer;
+  texte : text;
+	ligne : String;
+begin
+  couleurFond(White);
+  couleurTexte(Cyan);
+  assign(texte,'./file/pierre.txt');
+  reset(texte);
+  for i:=0 to 39 do 
+    begin
+      deplacerCurseurXY(x,y+i);
+      readln(texte,ligne);
+      write(ligne);
+    end;
+  couleurTexte(Black);
+  couleurFond(Black);
+end;
 //AffichePerso : procedure qui affiche le cadre avec les infos du personnage
 procedure AffichePerso();
 begin
@@ -53,9 +76,11 @@ end;
 //AfficheLieuFerme : procedure qui affiche le cadre avec le lieu actuel
 procedure AfficheLieuFerme();
 begin
-  dessinerCadreXY(60,2,112,6,double,Black,White);
+  dessinerCadreXY(60,2,112,8,double,Black,White);
   deplacerCurseurXY(80,4);
-  write('Lieu : Ferme');
+  write('Lieu : ',getNomFerme);
+  deplacerCurseurXY(80,6);
+  write('Temps : ',getCurrentWeather);
   couleurTexte(Black);
 end;
 
@@ -75,9 +100,9 @@ begin
   deplacerCurseurXY(184,3);
   write(IntToStr(getHeureActuelle)+' : '+IntToStr(getMinuteActuelle));
   deplacerCurseurXY(184,5);
-  write(getJourActuel);
+  write(getJourActuel,' ',IntToStr(getNumJour));
   deplacerCurseurXY(184,7);
-  write(getSaisonActuelle);
+  write(getSaisonName);
 end;
 
 // Refresh : procedure qui resfresh les écrans de donné
@@ -197,7 +222,7 @@ begin
   deplacerCurseurXY(5,45);
   write('1 - Aller à la ferme');
   deplacerCurseurXY(35,45);
-  write('2 - Attendre');
+  write('2 - Attendre 1 heure');
   deplacerCurseurXY(65,45);
   write('3 - Dormir');
   deplacerCurseurXY(95,45);
