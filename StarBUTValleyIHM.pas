@@ -200,8 +200,8 @@ begin
   write('2 - Attendre');
   deplacerCurseurXY(65,45);
   write('3 - Dormir');
-  deplacerCurseurXY(955,45);
-  write('4 - Regarder la méteto');
+  deplacerCurseurXY(95,45);
+  write('4 - Regarder la météo');
   deplacerCurseurXY(125,45);
   write('9 - Revenir au menu principal');
   deplacerCurseurXY(10,47);
@@ -248,6 +248,10 @@ begin
   dessinerCadreXY(1,1,199,50,simple,White,Black);
   AfficheLieuMaison;
   Refresh;
+  deplacerCurseurXY(25,25);
+  write('Bienvenue chez vous !');
+  deplacerCurseurXY(25,27);
+  write('Votre lit et votre télé vous attend');
   EffaceRuban;
   rubanBasMaison;
 end;
