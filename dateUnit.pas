@@ -71,7 +71,7 @@ function getSaisonName() : String;
 
 
 implementation
-uses weatherUnit;
+uses weatherUnit, SeedManagmentUnit;
 
 var 
   currentTime : date;   //record date, contient la date actuelle
@@ -207,6 +207,8 @@ begin
   begin
     saisonSuivante();
   end;
+  toutAmeliorer;
+  secherTout;
   meteoSuivante;
 end;
 

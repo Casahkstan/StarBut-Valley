@@ -150,6 +150,26 @@ begin
         end;
 end;
 
+procedure ameliorer(n : Integer);
+var
+  i : Integer;
+  fermeTemp : emplacement;
+begin
+  fermeTemp := getFerme;  
+  if (fermeTemp[n].arrose = true) and (fermeTemp[n].elem.name <> 'Emplacement vide') and (fermeTemp[n].joursRestant <> 0) then
+    fermeTemp[n].joursRestant := fermeTemp[n].joursRestant - 1;
+end;
+
+procedure toutAmeliorer();
+var
+  i : Integer;
+  fermeTemp : emplacement;
+begin
+  fermeTemp := getFerme;
+  for i:= low(fermeTemp) to high(fermeTemp) do
+    ameliorer(i);
+end;
+
 // Grandit : reduit de 1 la valeur du jours restant
 procedure Grandit();
 var 
