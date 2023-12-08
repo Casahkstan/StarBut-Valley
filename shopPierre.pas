@@ -32,10 +32,10 @@ begin
 			setMoney(money);
 		end
 	else
-		writeln('Inventaire plein');
+		affichageMessage(88, 110, 10, 14, 'Inventaire plein');
 	end
 else
-	writeln('Pas assez d''argent');
+	affichageMessage(88, 110, 10, 14, 'Pas assez d''argent');
 end;
 
 // Permet de vendre des objets à Pierre

@@ -88,6 +88,7 @@ procedure randomWeather();
 begin
   Randomize;
   setAleatoire(random(100));
+  saisonnalite;
 end;
 
 
@@ -120,11 +121,10 @@ begin
   end;
 end;
 
-// Renvoie la météo du lendemain
-function chaineMeteo() : TWeather;
+// Choisis la météo de demain
+procedure chaineMeteo();
 begin
   randomWeather;
-  chaineMeteo := getFutureWeather;  
 end;
 
 end.

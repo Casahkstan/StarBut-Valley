@@ -130,13 +130,16 @@ end;
 
 //AfficheHeure : procedure qui affiche le cadre avec l'heure et la saison
 procedure AfficheHeure();
+var
+  heureTemp : Real;
 begin
-  dessinerCadreXY(180,2,198,8,double,White,Black);
-  deplacerCurseurXY(184,3);
-  write(IntToStr(getHeureActuelle)+' : '+IntToStr(getMinuteActuelle));
-  deplacerCurseurXY(184,5);
-  write(getJourActuel,' ',IntToStr(getNumJour));
-  deplacerCurseurXY(184,7);
+  dessinerCadreXY(175,2,198,8,double,White,Black);
+  deplacerCurseurXY(179,3);
+  heureTemp := getHeureActuelle;
+  write(FloatToStr(heureTemp:2:0)+' heure');
+  deplacerCurseurXY(179,5);
+  write(getJourActuel,' ',IntToStr(getNumJour),' (',getDate().annee,')');
+  deplacerCurseurXY(179,7);
   write(getSaisonName);
 end;
 
@@ -364,6 +367,8 @@ end;
 // ShopIHM : procedure qui affiche l'interface de la ferme
 procedure ShopIHM();
 begin
+  Fatigue(1);
+  heureSuivante;
   effacerEcran();
   dessinerCadreXY(1,1,199,50,simple,White,Black);
   AfficheLieuShop;

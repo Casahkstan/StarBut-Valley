@@ -151,6 +151,8 @@ begin
             fermeTemp[numEmplacement].joursPlante := getNumJour();
             fermeTemp[numEmplacement].joursMature := getFerme()[numEmplacement].joursPlante+fermeTemp[numEmplacement].elem.maturite;
             setFerme(fermeTemp);
+            Fatigue(2);
+            heureSuivante;
         end;
 end;
 
@@ -274,6 +276,7 @@ var
 begin
   for i:=low(getFerme) to high(getFerme) do
     arrose(i);
+  heureSuivante;
 end;
 
 // joursPluvieux : arrose automatiquement les emplacements s'il pleut

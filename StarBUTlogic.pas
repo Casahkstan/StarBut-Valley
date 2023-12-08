@@ -149,7 +149,7 @@ begin
                 effacerEcran;
                 dessinerCadreXY(1,1,199,50,double,Black,White);
                 deplacerCurseurXY(86,25);
-                write('Météo de demain : ',chaineMeteo);
+                write('Météo de demain : ',getFutureWeather);
                 readln;
                 MaisonIHM;
             end;
