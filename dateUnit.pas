@@ -242,7 +242,7 @@ begin
   saisonValue := getSaisonActuelle;
   case saisonValue of
     0 : getSaisonName := 'Printemps';
-    1 : getSaisonName := 'Été';
+    1 : getSaisonName := 'Ete';
     2 : getSaisonName := 'Automne';
     3 : getSaisonName := 'Hiver';
   end;
