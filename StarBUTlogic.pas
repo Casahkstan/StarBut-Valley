@@ -145,7 +145,7 @@ begin
                 for i:=0 to getInventoryLevel do
                     for j:=0 to 4 do 
                         begin
-                            deplacerCurseurXY(1+j*40,40+i*3);
+                            deplacerCurseurXY(10+j*40,40+i*3);
                             write(getInventory[i*5+j].Itype.name+' vous en avez '+IntToStr(getInventory[i*5+j].stack)); 
                         end;
                 deplacerCurseurXY(45,25);
@@ -158,7 +158,7 @@ begin
                 choix2:=ChoixEmplacement();
                 AddSeed(choix2,getInventory[choix1].iType);
                 effacerEcran;
-                FermeIHM();
+                FermeIHM;
             end;
         2:
             begin
@@ -179,7 +179,18 @@ begin
                 effacerEcran;
                 FermeIHM();
             end;
-        3:Ramasse(num);
+        3:
+            begin
+                effacerEcran;
+                dessinerCadreXY(40,30,159,40,double,White,Black);
+                deplacerCurseurXY(75,32);
+                write('Quel emplacement veux tu ramasser ?');
+                deplacerCurseurXY(45,35);
+                choix2:=ChoixEmplacement();
+                Ramasse(choix2);
+                effacerEcran;
+                FermeIHM;
+            end;
     end;
 end;
 
