@@ -2,7 +2,7 @@ unit inventoryUnit;
 
 
 interface
-uses playerUnit, dateUnit, math, sysutils, GestionEcran;
+uses playerUnit, dateUnit, math, sysutils, GestionEcran,StarBUTValleyIHM;
 // Types utilisé pour l'inventaire 
 type
   Rarity = (base, silver, gold, iridium); // 4 niveaux de rareté pour une graine

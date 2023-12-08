@@ -31,9 +31,21 @@ procedure RubanMenuAchete();
 //Affiche un message au centre de l'écran
 procedure affichageMessage(x1,x2,y1,y2:Integer;message : String);
 
+// ecranFin :  procedure qui affiche l'ecran de fin
+procedure ecranFin();
+
 implementation
 
-
+// ecranFin :  procedure qui affiche l'ecran de fin
+procedure ecranFin();
+begin
+  effacerEcran();
+  dessinerCadreXY(25,5,135,49,simple,White,Black);
+  afficheLogo(45,6);
+  deplacerCurseurXY(94,40);
+  write('Merci d''avoir joué');
+  debutPartie;
+end;
 
 // afficheLogo : procedure permettant d'afficher le logo
 procedure afficheLogo(x,y:Integer);
