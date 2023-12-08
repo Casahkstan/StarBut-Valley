@@ -134,7 +134,7 @@ procedure AddSeed(numEmplacement : Integer; seed : itemType);
 var
   fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
-    if not EstVide(numEmplacement) then 
+    if EstVide(numEmplacement) then 
         begin
             fermeTemp := getFerme();
             fermeTemp[numEmplacement].elem.name := seed.name;
