@@ -5,17 +5,21 @@ unit shopPierre;
 interface
 uses inventoryUnit, SeedUnit,playerUnit;
 type
-	shop = array[0..3] of itemType;
+	shop = array[0..3] of itemType;	// Boutique de Pierre
   
+// Permet d'acheter des objets à Pierre
 procedure acheter(choix : Integer);
+
+// Permet de vendre des objets à Pierre
 procedure vendre();
 
 implementation
 
+// Permet d'acheter des objets à Pierre
 procedure acheter(choix : Integer);
 var
-	produit : shop;
-	money : Integer;
+	produit : shop;		// Produits proposés
+	money : Integer;	// Argent du joueur
 begin
 	produit := getSeed();
 	money := getMoney();
@@ -33,14 +37,15 @@ else
 	writeln('Pas assez d''argent');
 end;
 
+// Permet de vendre des objets à Pierre
 procedure vendre();
 var
-	inv : inventory;
-	nbVente,
-	money,
-	prix,
-	choix,
-	multiplicateurRarete : Integer;
+	inv : inventory;		// Inventaire du joueur
+	nbVente,	// Nombre de produits vendus
+	money,	// Argent du joueur
+	prix,	// Prix d'une graine
+	choix,	// Choix du joueur
+	multiplicateurRarete : Integer;	// Multiplie le prix d'un objet selon sa rareté
 begin
 	writeln('Que voulez vous vendre ? (entrer le numéro de l''objet a vendre)');
 	displayInventory();
