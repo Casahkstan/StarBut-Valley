@@ -14,7 +14,7 @@ uses StarBUTlogic, TestUnitaire, playerUnit, inventoryUnit, dateUnit, SeedManagm
 // Retourne true si les 2 records sont similaires
 function compareRec(s1, s2 : itemType) : Boolean;
 begin
-  if (s1.name = s2.name) and (s1.maturite = s2.maturite) and (s1.prix = s2.prix) and (s1.rarete = s2.rarete) and (s1.saison = s2.saison) then
+  if (s1.name = s2.name) and (s1.maturite = s2.maturite) and (s1.prix = s2.prix) and (s1.rarete = s2.rarete) and (s1.saison = s2.saison) and (s1.legume = s2.legume) then
     compareRec := True
   else
     compareRec := False;

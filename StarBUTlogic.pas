@@ -169,12 +169,12 @@ begin
                 effacerEcran;
                 dessinerCadreXY(40,20,159,30,double,White,Black);
                 deplacerCurseurXY(68,22);
-                write('Quel graine de ton inventaire choisis tu (numéro de slot)');
+                write('Quel graine de ton inventaire choisis-tu (numéro de slot) ?');
                 for i:=0 to getInventoryLevel do
                     for j:=0 to 4 do 
                         begin
                             deplacerCurseurXY(10+j*40,40+i*3);
-                            write(getInventory[i*5+j].Itype.name+' vous en avez '+IntToStr(getInventory[i*5+j].stack)); 
+                            write(getInventory[i*5+j].Itype.name+' ('+IntToStr(getInventory[i*5+j].stack)+')'); 
                         end;
                 deplacerCurseurXY(45,25);
                 choix1:=ChoixEmplacement()-1;

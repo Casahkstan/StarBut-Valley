@@ -136,7 +136,7 @@ procedure AddSeed(numEmplacement : Integer; seed : itemType);
 var
   fermeTemp : emplacement;  // Ferme temporaire, permet de modifier une à une les valeurs de la ferme
 begin
-    if EstVide(numEmplacement) and (seed.name <> 'Vide') then 
+    if EstVide(numEmplacement) and (seed.name <> 'Vide') and (not seed.legume) then 
         begin
             SubInventory(seed, 1);
             fermeTemp := getFerme();
@@ -145,6 +145,7 @@ begin
             fermeTemp[numEmplacement].elem.saison := seed.saison;
             fermeTemp[numEmplacement].elem.prix := seed.prix;
             fermeTemp[numEmplacement].elem.maturite := seed.maturite;
+            fermeTemp[numEmplacement].elem.legume := false;
             fermeTemp[numEmplacement].joursRestant := seed.maturite;
             fermeTemp[numEmplacement].arrose := false;
             fermeTemp[numEmplacement].joursPlante := getNumJour();
