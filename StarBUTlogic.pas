@@ -151,7 +151,7 @@ begin
                             write(getInventory[i*5+j].Itype.name+' vous en avez '+IntToStr(getInventory[i*5+j].stack)); 
                         end;
                 deplacerCurseurXY(45,25);
-                choix1:=ChoixEmplacement();
+                choix1:=ChoixEmplacement()-1;
                 effacerEcran;
                 dessinerCadreXY(40,30,159,40,double,White,Black);
                 deplacerCurseurXY(75,32);

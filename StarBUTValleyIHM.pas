@@ -188,7 +188,7 @@ begin
   else
     estarrose:='N''est pas arrosé';
   deplacerCurseurXY(x,y);
-  write(getFerme[num].elem.name+' '+IntToStr(num)+'('+IntToStr(getFerme[num].joursRestant)+')'+estarrose);
+  write(getFerme[num].elem.name+' '+'(temps restant :'+IntToStr(getFerme[num].joursRestant)+') '+estarrose);
 end;
 
 // AfficheAllEmplacement : procedure qui affiche tous les emplacemnts
