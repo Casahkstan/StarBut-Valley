@@ -250,7 +250,6 @@ begin
         2:
         begin
           heureSuivante;
-          Fatigue(2);
           ShopIHM;
         end;
         3:RubanEmplacement();
@@ -297,7 +296,6 @@ begin
     case choix of 
         1:begin
           heureSuivante;
-          Fatigue(2);
           FermeIHM;
         end;
         2:rubanMenuachete;
