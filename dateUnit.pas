@@ -230,11 +230,8 @@ end;
 //Change la météo seulement si l'heure dépasse 6h du matin
 procedure meteoSuivante();
 begin
-  if getHeureActuelle >= 6 then
-  begin
-    setCurrentWeather(getFutureWeather);
-    randomWeather;
-  end;
+  setCurrentWeather(getFutureWeather);
+  randomWeather;
 end;
 
 // Retourne une chaine de caractère correspondant au nom de la saison actuelle

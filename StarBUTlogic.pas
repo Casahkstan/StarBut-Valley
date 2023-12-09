@@ -94,6 +94,7 @@ procedure EcrisFerme();
 var
     nom : String;
 begin
+    deplacerCurseurXY(67, 25);
     readln(nom);
     setNomFerme(nom);
 end;
@@ -134,8 +135,8 @@ begin
                 EffaceRuban;
                 dessinerCadreXY(40,30,159,40,double,White,Black);
                 deplacerCurseurXY(94,35);
-                write('Bonne nuit');
                 repos();
+                write('Bonne nuit');
                 readln();
                 MaisonIHM;
             end;
@@ -172,7 +173,7 @@ begin
                 dessinerCadreXY(40,20,159,30,double,White,Black);
                 deplacerCurseurXY(68,22);
                 write('Quel graine de ton inventaire choisis-tu (numéro de slot) ?');
-                for i:=0 to getInventoryLevel do
+                for i:=0 to getInventoryLevel-1 do
                     for j:=0 to 4 do 
                         begin
                             deplacerCurseurXY(10+j*40,40+i*3);
@@ -211,12 +212,14 @@ begin
             end;
         3:
             begin
+              repeat
                 effacerEcran;
                 dessinerCadreXY(40,30,159,40,double,White,Black);
                 deplacerCurseurXY(75,32);
                 write('Quel emplacement veux tu ramasser ?');
                 deplacerCurseurXY(45,35);
                 choix2:=ChoixEmplacement();
+              until (choix2 < 31) and (choix2 > 0);
                 if (EstVide(choix2)) or (getFerme[choix2].joursRestant>0) then
                     begin
                         effacerEcran;
@@ -277,10 +280,13 @@ begin
                         Description(getSeed[i].name);
                     end;
                 deplacerCurseurXY(120,20+(i+1)*2);
-                write('Sac : Peut contenir ', (getInventoryLevel + 1) * 5, ' objets , il faut ', Round(100 * math.power(1.4, getInventoryLevel+1)), ' d''or pour l''ameliorer');
+                write('Sac : Peut contenir ', (getInventoryLevel) * 5, ' objets , il faut ', Round(100 * math.power(1.4, getInventoryLevel)), ' d''or pour l''ameliorer');
             end;
         7:ShopIHM;
     end;
+    write(' ');
+    refresh;
+    RubanMenuAchete;
 end;
 // Shop : procédure qui lance chaque choix possible dans le shop
 procedure Shop();

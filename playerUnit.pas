@@ -163,7 +163,7 @@ begin
     end; 
   end;
   affichageMessage(88,110,10,14,'Vous vous etes evanouis');
-  readln();
+  readln;
 end;
 
 //Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (on met la stamina à 10)
