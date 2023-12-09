@@ -64,6 +64,9 @@ function isNotFull() : Boolean;
 // Retourne le nombre de fois ou iT apprait dans l'inventaire (stack comptés)
 function getNombreOccu(iT : itemType) : Integer;
 
+// retourne la valeur de la rarete de l'itemtype
+function multiplicateurRarete(iT : itemType) : Integer;
+
 implementation
 
 var
@@ -364,5 +367,15 @@ begin
     end;
 end;
 
+// retourne la valeur de la rarete de l'itemtype
+function multiplicateurRarete(iT : itemType) : Integer;
+begin
+    case iT.rarete of
+			base: multiplicateurRarete := 1;
+			silver: multiplicateurRarete := 2;
+			gold: multiplicateurRarete := 3;
+			iridium: multiplicateurRarete := 4;
+		end;
+end;
 
 end.

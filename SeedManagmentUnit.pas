@@ -202,7 +202,7 @@ begin
             retour.rarete:=DonneRarete();
             retour.legume := True;
             ClearEmplacement(numEmplacement);
-            addExperience(multiplicateurRarete(retour.rarete));
+            addExperience(multiplicateurRarete(retour));
         end;
   AddInventory(retour, 1);
 end;
@@ -217,6 +217,7 @@ var
     probRarete:Rarity;  // Rareté, renvoyé, la rareté d'une graine suivant le niveau du joueur 
 begin
     Randomize;
+    attendrems(10);
     numChance:=random(101);
     chanceBase:=78-(3*getExpLevel());
     chanceArgent:=14+getExpLevel();

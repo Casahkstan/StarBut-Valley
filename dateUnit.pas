@@ -190,12 +190,11 @@ begin
     dateTemp.annee := dateTemp.annee + 1;
     setDate(dateTemp);
     setSaisonActuelle(0);
-    for i := low(getFerme) to high(getFerme) do
-      ClearEmplacement(i);
   end
   else
-    setSaisonActuelle(succ(getSaisonActuelle));
-  
+    setSaisonActuelle(succ(getSaisonActuelle)); 
+  for i := low(getFerme) to high(getFerme) do
+    ClearEmplacement(i);
 end;
 
 //Même principe que la procedure saisonSuivante
