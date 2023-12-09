@@ -3,9 +3,6 @@ unit weatherUnit;
 {$codepage utf-8}
 
 interface
-
-uses dateUnit;
-
 type
   TWeather=(Soleil,Pluie,Neige,Orage);  //Différents types de météo
 
@@ -27,16 +24,14 @@ function getAleatoire():Integer;
 // Setter : Change la valeur aléatoire
 procedure setAleatoire(valeur:Integer);
 
-//Génère un nombre aléatoire
+// Choisis la météo pour le landemain
 procedure randomWeather();
 
 //Change la météo actuelle selon la saison
 procedure saisonnalite();
 
-// Choisis la météo de demain
-procedure chaineMeteo();
-
 implementation
+uses dateUnit, GestionEcran;
 
 var
   futureWeather,  // Météo du lendemain
@@ -54,7 +49,6 @@ end;
 procedure setCurrentWeather(valeur : TWeather);
 begin
   currentWeather := valeur;
-  
 end;
 
 // Getter : Retourne la météo du lendemain
@@ -83,11 +77,15 @@ begin
   aleatoire := valeur;
 end;
 
-//On génère un nombre aléatoire via Randomize qu'on renvoie 
+// Choisis la météo pour le landemain
 procedure randomWeather();
+var
+  rdm : Integer;
 begin
-  Randomize;
-  setAleatoire(random(100));
+  Randomize();
+  attendrems(10);
+  rdm := random(100);
+  setAleatoire(rdm);
   saisonnalite;
 end;
 
@@ -100,16 +98,16 @@ begin
       0..49 : setFutureWeather(Soleil);
       50..89 : setFutureWeather(Pluie);
       90..99 : setFutureWeather(Orage); 
-      // 60% que la météo soit ensoleillée,30% qu'elle soit pluvieuse et 10% pour qu'elle soit orageuse au Printemps ; même principe à la suite
     end;
     1 : case getAleatoire of
       0..69 : setFutureWeather(Soleil);
-      70..79 : setFutureWeather(Pluie);
-      80..99 : setFutureWeather(Orage);
+      70..89 : setFutureWeather(Pluie);
+      90..99 : setFutureWeather(Orage);
     end;
     2 : case getAleatoire of
       0..9 : setFutureWeather(Soleil);
-      10..79 : setFutureWeather(Pluie);
+      10..74 : setFutureWeather(Pluie);
+      75..79 : setFutureWeather(Neige);
       80..99 : setFutureWeather(Orage);
     end;
     3 : case getAleatoire of
@@ -119,12 +117,6 @@ begin
       75..99 : setFutureWeather(Orage);
     end;
   end;
-end;
-
-// Choisis la météo de demain
-procedure chaineMeteo();
-begin
-  randomWeather;
 end;
 
 end.

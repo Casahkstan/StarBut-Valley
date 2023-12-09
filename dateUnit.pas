@@ -205,6 +205,7 @@ begin
     setJourActuel(Lundi)
   else
     setJourActuel(succ(getDate().jour));
+
   setNumJour(getNumJour()+1);
   toutAmeliorer();
   secherTout();
@@ -234,6 +235,7 @@ begin
   if getHeureActuelle >= 6 then
   begin
     setCurrentWeather(getFutureWeather);
+    randomWeather;
   end;
 end;
 

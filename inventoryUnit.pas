@@ -123,21 +123,22 @@ begin
   inv := getInventory;
   i := low(inv);
   // SI L'OBJET EST DEJA DANS L'INVENTAIRE ET QU'UN DES STACKS N'EST PAS PLEIN
-  if isPresent(iT) and isStackAvailable(iT) then
+  if isStackAvailable(iT) then
   begin
     estPresent := False;
     // Récupère l'indice de l'item
     while (i < high(inv)) and not estPresent do
     begin
-      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) then
+      if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) and (inv[i].stack <> 5) then
         estPresent := True;
       i := i + 1;
     end;
     // Regarde si le slot sera rempli
-    if inv[i-1].stack + ammount > 5 then
+    if inv[i].stack + ammount > 5 then
     begin
-      newAmmount := (ammount + inv[i-1].stack) - 5;
-      inv[i-1].stack := 5;
+      newAmmount := (ammount + inv[i].stack) - 5;
+      inv[i].stack := 5;
+        setInventory(inv);
       AddInventory(iT, newAmmount);
     end
     else
@@ -162,10 +163,10 @@ begin
       newItem.iType := iT;
       newItem.stack := 5;
       inv[i] := newItem;
+      setInventory(inv);
       AddInventory(iT, ammount-5);
     end;
   end;
-  setInventory(inv);
 end;
 
 //Sub : Retire un élément passé en paramètre à l'inventaire du joueur
@@ -203,6 +204,7 @@ begin
           newAmmount := inv[i].stack - ammount;
           newItem := inv[i].iType;
           inv[i] := itemVide;
+          setInventory(inv);
           AddInventory(newItem, newAmmount);
           ammount := 0;
         end;
@@ -290,8 +292,8 @@ var
   stackDispo : Boolean; // Valeur si un stack est dispo 
 begin
   inv := getInventory;
-  i := low(inv);
   stackDispo := False;
+  i := low(inv);
   while (i <= high(inv)) and (stackDispo = False) do
   begin
     if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) and (inv[i].stack <> 5) then
@@ -315,9 +317,10 @@ begin
   while (i <= high(inv)) and (not estPresent) do
   begin
     if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) then
+    begin
       estPresent := True;
+    end;
     i := i + 1;
-    writeln(i);
   end;
   isPresent := estPresent;
 end;
