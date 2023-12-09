@@ -3,7 +3,7 @@ unit shopPierre;
 {$mode objfpc}{$H+}
 
 interface
-uses inventoryUnit, SeedUnit,playerUnit,StarBUTValleyIHM,sysutils,GestionEcran;
+uses inventoryUnit, SeedUnit, playerUnit, StarBUTValleyIHM, sysutils, GestionEcran;
 type
 	shop = array[0..3] of itemType;	// Boutique de Pierre
   
@@ -47,7 +47,7 @@ var
 	prix,	// Prix d'une graine
 	choix,	// Choix du joueur
 	i,j,	//Compteurs
-	multiplicateurRarete : Integer;	// Multiplie le prix d'un objet selon sa rareté
+	multiplicateurR : Integer;	// Multiplie le prix d'un objet selon sa rareté
 begin
 	effacerEcran;
 	for i:=0 to getInventoryLevel do
@@ -76,9 +76,9 @@ begin
 			readln(nbVente)
 		until (nbVente <= getNombreOccu(inv[choix-1].iType));
 		SubInventory(inv[choix-1].iType, nbVente);
-		multiplicateurRarete := multiplicateurRarete(inv[choix-1].iType.rarete);
+		multiplicateurR := multiplicateurRarete(inv[choix-1].iType);
 		money := getMoney;
-		money := money + (prix + 1 * multiplicateurRarete) * nbVente;
+		money := money + (prix + 1 * multiplicateurR) * nbVente;
 		setMoney(money);
 		effacerEcran;
 		affichageMessage(85,113,24,26,'Vente terminée');

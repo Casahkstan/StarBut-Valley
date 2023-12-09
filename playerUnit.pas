@@ -33,9 +33,6 @@ function getExpLevel() : Integer;
 // Setter : Change la quantité d'experience du joueur
 procedure setExp(e : Integer);
 
-// retourne la valeur de la rarete de l'itemtype
-function multiplicateurRarete(r : Rarity) : Integer;
-
 //Permet au joueur de dormir
 procedure repos();
 
@@ -52,14 +49,15 @@ procedure Attendre();
 procedure addExperience(e : Integer);
 
 implementation
-uses inventoryUnit, dateUnit, StarBUTValleyIHM;
+uses inventoryUnit, dateUnit, StarBUTValleyIHM, math, sysutils;
 
 //  Variable du joueur
 var
   username : String;  // Chaîne de caractères, nom du joueur
   stamina,  // Entier, niveau d'endurance du joueur
   money,  // Entier, argent du joueur
-  experience : Integer; // Entier, niveau d'expérience du joueur
+  level,  // Entier, niveau du joueur (en fonction du nombre d'experience)
+  experience : Integer; // Entier, quantité d'expérience du joueur
 
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
@@ -153,16 +151,6 @@ begin
   end;
 end;
 
-function multiplicateurRarete(r : Rarity) : Integer;
-begin
-    case r of
-			base: multiplicateurRarete := 1;
-			silver: multiplicateurRarete := 2;
-			gold: multiplicateurRarete := 3;
-			iridium: multiplicateurRarete := 4;
-		end;
-end;
-
 // Gère l'évanouissement du joueur
 procedure evanouissement();
 begin
@@ -212,11 +200,11 @@ var
 begin
   exp := getExp;
   lvl := getExpLevel;
-  if (2 * math.Log2(exp) >= lvl) then
+  if (2 * math.Log2(exp) >= lvl) and (lvl <> 10) then
   begin
     setExpLevel(lvl + 1);
-    setExp(0)
-    affichageMessage(88,110,10,14,'Vous etes passes niveau ', getExpLevel);
+    setExp(0);
+    affichageMessage(88,110,10,14,'Vous etes passes niveau '+IntToStr(getExpLevel));
   end;
 end;
 
