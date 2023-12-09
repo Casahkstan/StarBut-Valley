@@ -213,7 +213,6 @@ begin
   begin
     saisonSuivante();
   end;
-  meteoSuivante;
 end;
 
 //Si l'heure actuelle vaut 23, alors on repasse l'heure à 0 pour passer à l'heure suivante. Sinon, on ajoute 1.

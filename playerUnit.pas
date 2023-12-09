@@ -28,10 +28,13 @@ procedure setStamina(s : Integer);
 
 // Getter : Retourne la quantité d'experience du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
-function getExp() : Integer;
+function getExpLevel() : Integer;
 
 // Setter : Change la quantité d'experience du joueur
 procedure setExp(e : Integer);
+
+// retourne la valeur de la rarete de l'itemtype
+function multiplicateurRarete(r : Rarity) : Integer;
 
 //Permet au joueur de dormir
 procedure repos();
@@ -44,6 +47,9 @@ procedure fatigue(point:Integer);
 
 // Attendre : permet au joueur d'attendre 1heure
 procedure Attendre();
+
+// Ajoute e experience au joueur, met a jour le niveau
+procedure addExperience(e : Integer);
 
 implementation
 uses inventoryUnit, dateUnit, StarBUTValleyIHM;
@@ -62,6 +68,7 @@ begin
   stamina := 100;
   money := 200;
   experience:=0;
+  level := 0;
   initInventory();
 end;
 
@@ -106,9 +113,14 @@ end;
 
 // Getter : Retourne la quantité d'experience du joueur
 // ⚠️ Ne peut pas être utilisépour modifier des variables
-function getExp() : Integer;
+function getExpLevel() : Integer;
 begin
-  getExp := experience;
+  getExpLevel := level;
+end;
+
+procedure setExpLevel(v : Integer);
+begin
+  level := v;
 end;
 
 // Setter : Change la quantité d'experience du joueur
@@ -123,6 +135,7 @@ var
   heure : Integer;
 begin
   heure := getHeureActuelle;
+  meteoSuivante;
   case heure of
     6..23 : begin
       jourSuivant();
@@ -140,6 +153,16 @@ begin
   end;
 end;
 
+function multiplicateurRarete(r : Rarity) : Integer;
+begin
+    case r of
+			base: multiplicateurRarete := 1;
+			silver: multiplicateurRarete := 2;
+			gold: multiplicateurRarete := 3;
+			iridium: multiplicateurRarete := 4;
+		end;
+end;
+
 // Gère l'évanouissement du joueur
 procedure evanouissement();
 begin
@@ -151,7 +174,8 @@ begin
       setHeureActuelle(6); // Si on s'évanouit alors qu'il est entre 0 et 5h, on ne change pas le jour, sinon, on passe au suivant et se réveille à 6h
     end; 
   end;
-  affichageMessage(88,110,10,14,'Vous vous êtes évanouis');
+  affichageMessage(88,110,10,14,'Vous vous etes evanouis');
+  readln();
 end;
 
 //Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (on met la stamina à 10)
@@ -174,4 +198,38 @@ begin
     setHeureActuelle((getHeureActuelle()+1)mod 24);   //le mod 24 permet de revenir à 0 si l'heure est à 23
   end;
 end;
+
+function getExp() : Integer;
+begin
+  getExp := experience;
+end;
+
+// Procedure privée qui met a jour le niveau du joueur
+procedure updateLevel();
+var
+  exp,
+  lvl : Integer;
+begin
+  exp := getExp;
+  lvl := getExpLevel;
+  if (2 * math.Log2(exp) >= lvl) then
+  begin
+    setExpLevel(lvl + 1);
+    setExp(0)
+    affichageMessage(88,110,10,14,'Vous etes passes niveau ', getExpLevel);
+  end;
+end;
+
+
+// Ajoute e experience au joueur, met a jour le niveau
+procedure addExperience(e : Integer);
+var
+  exp : Integer;
+begin
+  exp := getExp;
+  exp := exp + e;
+  setExp(exp);
+  updateLevel();
+end;
+
 end.
