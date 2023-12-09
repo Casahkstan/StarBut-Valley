@@ -2,7 +2,7 @@ unit SeedManagmentUnit;
 {$codepage utf-8}
 interface
 
-uses inventoryUnit,dateUnit,playerUnit,weatherUnit;
+uses inventoryUnit;
 type 
 
     slot = record 
@@ -68,6 +68,7 @@ procedure secherTout();
 procedure toutAmeliorer();
 
 implementation
+uses dateUnit,playerUnit,weatherUnit, GestionEcran;
 var
     ferme:emplacement;  // Ferme du jeu
     nomFerme : String;  // Nom de la ferme
