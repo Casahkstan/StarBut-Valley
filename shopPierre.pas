@@ -50,21 +50,23 @@ var
 	multiplicateurR : Integer;	// Multiplie le prix d'un objet selon sa rareté
 begin
 	effacerEcran;
-	for i:=0 to getInventoryLevel do
+	for i:=0 to getInventoryLevel-1 do
 		for j:=0 to 4 do 
 			begin
 				deplacerCurseurXY(10+j*40,40+i*3);
 				write(getInventory[i*5+j].Itype.name+'('+IntToStr(getInventory[i*5+j].stack),')'); 
 			end;
-	affichageMessage(89,110,10,14,'Que veux-tu vendre ?');
-	deplacerCurseurXY(95,13);
-	readln(choix);
+	repeat
+		affichageMessage(89,110,10,14,'Que veux-tu vendre ?');
+		deplacerCurseurXY(95,13);
+		readln(choix);
+	until ((choix) < (getInventoryLevel)*5) and (choix > 0) ;
 	effacerEcran;
 	inv := getInventory;
 	if (inv[choix-1].iType.name = 'Vide') or not inv[choix-1].iType.legume then
 	begin
 		affichageMessage(85,113,24,26,'Impossible de vendre ceci !');
-		readln();
+		readln;
 		ShopIHM;
 	end
 	else
@@ -74,7 +76,7 @@ begin
 			affichageMessage(79,119,10,14,'Combien souhaitez vous en vendre, max '+IntToStr(getNombreOccu(inv[choix-1].iType)));
 			deplacerCurseurXY(82,13);
 			readln(nbVente)
-		until (nbVente <= getNombreOccu(inv[choix-1].iType));
+		until (nbVente <= getNombreOccu(inv[choix-1].iType)) and (nbVente > 0);
 		SubInventory(inv[choix-1].iType, nbVente);
 		multiplicateurR := multiplicateurRarete(inv[choix-1].iType);
 		money := getMoney;

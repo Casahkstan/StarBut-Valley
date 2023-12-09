@@ -3,7 +3,7 @@ program main;
 {$mode objfpc}{$H+}
 uses
 	StarBUTValleyIHM;
-
+	
 begin 
-	debutPartie();
+	debutPartie;
 end.

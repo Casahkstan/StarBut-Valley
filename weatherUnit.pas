@@ -6,6 +6,9 @@ interface
 type
   TWeather=(Soleil,Pluie,Neige,Orage);  //Différents types de météo
 
+// Init: initialise lse variables de l'unité
+procedure initWeather();
+
 // Getter : Retourne la météo actuelle
 // ⚠️ Ne peut pas être utilisé pour modifier des variables
 function getCurrentWeather():TWeather;
@@ -37,6 +40,13 @@ var
   futureWeather,  // Météo du lendemain
   currentWeather : TWeather;  // Météo courante
   aleatoire : Integer;  // Nombre aléatoire
+
+// Init: initialise lse variables de l'unité
+procedure initWeather();
+begin
+  currentWeather := Soleil;
+  randomWeather;
+end;
 
 // Getter : Retourne la météo actuelle
 // ⚠️ Ne peut pas être utilisé pour modifier des variables
@@ -106,8 +116,7 @@ begin
     end;
     2 : case getAleatoire of
       0..9 : setFutureWeather(Soleil);
-      10..74 : setFutureWeather(Pluie);
-      75..79 : setFutureWeather(Neige);
+      10..79 : setFutureWeather(Pluie);
       80..99 : setFutureWeather(Orage);
     end;
     3 : case getAleatoire of

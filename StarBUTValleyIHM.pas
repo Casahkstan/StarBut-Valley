@@ -37,6 +37,9 @@ procedure affichageMessage(x1,x2,y1,y2:Integer;message : String);
 // ecranFin :  procedure qui affiche l'ecran de fin
 procedure ecranFin();
 
+// Refresh : procedure qui resfresh les écrans de donné
+procedure refresh();
+
 implementation
 uses GestionEcran,StarBUTlogic,playerUnit,SeedManagmentUnit,sysutils,dateUnit,weatherUnit,SeedUnit;
 // ecranFin :  procedure qui affiche l'ecran de fin
@@ -48,6 +51,7 @@ begin
   deplacerCurseurXY(49,40);
   write('Merci d''avoir joué');
   readln;
+  Halt(1);
 end;
 
 // afficheLogo : procedure permettant d'afficher le logo
@@ -314,9 +318,6 @@ begin
   write('7 - Retour au Shop');
   deplacerCurseurXY(10,47);
   menuachete;
-  write(' ');
-  refresh;
-  RubanMenuAchete;
 end;
 
 // FermeIHM : procedure qui affiche l'interface de la ferme
@@ -386,9 +387,10 @@ begin
       write('Votre nom : ');
       EcrisNom();
       deplacerCurseurXY(46,11);
-      write('Votre ferme s''apelle ....');
+      write('Votre ferme s''appelle ....');
       deplacerCurseurXY(46,25);
-      write('Votre nom de ferme : ');
+      // Beaucoup d'espaces pour effacer la ligne d'avant s'il y a un grand nom
+      write('Votre nom de ferme :                           '); 
       EcrisFerme();
       effacerEcran();
       dessinerCadreXY(26,10,114,14,double, black, white);
