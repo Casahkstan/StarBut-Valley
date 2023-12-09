@@ -31,7 +31,7 @@ procedure menuachete();
 
 implementation
 
-uses weatherUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit,StarBUTValleyIHM,GestionEcran,sysutils,SeedUnit;
+uses weatherUnit,inventoryUnit,shopPierre,dateUnit,playerUnit,SeedManagmentUnit,StarBUTValleyIHM,GestionEcran,sysutils,SeedUnit, math;
 
 // Initpartie : lance une partie complète de StarBUTValley
 procedure Initpartie();
@@ -72,14 +72,12 @@ end;
 function choixMenuPrincipal() : Boolean;
 var 
     choixInt : Integer;
-    choixBool : Boolean;
 begin
     readln(choixInt);
     if choixInt=1 then 
-        choixBool:=true
+        choixMenuPrincipal:=true
     else
-        choixBool:=false;
-    choixMenuPrincipal:=choixBool;
+        choixMenuPrincipal:=false;
 end;
 
 // EcrisNom : procédure qui écirs le nom du joueur au début du jeu
@@ -126,7 +124,11 @@ begin
     choix:=BatimentChoix();
     case choix of 
         1:FermeIHM;
-        2:Attendre();
+        2:
+        begin
+          Attendre();
+          MaisonIHM;
+        end;
         3:
             begin
                 EffaceRuban;
@@ -134,7 +136,7 @@ begin
                 deplacerCurseurXY(94,35);
                 write('Bonne nuit');
                 repos();
-                attendrems(1000);
+                readln();
                 MaisonIHM;
             end;
         4:
@@ -221,7 +223,7 @@ begin
                         dessinerCadreXY(40,30,159,40,double,White,Black);
                         deplacerCurseurXY(85,35);
                         write('Emplacement vide ou pas mûr');
-                        attendrems(2000);
+                        readln();
                         effacerEcran;
                     end
                 else
@@ -242,7 +244,12 @@ begin
     choix:=BatimentChoix();
     case choix of 
         1:MaisonIHM;
-        2:ShopIHM;
+        2:
+        begin
+          heureSuivante;
+          Fatigue(2);
+          ShopIHM;
+        end;
         3:RubanEmplacement();
         4:
             begin
@@ -269,6 +276,8 @@ begin
                         write(getSeed[i].name+' : ');
                         Description(getSeed[i].name);
                     end;
+                deplacerCurseurXY(120,20+(i+1)*2);
+                write('Sac : Peut contenir ', (getInventoryLevel + 1) * 5, ' objets , il faut ', Round(100 * math.power(1.4, getInventoryLevel+1)), ' d''or pour l''ameliorer');
             end;
         7:ShopIHM;
     end;
@@ -282,6 +291,7 @@ begin
     case choix of 
         1:begin
           heureSuivante;
+          Fatigue(2);
           FermeIHM;
         end;
         2:rubanMenuachete;

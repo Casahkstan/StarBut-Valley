@@ -2,7 +2,6 @@ unit playerUnit;
 {$codepage utf-8}
 interface
 
-uses dateUnit;
 // Init: Crée le joueur en lui assignant les valeurs par défault
 procedure initPlayer();
 
@@ -47,7 +46,7 @@ procedure fatigue(point:Integer);
 procedure Attendre();
 
 implementation
-uses inventoryUnit;
+uses inventoryUnit, dateUnit, StarBUTValleyIHM;
 
 //  Variable du joueur
 var
@@ -152,6 +151,7 @@ begin
       setHeureActuelle(6); // Si on s'évanouit alors qu'il est entre 0 et 5h, on ne change pas le jour, sinon, on passe au suivant et se réveille à 6h
     end; 
   end;
+  affichageMessage(88,110,10,14,'Vous vous êtes évanouis');
 end;
 
 //Si on fait une action, on perd 5 point d'endurance/stamina. Si on a dormi, on récupère toute son endurance, sinon on s'évanouit (on met la stamina à 10)

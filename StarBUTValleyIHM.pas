@@ -133,7 +133,7 @@ procedure AfficheHeure();
 begin
   dessinerCadreXY(175,2,198,8,double,White,Black);
   deplacerCurseurXY(179,3);
-  write(IntToStr(getHeureActuelle)+' heure');
+  write(IntToStr(getHeureActuelle)+':'+IntToStr(getDate().minute));
   deplacerCurseurXY(179,5);
   write(getJourActuel,' ',IntToStr(getNumJour),' (',getDate().annee,')');
   deplacerCurseurXY(179,7);
@@ -244,10 +244,6 @@ begin
   write('9 - Revenir au menu principal');
   deplacerCurseurXY(10,47);
   Ferme();
-  deplacerCurseurXY(10,47);
-  write(' ');
-  refresh();
-  rubanBasFerme();
 end;
 
 // rubanBasMaison : procedure qui affiche le ruban en bas de l'écran
@@ -266,10 +262,6 @@ begin
   write('9 - Revenir au menu principal');
   deplacerCurseurXY(10,47);
   Maison();
-  deplacerCurseurXY(10,47);
-  write(' ');
-  refresh();
-  rubanBasMaison();
 end;
 
 // rubanBasShop : procedure qui affiche le ruban en bas de l'écran
@@ -286,10 +278,6 @@ begin
   write('9 - Revenir au menu principal');
   deplacerCurseurXY(10,47);
   Shop();
-  deplacerCurseurXY(10,47);
-  write(' ');
-  refresh();
-  rubanBasShop;
 end;
 
 //RubanEmplacement : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un emplacement
@@ -304,9 +292,6 @@ begin
   write('3 - Ramasser un  légume');
   deplacerCurseurXY(10,47);
   menuEmplacement();
-  deplacerCurseurXY(10,47);
-  write(' ');
-  RubanEmplacement();
 end;
 
 //RubanMenuAchete : procedure qui affiche le ruban quand le joueur choisit de rentrer dans un MenuAchete
@@ -324,7 +309,7 @@ begin
   deplacerCurseurXY(85,45);
   write('5 - Améliore ton sac');
   deplacerCurseurXY(115,45);
-  write('6 - Description des graines');
+  write('6 - Description des objets');
   deplacerCurseurXY(145,45);
   write('7 - Retour au Shop');
   deplacerCurseurXY(10,47);
@@ -364,7 +349,6 @@ end;
 // ShopIHM : procedure qui affiche l'interface de la ferme
 procedure ShopIHM();
 begin
-  heureSuivante;
   effacerEcran();
   dessinerCadreXY(1,1,199,50,simple,White,Black);
   AfficheLieuShop;
@@ -384,7 +368,7 @@ end;
 // debutPartie : procedure qui debute une partie 
 procedure debutPartie();
 var 
-  choix:Boolean;
+  choix : Boolean;  // Choix du joueur de jouer ou non
 begin
   choix:=menuDepartIHM();
   if choix then 
