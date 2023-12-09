@@ -312,11 +312,12 @@ begin
   inv := getInventory;
   i := low(inv);
   estPresent := False;
-  while (i < high(inv)) and not estPresent do
+  while (i <= high(inv)) and (not estPresent) do
   begin
     if (inv[i].iType.name = iT.name) and (inv[i].iType.rarete = iT.rarete) and (inv[i].iType.legume = iT.legume) then
       estPresent := True;
     i := i + 1;
+    writeln(i);
   end;
   isPresent := estPresent;
 end;
