@@ -202,6 +202,7 @@ begin
             retour.rarete:=DonneRarete();
             retour.legume := True;
             ClearEmplacement(numEmplacement);
+            addExperience(multiplicateurRarete(retour.rarete));
         end;
   AddInventory(retour, 1);
 end;
@@ -217,9 +218,9 @@ var
 begin
     Randomize;
     numChance:=random(101);
-    chanceBase:=78-(3*getExp());
-    chanceArgent:=14+getExp();
-    chanceOr:=8+getExp();
+    chanceBase:=78-(3*getExpLevel());
+    chanceArgent:=14+getExpLevel();
+    chanceOr:=8+getExpLevel();
     if (numChance >= 0) and (numChance <= chanceBase) then
       probRarete := Rarity.base
     else

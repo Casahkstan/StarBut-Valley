@@ -54,7 +54,7 @@ begin
 		for j:=0 to 4 do 
 			begin
 				deplacerCurseurXY(10+j*40,40+i*3);
-				write(getInventory[i*5+j].Itype.name+' vous en avez '+IntToStr(getInventory[i*5+j].stack)); 
+				write(getInventory[i*5+j].Itype.name+'('+IntToStr(getInventory[i*5+j].stack),')'); 
 			end;
 	affichageMessage(89,110,10,14,'Que veux-tu vendre ?');
 	deplacerCurseurXY(95,13);
@@ -76,12 +76,7 @@ begin
 			readln(nbVente)
 		until (nbVente <= getNombreOccu(inv[choix-1].iType));
 		SubInventory(inv[choix-1].iType, nbVente);
-		case inv[choix-1].iType.rarete of
-			base: multiplicateurRarete := 1;
-			silver: multiplicateurRarete := 2;
-			gold: multiplicateurRarete := 3;
-			iridium: multiplicateurRarete := 4;
-		end;
+		multiplicateurRarete := multiplicateurRarete(inv[choix-1].iType.rarete);
 		money := getMoney;
 		money := money + (prix + 1 * multiplicateurRarete) * nbVente;
 		setMoney(money);

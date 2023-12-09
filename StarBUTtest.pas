@@ -32,7 +32,7 @@ begin
   newTest('Initialisation Joueur', 'Pseudo valide');
   testIsEqual(getName(), 'Non défini');
   newTest('Initialisation Joueur', 'Bon nombre d''xp');
-  testIsEqual(getExp(), 0);
+  testIsEqual(getExpLevel(), 0);
   newTest('Initialisation Joueur', 'Initialisation du sac');
   inv := getInventory;
   estVide := True;
