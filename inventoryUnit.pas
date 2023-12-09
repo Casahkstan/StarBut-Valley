@@ -252,7 +252,7 @@ begin
   begin
     if getMoney > Round(100 * math.power(1.4, getInventoryLevel+1)) then
     begin
-      setMoney(getMoney - Round(100*math.power(1.4, getInventoryLevel)));
+      setMoney(getMoney - Round(100*math.power(1.4, getInventoryLevel+1)));
       inv := getInventory();
       level := level + 1;
       SetLength(inv, length(inventaire)+5);
@@ -277,11 +277,13 @@ begin
     end;
   end
   else
+  begin
     effacerEcran; 
-      affichageMessage(88,110,10,14,'Sac max');
-      readln;
-      effacerEcran;
-      ShopIHM;
+    affichageMessage(88,110,10,14,'Sac max');
+    readln;
+    effacerEcran;
+    ShopIHM;
+  end;
 end;
 
 // Retourne False si l'inventaire contient un stack non plein de l'item passé en paramètre, True sinon
